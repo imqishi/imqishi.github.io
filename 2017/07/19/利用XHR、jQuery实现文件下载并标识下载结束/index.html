@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Nick的回收站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="利用XHR、jQuery实现文件下载并标识下载结束问题描述实现文件下载，点击下载按钮出现遮罩/提示层，等待后台文件准备完毕弹出另存为窗口，遮罩层消失。 问题所在传统的文件下载可以实现点击以后出现遮罩层，但是由于无法判断文件何时传输完毕，导致弹出另存为窗口时无法找到事件钩子或回调函数以实现遮罩层消失。 背景XHR-XMLHttpRequestXHR其实我们平时很经常的在用到，它是Ajax实现的基础，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nick的回收站">
+<meta property="og:url" content="http://yoursite.com/2017/07/19/利用XHR、jQuery实现文件下载并标识下载结束/index.html">
+<meta property="og:site_name" content="Nick的回收站">
+<meta property="og:description" content="利用XHR、jQuery实现文件下载并标识下载结束问题描述实现文件下载，点击下载按钮出现遮罩/提示层，等待后台文件准备完毕弹出另存为窗口，遮罩层消失。 问题所在传统的文件下载可以实现点击以后出现遮罩层，但是由于无法判断文件何时传输完毕，导致弹出另存为窗口时无法找到事件钩子或回调函数以实现遮罩层消失。 背景XHR-XMLHttpRequestXHR其实我们平时很经常的在用到，它是Ajax实现的基础，">
+<meta property="og:updated_time" content="2017-07-19T14:19:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nick的回收站">
+<meta name="twitter:description" content="利用XHR、jQuery实现文件下载并标识下载结束问题描述实现文件下载，点击下载按钮出现遮罩/提示层，等待后台文件准备完毕弹出另存为窗口，遮罩层消失。 问题所在传统的文件下载可以实现点击以后出现遮罩层，但是由于无法判断文件何时传输完毕，导致弹出另存为窗口时无法找到事件钩子或回调函数以实现遮罩层消失。 背景XHR-XMLHttpRequestXHR其实我们平时很经常的在用到，它是Ajax实现的基础，">
+  
+    <link rel="alternate" href="/atom.xml" title="Nick的回收站" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Nick的回收站</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-利用XHR、jQuery实现文件下载并标识下载结束" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/19/利用XHR、jQuery实现文件下载并标识下载结束/" class="article-date">
+  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="利用XHR、jQuery实现文件下载并标识下载结束"><a href="#利用XHR、jQuery实现文件下载并标识下载结束" class="headerlink" title="利用XHR、jQuery实现文件下载并标识下载结束"></a>利用XHR、jQuery实现文件下载并标识下载结束</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>实现文件下载，点击下载按钮出现遮罩/提示层，等待后台文件准备完毕弹出另存为窗口，遮罩层消失。</p>
+<h2 id="问题所在"><a href="#问题所在" class="headerlink" title="问题所在"></a>问题所在</h2><p>传统的文件下载可以实现点击以后出现遮罩层，但是由于无法判断文件何时传输完毕，导致弹出另存为窗口时无法找到事件钩子或回调函数以实现遮罩层消失。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="XHR-XMLHttpRequest"><a href="#XHR-XMLHttpRequest" class="headerlink" title="XHR-XMLHttpRequest"></a>XHR-XMLHttpRequest</h3><p>XHR其实我们平时很经常的在用到，它是Ajax实现的基础，所有现代浏览器均支持XHR。它可以与服务器异步通信，所以可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<p>主要用到的函数与变量主要有：</p>
+<ol>
+<li>open(<em>method</em>,<em>url</em>,<em>async</em>)</li>
+</ol>
+<p>规定请求的类型、URL 以及是否异步处理请求。</p>
+<ul>
+<li><em>method</em>：请求的类型；GET 或 POST</li>
+<li><em>url</em>：文件在服务器上的位置</li>
+<li><em>async</em>：true（异步）或 false（同步）</li>
+</ul>
+<ol>
+<li>send(<em>string</em>)</li>
+</ol>
+<p>发送请求，当POST请求时，用到string参数。</p>
+<ol>
+<li>setRequestHeader(<em>header</em>,<em>value</em>)</li>
+</ol>
+<p>设置HTTP头的函数。</p>
+<ol>
+<li>responseText &amp; responseXML &amp; response</li>
+</ol>
+<p>XHR对象属性，用于获取服务器响应。</p>
+<h5 id="下面的是解决本问题所用到的额外的几个参数"><a href="#下面的是解决本问题所用到的额外的几个参数" class="headerlink" title="下面的是解决本问题所用到的额外的几个参数"></a>下面的是解决本问题所用到的额外的几个参数</h5><ol>
+<li>responseType</li>
+</ol>
+<p>XHR对象属性，设置想要获得的response类型，常用的有下面几个：</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Data type of <code>response</code> property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&quot;&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString" target="_blank" rel="external"><code>DOMString</code></a> (默认值)</td>
+</tr>
+<tr>
+<td><code>&quot;arraybuffer&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer" target="_blank" rel="external"><code>ArrayBuffer</code></a></td>
+</tr>
+<tr>
+<td><code>&quot;blob&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob" target="_blank" rel="external"><code>Blob</code></a> (用于文件下载等大量数据)</td>
+</tr>
+<tr>
+<td><code>&quot;document&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank" rel="external"><code>Document</code></a></td>
+</tr>
+<tr>
+<td><code>&quot;json&quot;</code></td>
+<td>由服务端返回的JSON字符串所构造的JavaScript 对象</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>onload事件</li>
+</ol>
+<p>当请求成功完成时触发，此时<code>xhr.readystate=4</code>，利用onload回调，可以在此实现文件下载完毕时关闭遮罩层。</p>
+<h3 id="Blob简介"><a href="#Blob简介" class="headerlink" title="Blob简介"></a>Blob简介</h3><p>BLOB (binary large object)，二进制大对象，是一个可以存储二进制文件的容器。<br>在计算机中，BLOB常常是数据库中用来存储二进制文件的字段类型。<br>BLOB是一个大文件，典型的BLOB是一张图片或一个声音文件，由于它们的尺寸，必须使用特殊的方式来处理（例如：上传、下载或者存放到一个数据库）。</p>
+<p>利用Blob，我们的问题得以解决。说到Blob，就不得不说起利用<strong><em>window.URL</em></strong> or <strong><em>window.webkitURL</em></strong>实现下载Blob的问题啦</p>
+<p><strong><em>URL.createObjectURL()</em></strong> 方法会根据传入的参数创建一个指向该参数对象的URL。这个URL的生命仅存在于它被创建的这个文档里。 新的对象URL指向执行的File对象或者是Blob对象。</p>
+<p><strong><em>URL.revokeObjectURL()</em> </strong>方法会释放一个通过URL.createObjectURL()创建的对象URL，当你要已经用过了这个对象URL，然后要让浏览器知道这个URL已经不再需要指向对应的文件的时候，就需要调用这个方法。</p>
+<p>具体的意思就是说，一个对象URL，使用这个url是可以访问到指定的文件的，但是我可能只需要访问一次，一旦已经访问到了，这个对象URL就不再需要了，就被释放掉。被释放掉以后，这个对象URL就不再指向指定的文件了。</p>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>利用XHR实现把后台传输的文件以Blob格式存储，在点击下载按钮时，发送XMLHttpRequest请求，在onload回调中创建虚拟的一个a标签并将其绑定到Blob对象，然后模拟点击URL下载的操作实现下载。弹出另存为窗口后，也即在onload事件的最后隐藏遮罩层。搞定~</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  $(<span class="string">".submit"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $(<span class="string">'.wrd-loading'</span>).show();</div><div class="line">    <span class="keyword">var</span> oReq = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">    oReq.open(<span class="string">"GET"</span>, <span class="string">"&#123;&#123; action('System\LogController@getDownloadLogFile')  &#125;&#125;"</span>, <span class="literal">true</span>);</div><div class="line">    oReq.responseType = <span class="string">"blob"</span>;</div><div class="line"></div><div class="line">    oReq.onload = <span class="function"><span class="keyword">function</span>(<span class="params">oEvent</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> blob = oReq.response;</div><div class="line">      <span class="keyword">let</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</div><div class="line">      <span class="keyword">let</span> myURL = <span class="built_in">window</span>.URL</div><div class="line">      <span class="keyword">if</span>(myURL.createObjectURL == <span class="literal">undefined</span>)</div><div class="line">        myURL = <span class="built_in">window</span>.webkitURL</div><div class="line">      <span class="keyword">let</span> url = myURL.createObjectURL(blob);</div><div class="line">      <span class="keyword">let</span> filename = <span class="string">'api_push.zip'</span>;</div><div class="line">      a.href = url;</div><div class="line">      a.download = filename;</div><div class="line">      a.click();</div><div class="line">      myURL.revokeObjectURL(url);</div><div class="line">      $(<span class="string">'.wrd-loading'</span>).hide();</div><div class="line">    &#125;;</div><div class="line">    oReq.send();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>后台只需按正常方式发送即可，如php可能就是echo file_get_contents();</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><p>[你真的会使用XMLHttpRequest吗？]: <a href="https://segmentfault.com/a/1190000004322487" target="_blank" rel="external">https://segmentfault.com/a/1190000004322487</a></p>
+</li>
+<li><p>[XMLHttpRequest.responseType]: <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType</a></p>
+</li>
+<li><p>[URL.createObjectURL和URL.revokeObjectUR]: <a href="http://www.mamicode.com/info-detail-456059.html" target="_blank" rel="external">http://www.mamicode.com/info-detail-456059.html</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/19/利用XHR、jQuery实现文件下载并标识下载结束/" data-id="cj5b3l7w60006pa1yht1ij4om" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/19/11.容器装水取最大/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/19/简单正则匹配（.和*）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/07/19/从生成括号到递归算法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/19/3Sum/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/19/5.最长回文子串/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/19/4.求有序数组的中位数/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/19/Rules of Machine Learning: Best Practices for ML Engineering — Martin Zinkevich/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Nick<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
