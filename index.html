@@ -50,7 +50,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imqishi.cn"></form>
@@ -61,424 +61,29 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Rules of Machine Learning: Best Practices for ML Engineering — Martin Zinkevich" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/19/Rules of Machine Learning: Best Practices for ML Engineering — Martin Zinkevich/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Rules-of-Machine-Learning-Best-Practices-for-ML-Engineering-—-Martin-Zinkevich"><a href="#Rules-of-Machine-Learning-Best-Practices-for-ML-Engineering-—-Martin-Zinkevich" class="headerlink" title="Rules of Machine Learning: Best Practices for ML Engineering — Martin Zinkevich"></a>Rules of Machine Learning: Best Practices for ML Engineering — Martin Zinkevich</h1><h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><p>下列术语将会在我们接下来的讨论中不断出现：</p>
-<p><strong>实例（Instance）</strong>：即想要预测的东西。例如，一个实例可以是一个你想要划分是“与猫相关”还是“与猫无关”的网页。</p>
-<p><strong>标记（Label）</strong>：一个预测任务的结果 — 可能是由机器学习系统产生的结果，或者是训练数据提供的正确答案。例如，一个网页的标记可以是“与猫相关”。</p>
-<p><strong>特征（Feature）</strong>：预测任务使用的实例中的一个属性。例如，一个网页可能有一个特征是“含有‘猫’这一单词”。</p>
-<p><strong>特征列（Feature Column）</strong>：相关特征的集合，如用户可能居住的所有可能的国家的集合。一个例子可能含有特征列中的一个或多个特征。特征列在VM系统（如在Yahoo或Microsoft）或字段（field）中可能被称作命名空间。</p>
-<p><strong>例子（Example）</strong>：一个实例（带有他的一系列特征）和一个标记。</p>
-<p><strong>模型（Model）</strong>：一个预测任务的统计表现。在例子上训练一个模型然后使用模型做出预测。</p>
-<p><strong>度量（Metric）</strong>：一个你关心的数字。可能被直接优化，也可能不行。</p>
-<p><strong>目标（Objective）</strong>：你的算法尝试优化的一个度量。</p>
-<p><strong>管道（Pipeline）</strong>：围绕一个机器学习算法的一些工具。包括从前端收集数据，把数据编入训练数据文件，训练一个至多个模型，并且将模型导出到生产中。</p>
-<h2 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">To make great products:</div><div class="line">Do machine learning like the great engineer you are, not like the great machine learning expert you aren’t.</div></pre></td></tr></table></figure>
-<p>你将面临的大多数问题都是工程问题。即便是一个有着巨大资源的伟大的机器学习专家，大多数的成果也是来自有用的特征，而不是厉害的机器学习算法。所以基本的方法是：</p>
-<ol>
-<li>确保你的管道是端到端有效可用的</li>
-<li>从一个有意义的目标开始</li>
-<li>以简单的方法增加常识性特征</li>
-<li>确保你的管道一直坚固有效</li>
-</ol>
-<p>这个方法将会在相当长的时间耗费大量的金钱以及很多人的快乐。只有当没有更简单的技巧让你更远的时候，才能从这种方法开始。 增加复杂性会耗费更长的时间。</p>
-<p>一旦你用尽了简单的技巧，未来可能确实存在更前沿的机器学习。 请参阅第三阶段机器学习项目。</p>
-<p>本文档准备了四个部分：</p>
-<ol>
-<li>第一部分帮助你理解什么情况下适用机器学习</li>
-<li>第二部分是关于如何部署你的第一个管道</li>
-<li>第三部分是关于启动和迭代，同时在管道中添加新功能，以及如何评估模型和训练策略</li>
-<li>最后一部分关于达到瓶颈时你应该怎么做</li>
-<li>之后是一些本文档用到的例子的相关背景、相关工作和附录</li>
-</ol>
-<h2 id="在机器学习之前…"><a href="#在机器学习之前…" class="headerlink" title="在机器学习之前…"></a>在机器学习之前…</h2><p>规则一：不要害怕启动一个没有机器学习的产品</p>
-<p>机器学习很酷，但是它需要数据。理论上，你可以从不同的问题中获取数据并且把模型转化为新产品，但是他可能并不比没有机器学习的时候好。如果你认为机器学习将会为你100%提速，那么启发式</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/Rules of Machine Learning: Best Practices for ML Engineering — Martin Zinkevich/" data-id="cj5b4rrae00057q1y06mod8us" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-11.容器装水取最大" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/19/11.容器装水取最大/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="容器装水取最大"><a href="#容器装水取最大" class="headerlink" title="容器装水取最大"></a>容器装水取最大</h1><h1 id="LeetCode-11"><a href="#LeetCode-11" class="headerlink" title="LeetCode 11"></a>LeetCode 11</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给出n个非负整数的数组，以下标和值分别作x, y轴，可以构成一个坐标轴中有很多竖线的图例，取其中两条线作为一个容器，求如何取线可以使容器获得最大的容量</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>一个是要注意是非负整数，这就意味着有可能值为0，此时与其他正数构成的形状是三角形，所以蓄水量为0</p>
-<p>还有一个是输入数组长度至少应该为2</p>
-<h2 id="方法一-暴力求解"><a href="#方法一-暴力求解" class="headerlink" title="方法一 - 暴力求解"></a>方法一 - 暴力求解</h2><p>首先想到的就是暴力枚举，通过遍历所有情况求得最大值，这种情况下时间复杂度为O(n^2)。进一步思考，下标ij和ji的值是相同的，不需要重复计算，也即只需计算 j &gt; i 或者 i &gt; j 的情况即可。代码简单，此处不再赘述。</p>
-<h2 id="方法二-一点小Trick与其他的思考"><a href="#方法二-一点小Trick与其他的思考" class="headerlink" title="方法二 - 一点小Trick与其他的思考"></a>方法二 - 一点小Trick与其他的思考</h2><p>最近被动态规划给整惨了，搞得我现在一看到这种有重复计算包含在其中的都想去看看能不能动态规划一下…但是想了一下，虽然看起来有很多计算，好像可以重复利用，但是仔细思考并不适合用动态规划，最优子结构是什么？</p>
-<p>类比正则匹配的题目一样以f[i][j]作为i和j之间的最大蓄水量吗…好像没有办法在接下来的计算中进行利用…</p>
-<p>类比最长回文子串的题目一样以回文串的长度作为子结构进行一步步迭代利用吗？哎？这个好像可以，但是这样的话好像把问题想复杂了，时间复杂度还是O(n^2)呀…</p>
-<p>方法一的代码提交以后显示超时，那么一般来说，这里的时间复杂度应该可以减到O(logn)或者O(n)，看到log就想二分思想，但是这里显然和二分没有什么关系。看到O(n)就想到遍历一遍，一种情况是从左往右，一种情况就是从两边到中间。第一种情况想了一下不可能，因为两个点的位置是任意出现的，并不是一个固定一个活动。所以考虑情况二。</p>
-<p>根据贪心的思想，每次都想让结果更大一些，那么两个竖线低的一边应该继续活动，寻找有没有更大的。这样做出来确实是对的，但是却让人心生疑惑，会不会有一个x轴跨度比较大，竖线长度比较短，而有一个x轴跨度比较小，但是竖线很长的，这两个哪个会更大呢，会不会错过一些可能的获得最大值的情况呢？</p>
-<p>学习了<a href="https://discuss.leetcode.com/topic/503/anyone-who-has-a-o-n-algorithm/3" target="_blank" rel="external">Discuss</a>以后，根据第一位答主的反证法证明，我们可以看出上述问题是不可能存在的：</p>
-<p>假设这样计算的结果不是最优解。那么假设最优解是a_ol和a_or。我们的算法结束的条件是左游标和右游标相遇，那么我们必然是只有一个游标曾经走过a_ol或a_or，假设一个游标到了a_ol，那么下列情况下，该游标可能从a_ol上移走：</p>
-<ol>
-<li>另一个游标也到了a_ol。这种情况下会退出循环，但是容易看出，a_or肯定被另一个游标走过了，这与我们的假设相悖，不可能成立。</li>
-<li>另一个游标到了一个比a_ol处数组更大的值的地方，假设它是a_rr。这种情况下，哎？刚才我们是不是假设a_ol和a_or能蓄水最多吗？如果又出来一个a_rr，岂不是刚才的假设失效了？显然，这种情况也是不可能发生的。</li>
-</ol>
-<p>综上所述，该算法成立。</p>
-<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxArea</span><span class="params">(self, height)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type height: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        Max = <span class="number">0</span></div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = len(height) - <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i != j:</div><div class="line">            tm = (j - i) * min(height[i], height[j])</div><div class="line">            Max = tm <span class="keyword">if</span> tm &gt; Max <span class="keyword">else</span> Max</div><div class="line">            <span class="keyword">if</span> height[i] &lt; height[j]:</div><div class="line">                i += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                j -= <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> Max</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/11.容器装水取最大/" data-id="cj5b4rr9u00007q1yph7njdj5" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-4.求有序数组的中位数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/19/4.求有序数组的中位数/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="求有序数组的中位数"><a href="#求有序数组的中位数" class="headerlink" title="求有序数组的中位数"></a>求有序数组的中位数</h1><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>遍历，分别从两个数组头最小的开始向后走，走到中间为止。这种方法最简单，但是时间复杂度为O(m+n)，那么有没有更快的方法呢？</p>
-<p>由题目要求我们的算法时间复杂度为O(log (m+n))可以看出显然是有的，看到log就让人想起二分，没错，这种更快的方法正是利用了二分的原理。</p>
-<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>根据中位数的定义可以知道，中位数是一组数据中位于中间位置的数字，这也就意味着，假设有两个有序数组A和B：</p>
-<p>把A分成两部分，分别为0 ~ i-1, i ~ m-1</p>
-<p>把B分成两部分，分别为0 ~ j-1, j ~ n-1</p>
-<p>可以知道</p>
-<p>i-1-0+1 + j-1-0+1 = m-1-i+1 + n-1-j+1</p>
-<p>也就是 i + j = (m + n) / 2</p>
-<p>这里要注意的是，该式是m+n为偶数时成立的情况，当m+n为奇数时，i+j = (m+n+1) / 2，原因如下：</p>
-<h3 id="首先我们要搞清楚，按这种分法，中位数在哪里产生："><a href="#首先我们要搞清楚，按这种分法，中位数在哪里产生：" class="headerlink" title="首先我们要搞清楚，按这种分法，中位数在哪里产生："></a>首先我们要搞清楚，按这种分法，中位数在哪里产生：</h3><ol>
-<li>如果是偶数的话，显然应该是i-1和j-1的较大者与i和j的较小者的均值</li>
-<li>如果是奇数的话，则我们认定为i-1和j-1的较大者</li>
-</ol>
-<h3 id="在这种情况下，我们进行假设："><a href="#在这种情况下，我们进行假设：" class="headerlink" title="在这种情况下，我们进行假设："></a>在这种情况下，我们进行假设：</h3><p>假设A = [1,2], B = [3,4]，以第一轮为例，i = 2 / 2 = 1, j = 4 / 2 - 1 = 1，注意i和j是数组下标，也就是说，左侧分别有一个下标为0的数，正好是中位数。假设我们+1，i + j = 5 / 2 = 2 正确</p>
-<p>假设A = [1, 2], B= [3, 4, 5]，以第一轮为例，如果不+1，i = 2 / 2 = 1, j = 5 / 2 - 1 = 1，由于i和j是数组下标，那么左侧共有两个数，而根据之前的定义左侧应该有3个数，所以只有+1以后才能满足左侧有3个数（此时j = 2）</p>
-<p>为什么必须是3个数呢？这要从开始的解题思路说起，因为我们假设分成的两部分是以 i, j 为分割的，那么左侧加起来应该为总长度的一半，此时中位数为左侧最大与右侧最小的均值。如果无法整除，取左侧最大。所以左侧长度要么为一半，要么为一半 +1，故i + j = (m + n + 1) / 2</p>
-<p>为什么要保证m &lt; n呢？因为如果m &gt; n，i比较大，有可能会出现j为负数的情况。</p>
-<h3 id="那么搜索的时候有哪些情况呢？"><a href="#那么搜索的时候有哪些情况呢？" class="headerlink" title="那么搜索的时候有哪些情况呢？"></a>那么搜索的时候有哪些情况呢？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;a&gt; (j == 0 or i == m or B[j-1] &lt;= A[i]) and</div><div class="line">    (i == 0 or j = n or A[i-1] &lt;= B[j])</div><div class="line">    i即为所求.</div><div class="line"></div><div class="line">&lt;b&gt; j &gt; 0 and i &lt; m and B[j - 1] &gt; A[i]</div><div class="line">    i太小，应该增加（j会相应减小）.</div><div class="line"></div><div class="line">&lt;c&gt; i &gt; 0 and j &lt; n and A[i - 1] &gt; B[j]</div><div class="line">    i太大，应该减小（j会相应增加）.</div></pre></td></tr></table></figure>
-<h3 id="综上，代码如下："><a href="#综上，代码如下：" class="headerlink" title="综上，代码如下："></a>综上，代码如下：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">def median(A, B):</div><div class="line">   m, n = len(A), len(B)</div><div class="line">   if m &gt; n:</div><div class="line">       A, B, m, n = B, A, n, m</div><div class="line">   if n == 0:</div><div class="line">       raise ValueError</div><div class="line"></div><div class="line">   imin, imax, half_len = 0, m, (m + n + 1) / 2</div><div class="line">   while imin &lt;= imax:</div><div class="line">       i = (imin + imax) / 2</div><div class="line">       j = half_len - i</div><div class="line">       if i &lt; m and B[j-1] &gt; A[i]:</div><div class="line">           # i is too small, must increase it</div><div class="line">           imin = i + 1</div><div class="line">       elif i &gt; 0 and A[i-1] &gt; B[j]:</div><div class="line">           # i is too big, must decrease it</div><div class="line">           imax = i - 1</div><div class="line">       else:</div><div class="line">           # i is perfect</div><div class="line"></div><div class="line">		# i = 0意味着数组A太大了，走到左侧的头了，左侧只有B了，所以左侧的最大值应该为B[j-1]</div><div class="line">           if i == 0: max_of_left = B[j-1]</div><div class="line">           # j = 0意味着B太大了，指针走到左侧的头了，左侧只有A了，所以左侧最大值应该为A[i-1]</div><div class="line">           elif j == 0: max_of_left = A[i-1]</div><div class="line">           # 否则说明中位数的第一个数字（左侧较大的）在两组数据的中间位置</div><div class="line">           else: max_of_left = max(A[i-1], B[j-1])</div><div class="line"></div><div class="line">		# 根据上面的分析知道如果是奇数，该数就是中位数</div><div class="line">           if (m + n) % 2 == 1:</div><div class="line">               return max_of_left</div><div class="line"></div><div class="line">		# 如果i走到最右边，说明A太小了，右侧只有B，所以右侧最小值是B[j]</div><div class="line">           if i == m: min_of_right = B[j]</div><div class="line">           # 如果j走到最右边，说明B太小了，右侧只有A，所以右侧最小值是A[i]</div><div class="line">           elif j == n: min_of_right = A[i]</div><div class="line">           # 否则说明中位数的第二个数字(右侧较小的)在两组数据的中间位置</div><div class="line">           else: min_of_right = min(A[i], B[j])</div><div class="line"></div><div class="line">		# 如果是偶数，应该为左侧最大与右侧最小值的均值</div><div class="line">           return (max_of_left + min_of_right) / 2.0</div></pre></td></tr></table></figure>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>解题过程中遇到的问题与解决思路主要有两个：</p>
-<ol>
-<li>第一次尝试解题，没能把中位数的概念运用好，i和j之间的关系没有用起来，导致i与j各自独立，计算的时候混乱。</li>
-<li>第二次尝试解题，注意了i与j之间的关系，但是对于 m + n + 1 中为什么+1没搞清楚，至于为什么+1，在上面已经讲清楚了。</li>
-<li>如果说还有小的点，那就是对imin和imax的设置了，一定要注意是 i + 1或者 i - 1 ，不是设置成1…这算是二分的基本点了。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/4.求有序数组的中位数/" data-id="cj5b4rr9z00027q1yqdkng1lw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-5.最长回文子串" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/19/5.最长回文子串/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="最长回文子串"><a href="#最长回文子串" class="headerlink" title="最长回文子串"></a>最长回文子串</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给定一个字符串，求其最长回文子串。</p>
-<p>如：abacd的最长回文子串为aba，abcdedcba的最长回文子串为abcdedcba，abcded的最长回文子串为a…</p>
-<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>最基本的方法，就是遍历所有的情况，选出最长的那个串。这种方法最大的问题是效率低下，时间复杂度较高（n^3）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">longestPalindrome_normal</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :rtype: str</div><div class="line">        """</div><div class="line">        max = <span class="number">0</span></div><div class="line">        max_str = <span class="string">""</span></div><div class="line">        search_str = <span class="string">""</span></div><div class="line">        <span class="comment"># 遍历所有字符</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> s:</div><div class="line">            <span class="comment"># 如果该字符还出现过，找到所有可能的位置，检查是否回文，是否是最大值</span></div><div class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> search_str:</div><div class="line">                indices = findIndex(search_str, i)</div><div class="line">                <span class="comment"># check palindrome</span></div><div class="line">                <span class="keyword">for</span> index <span class="keyword">in</span> indices:</div><div class="line">                    <span class="keyword">if</span> len(search_str) == index + <span class="number">1</span>:</div><div class="line">                        <span class="keyword">if</span> max &lt; <span class="number">2</span>:</div><div class="line">                            max = <span class="number">2</span></div><div class="line">                            max_str = search_str[index:] + i</div><div class="line">                        <span class="keyword">continue</span></div><div class="line">                    wait_checked = search_str[index:] + i</div><div class="line">                    rtn = checkPalindrome(wait_checked)</div><div class="line">                    <span class="keyword">if</span> rtn <span class="keyword">is</span> <span class="keyword">False</span>:</div><div class="line">                        <span class="keyword">continue</span></div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        <span class="keyword">if</span> rtn &gt; max:</div><div class="line">                            max = rtn</div><div class="line">                            max_str = search_str[index:] + i</div><div class="line"></div><div class="line">            search_str += i</div><div class="line"></div><div class="line">        <span class="keyword">if</span> max == <span class="number">0</span>:</div><div class="line">            max_str = s[<span class="number">0</span>]</div><div class="line">        <span class="keyword">return</span> max_str</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">findIndex</span><span class="params">(str, needle)</span>:</span></div><div class="line">    <span class="keyword">return</span> [i <span class="keyword">for</span> i, letter <span class="keyword">in</span> enumerate(str) <span class="keyword">if</span> letter == needle]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkPalindrome</span><span class="params">(str)</span>:</span></div><div class="line">    check_len = len(str)</div><div class="line">    <span class="keyword">if</span> check_len == <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    half_len = check_len / <span class="number">2</span></div><div class="line">    <span class="keyword">for</span> index, val <span class="keyword">in</span> enumerate(str):</div><div class="line">        <span class="keyword">if</span> index == half_len:</div><div class="line">            <span class="keyword">break</span></div><div class="line">        count_part = <span class="number">0</span> - index - <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span> val != str[count_part]:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> check_len</div></pre></td></tr></table></figure>
-<h2 id="方法二-Manacher-算法"><a href="#方法二-Manacher-算法" class="headerlink" title="方法二 - Manacher 算法"></a>方法二 - Manacher 算法</h2><h4 id="方法一中我们考虑问题太过于粗暴，有两点没有考虑到："><a href="#方法一中我们考虑问题太过于粗暴，有两点没有考虑到：" class="headerlink" title="方法一中我们考虑问题太过于粗暴，有两点没有考虑到："></a>方法一中我们考虑问题太过于粗暴，有两点没有考虑到：</h4><p>一个是回文串的定义，不难得出，回文串就像之前的中位数一样，有一个“中间点”，回文串以该中间点对称。</p>
-<p>第二个是在计算新的回文串之前，可能里面包含了我们曾经算过的回文串，这样的话我们就算多了，做了重复劳动。</p>
-<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><h5 id="根据第一点，转变做题思路"><a href="#根据第一点，转变做题思路" class="headerlink" title="根据第一点，转变做题思路"></a>根据第一点，转变做题思路</h5><p>不再是把当前在算的这个位置作为回文串的左侧从左往右一个个找，而是把这个位置当做一个回文串的中间点，以此点向左、向右扩展，得到回文串。</p>
-<p>这样一来，我们可以通过声明一个RL数组来标志以每个字符作为中间点的回文串的长度。</p>
-<p>还有一个问题是如果是长度为偶数的串，并没有这个中间点，因此我们需要创造这个中间点，方法是向字符串的头、尾还有两两之间添加一个不会出现的特殊字符，如“#”。这样的话字符串恒为奇数长度，且既不会影响回文性，也不会影响计算，只是要记得最后得把“#”占位的地方去掉就可以了。</p>
-<h5 id="解决了这些问题，根据第二点，我们做如下分析"><a href="#解决了这些问题，根据第二点，我们做如下分析" class="headerlink" title="解决了这些问题，根据第二点，我们做如下分析"></a>解决了这些问题，根据第二点，我们做如下分析</h5><p>设i为当前走到的位置</p>
-<p>maxRight为当前回文串能走到的最右侧</p>
-<p>pos为当前最长回文串的中间点</p>
-<p>j为i与pos对称的位置（此时，j的RL值已经算出），不难得出i与j的关系为：j = pos - ( i - pos ) = 2 * pos - i</p>
-<p><em>注意到：i的位置必然在pos的右边，因为假设i在pos左边，那么maxRight的位置必须也往左边跑，那么pos也往左跑，不应该是当前位置（考虑最长回文串的半径长度很容易看出）</em></p>
-<p>在这些条件下，有两种情况：</p>
-<ol>
-<li><p>i &gt;= maxRight 这种情况下，按照最普通的方式，以i为中心向左向右扩展寻找回文串，更新pos、maxRight的位置</p>
-</li>
-<li><p>i &lt; maxRight 这种情况下又分为两种子情况：</p>
-<p>a. 如果RL[j] &lt;= maxRight - i 也即j处的回文串长度较小，其对应的i处长度还没有超出maxRight，那么根据对称性可以知道，i处的长度至少为RL[j]，求i处回文串只需从RL[j]半径处继续向外扩展即可</p>
-<p>b. 如果RL[j] &gt; maxRight - i 也即j处的回文串长度较长，那么i处的回文串只能保证到maxRight的位置，因为对称性利用的是maxRight所在的最长回文串的对称性，超出maxRight无法保证回文性成立</p>
-</li>
-</ol>
-<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestPalindrome</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :rtype: str</div><div class="line">        """</div><div class="line">        s = <span class="string">"#"</span> + <span class="string">"#"</span>.join(s) + <span class="string">"#"</span></div><div class="line">        RL = &#123;&#125;</div><div class="line">        maxRight = <span class="number">0</span></div><div class="line">        pos = <span class="number">0</span></div><div class="line">        length = len(s)</div><div class="line">        <span class="keyword">for</span> (i, c) <span class="keyword">in</span> enumerate(s):</div><div class="line">            <span class="keyword">if</span> i &gt;= maxRight:</div><div class="line">                k = <span class="number">1</span></div><div class="line">                <span class="keyword">while</span> i - k &gt;= <span class="number">0</span> <span class="keyword">and</span> i + k &lt; length:</div><div class="line">                    <span class="keyword">if</span> s[i-k] != s[i+k]:</div><div class="line">                        <span class="keyword">break</span></div><div class="line">                    k += <span class="number">1</span></div><div class="line">                RL[i] = k - <span class="number">1</span></div><div class="line">                maxRight = i + k - <span class="number">1</span></div><div class="line">                pos = i</div><div class="line"></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                j = pos * <span class="number">2</span> - i</div><div class="line">                <span class="keyword">if</span> RL[j] &lt;= (maxRight - i):</div><div class="line">                    k = RL[j] + <span class="number">1</span></div><div class="line">                    <span class="keyword">while</span> i - k &gt;= <span class="number">0</span> <span class="keyword">and</span> i + k &lt; length:</div><div class="line">                        <span class="keyword">if</span> s[i-k] != s[i+k]:</div><div class="line">                            <span class="keyword">break</span></div><div class="line">                        k += <span class="number">1</span></div><div class="line">                    RL[i] = k - <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    k = maxRight - i</div><div class="line">                    <span class="keyword">while</span> i - k &gt;= <span class="number">0</span> <span class="keyword">and</span> i + k &lt; length:</div><div class="line">                        <span class="keyword">if</span> s[i-k] != s[i+k]:</div><div class="line">                            <span class="keyword">break</span></div><div class="line">                        k += <span class="number">1</span></div><div class="line">                    RL[i] = k - <span class="number">1</span></div><div class="line"></div><div class="line">        maxPos = <span class="number">0</span></div><div class="line">        maxLen = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> RL:</div><div class="line">            <span class="keyword">if</span> maxLen &lt; RL[i]:</div><div class="line">                maxLen = RL[i]</div><div class="line">                maxPos = i</div><div class="line"></div><div class="line">        <span class="keyword">return</span> s[maxPos - RL[maxPos]:maxPos + RL[maxPos]].replace(<span class="string">"#"</span>, <span class="string">""</span>)</div></pre></td></tr></table></figure>
-<p>写题过程中的一些小经验就是如果涉及到算下标算位置的时候（比如循环退出条件），可以先考虑一下能不能通过边界判断让代码自己去做，不然的话我们自己手算的可能不对还可能要浪费好多时间，<code>while i - k &gt;= 0 and i + k &lt; length:</code>就是一个鲜明的例子。</p>
-<h2 id="方法三-动态规划"><a href="#方法三-动态规划" class="headerlink" title="方法三 - 动态规划"></a>方法三 - 动态规划</h2><p>其实这个题目一看到我就想到了动态规划，奈何功力太浅找不到具体的思路0.0~估计对于有经验的来说先想到的会是动态规划吧，时间复杂度O(n^2)</p>
-<p>去搜了一下果然是可以用，总结如下：</p>
-<p>动态规划的思路主要就是利用之前计算的结果在下一步计算时继续用，不过它有几个必备条件，即：最优子结构性质、无后效性、子问题的重叠性。</p>
-<p>对于解决一个实际问题，我觉得最难的就是要找什么内容是可以下一步继续复用的…在网上看到了一些杂七杂八的答案，有的明明是错的，还在Baidu排在前几页（吐槽渣Baidu）去Google了一下总算是找到了一个比较正确的做法~</p>
-<p>定义数组<code>f[i][j] (i &lt; length, j &lt; length)</code>表示i到j之间是回文串，以回文串的长度作为重叠性的体现，不难看出，长度更长的回文串肯定包含长度短的回文串，即长回文串可以由短的回文串继续推广而得。</p>
-<p>当<code>s[i] == s[i+k-1]</code>并且比其小1的串也是回文串(<code>f[i+1][i+k-2] == 1</code>)说明<code>s[i][i+k-1]</code>是一个更长的回文串。</p>
-<p>然后我们探讨初始条件，一个字符本身构成的回文长度是1，相邻的回文长度也应该是1（或者更大，姑且置为最小值1，可以通过迭代继续增长），而<code>f[i][j]</code>和<code>f[j][i]</code>本质上是一样的，把f看成一个矩阵，容易看出我们只需要讨论一半即可。这里我们选择矩阵的左下部分（即 i &lt; j 的部分）讨论，故置<code>f[i][i]</code>和<code>f[i][i-1]</code>为初始值1</p>
-<h4 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestPalindrome</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :rtype: str</div><div class="line">        """</div><div class="line">        length = len(s)</div><div class="line">        <span class="keyword">if</span> length == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> s</div><div class="line">        f = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(length)] <span class="keyword">for</span> i <span class="keyword">in</span> range(length)]</div><div class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt; length:</div><div class="line">            f[i][i] = <span class="number">1</span></div><div class="line">            f[i][i - <span class="number">1</span>] = <span class="number">1</span></div><div class="line">            i += <span class="number">1</span></div><div class="line"></div><div class="line">        maxLeft = maxRight = <span class="number">0</span></div><div class="line">        k = <span class="number">2</span></div><div class="line">        <span class="keyword">while</span> k &lt;= length:</div><div class="line">            i = <span class="number">0</span></div><div class="line">            <span class="keyword">while</span> i &lt;= length - k:</div><div class="line">                <span class="keyword">if</span> s[i] == s[i+k<span class="number">-1</span>] <span class="keyword">and</span> f[i+<span class="number">1</span>][i+k<span class="number">-2</span>] == <span class="number">1</span>:</div><div class="line">                    f[i][i+k<span class="number">-1</span>] = <span class="number">1</span></div><div class="line">                    <span class="keyword">if</span> maxRight - maxLeft + <span class="number">1</span> &lt; k:</div><div class="line">                        maxLeft = i</div><div class="line">                        maxRight = i + k - <span class="number">1</span></div><div class="line">                i += <span class="number">1</span></div><div class="line">            k += <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> s[maxLeft:maxRight+<span class="number">1</span>]</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/5.最长回文子串/" data-id="cj5b4rrac00037q1y89mjwk7f" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-从生成括号到递归算法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/19/从生成括号到递归算法/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="从生成括号到递归算法"><a href="#从生成括号到递归算法" class="headerlink" title="从生成括号到递归算法"></a>从生成括号到递归算法</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给出数字n，表示有n对格式对应的括号，求解一共有多少种情况。如，n = 3时解为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  &quot;((()))&quot;,</div><div class="line">  &quot;(()())&quot;,</div><div class="line">  &quot;(())()&quot;,</div><div class="line">  &quot;()(())&quot;,</div><div class="line">  &quot;()()()&quot;</div><div class="line">]</div></pre></td></tr></table></figure>
-<h2 id="递归与回溯"><a href="#递归与回溯" class="headerlink" title="递归与回溯"></a>递归与回溯</h2><p>我们经常会碰到这种情况：为了描述问题的某一状态，必须要用到它的上一状态，而要描述它的上一状态，又要用上上一状态。这种用自己定义自己的方法，称为<strong>递归定义</strong>。递归定义有两个要素：</p>
-<ol>
-<li>递归边界条件，也就是最小的或者最原始的时候的情况，也是递归结束的情况</li>
-</ol>
-<p>。</p>
-<ol>
-<li>递归定义：使问题向边界条件转化的规则。递归定义必须能使问题越来越简单。也就是前面说的化简到最小的情况。</li>
-</ol>
-<p>递归算法的效率往往很低，费时和费内存空间。 但是递归也有其长处,，它能使一个蕴含递归关系且结构复杂的程序简介精炼,，增加可读性。特别是在难于找到从边界到解的全过程的情况下，如果把问题推进一步没其结果仍维持原问题的关系，则采用递归算法编程比较合适。</p>
-<p>回溯是一种算法思想，可以用递归实现。通俗点讲回溯就是一种试探，类似于穷举，但回溯有“剪枝”功能，比如求和问题。给定7个数字，1 2 3 4 5 6 7求和等于7的组合，从小到大搜索，选择1+2+3+4 =10&gt;7，已经超过了7，之后的5 6 7就没必要在继续了，这就是一种搜索过程的优化。</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>显然，回溯算法的思想适用于本题，我们可以用递归来实现，通过给出一些限制条件进行剪枝，完成题目。</p>
-<p>我们需要记录当前状态已经有多少个左括号，多少个右括号，以便对结束条件进行判断。当左右括号数等于n * 2时说明已经达到最大长度，不再递归。</p>
-<p>那么什么时候需要进行深一层的递归呢？首先是在左括号的数量没有达到n时，当前括号串后面加一个 “(” 并 left+1。其次是在右括号数小于左括号数时，当前括号串后面加一个 “)” 并 right+1。代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generateParenthesis</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: List[str]</div><div class="line">        """</div><div class="line">        self.result = []</div><div class="line">        self.backtrace(<span class="string">""</span>, <span class="number">0</span>, <span class="number">0</span>, n)</div><div class="line"></div><div class="line">        <span class="keyword">return</span> self.result</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backtrace</span><span class="params">(self, str, left, right, n)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(str) == n * <span class="number">2</span>:</div><div class="line">            self.result.append(str)</div><div class="line">            <span class="keyword">return</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> left &lt; n:</div><div class="line">            self.backtrace(str + <span class="string">"("</span>, left+<span class="number">1</span>, right, n)</div><div class="line">        <span class="keyword">if</span> right &lt; left:</div><div class="line">            self.backtrace(str + <span class="string">")"</span>, left, right+<span class="number">1</span>, n)</div></pre></td></tr></table></figure>
-<h2 id="用到递归-回溯的其他题目"><a href="#用到递归-回溯的其他题目" class="headerlink" title="用到递归-回溯的其他题目"></a>用到递归-回溯的其他题目</h2><h4 id="Leetcode-24-交换一个链表的每相邻的两个数字，如：1-gt-2-gt-3-gt-4-变换为-2-gt-1-gt-4-gt-3"><a href="#Leetcode-24-交换一个链表的每相邻的两个数字，如：1-gt-2-gt-3-gt-4-变换为-2-gt-1-gt-4-gt-3" class="headerlink" title="Leetcode 24 - 交换一个链表的每相邻的两个数字，如：1-&gt;2-&gt;3-&gt;4 变换为 2-&gt;1-&gt;4-&gt;3"></a>Leetcode 24 - 交换一个链表的每相邻的两个数字，如：1-&gt;2-&gt;3-&gt;4 变换为 2-&gt;1-&gt;4-&gt;3</h4><p>​    定义交换函数swapPairs(Node)。通过分析可以看出，整个过程是不断地对接下来的两个数字进行交换，因此有递归式：<code>node.next = swapPairs(node.next.next)</code> 代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">swapPairsByRecursion</span><span class="params">(self, head)</span>:</span></div><div class="line">    <span class="keyword">if</span> head <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> head.next <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        <span class="keyword">return</span> head</div><div class="line">    node = head.next</div><div class="line">    head.next = self.swapPairs(head.next.next)</div><div class="line">    node.next = head</div><div class="line">    <span class="keyword">return</span> n</div></pre></td></tr></table></figure>
-<h4 id="LeetCode-25-上题的变形：交换链表的每k个数字"><a href="#LeetCode-25-上题的变形：交换链表的每k个数字" class="headerlink" title="LeetCode 25 - 上题的变形：交换链表的每k个数字"></a>LeetCode 25 - 上题的变形：交换链表的每k个数字</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reverseKGroupByRecursion</span><span class="params">(self, head, k)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    :type head: ListNode</div><div class="line">    :type k: int</div><div class="line">    :rtype: ListNode</div><div class="line">    """</div><div class="line">    cur = head</div><div class="line">    count = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> cur <span class="keyword">and</span> count != k:</div><div class="line">        cur = cur.next</div><div class="line">        count += <span class="number">1</span></div><div class="line">    <span class="comment"># 如果够k个，则逆置，否则直接返回头结点</span></div><div class="line">    <span class="keyword">if</span> count == k:</div><div class="line">        cur = self.reverseKGroupByRecursion(cur, k)</div><div class="line">        <span class="comment"># 逆置子链表</span></div><div class="line">        <span class="keyword">while</span> count &gt; <span class="number">0</span>:</div><div class="line">            tmp = head.next</div><div class="line">            head.next = cur</div><div class="line">            cur = head</div><div class="line">            head = tmp</div><div class="line">            count -= <span class="number">1</span></div><div class="line">        head = cur</div><div class="line"></div><div class="line">    <span class="keyword">return</span> head</div></pre></td></tr></table></figure>
-<p>这类题目还有投机取巧的方法，消耗空间以换取解决问题的容易与易理解性。比如交换每k个数字，我们可以利用诸如Python中的字典类似的数据结构，每个维度存一个ListNode的数组，然后按序向该字典中放置链表节点，最后按序从字典中读取并重组链表。这种思路在一些走Z字型N字型之类的题目中都可以应用。</p>
-<p>不过显然，使用递归的方法代码更加简洁，也不用借助额外的数据结构（空间开销）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/从生成括号到递归算法/" data-id="cj5b4rrad00047q1yfs6b84hq" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-3Sum" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/19/3Sum/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="3Sum"><a href="#3Sum" class="headerlink" title="3Sum"></a>3Sum</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给出一个含有n个整数的数组，取其中三个元素a, b, c，使a + b + c = 0，列举出所有可能的情况</p>
-<p><em>注意：</em> [ 1, 2, 3 ] 和 [ 2, 1, 3 ]将被认为是同一组数据‘</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>暴力遍历所有情况，将是O(n^3)时间复杂度，当数据量上升到一定程度时算法会很慢。这里我们考虑有没有更快的情况。</p>
-<p>比O(n^3)低的有O(n^2)，也即只需遍历两遍，即可找到所有情况。</p>
-<p>首先想到的是进行<strong>排序</strong>，<strong>预处理后</strong>再做进一步打算，常用的排序都可以控制时间复杂度在O(n^2)以下。</p>
-<p>为了能够确保每个数字都被访问到，必然有一个外层循环 i 包括了所有下标，因为有三个数字，所以这个最外层只需要遍历到 0 ~ n-3 即可。</p>
-<p>接下来考虑<strong>如何更加有效的找另外两个数字</strong>，使题设成立：</p>
-<p>要想在O(n^2)完成任务，已经用掉了n，还剩下n。自然需要剩下的两个下标从两头向中间走。</p>
-<p>因为数据已排序，如果三者之和小于0，说明左边的下标太小，需要更大一些（对应的数字会小一些）</p>
-<p>同理，如果三者之和大于0，说明左边的下标太大，右边的太小，需要把右边的下标变小一些（它对应的数字更小一些）</p>
-<p>（因为左右边界已经定死 i + 1 ~ nums_len - 1，所以只能把小的变大，大的变小，而不能出现因为三者之和大于0就让左侧下标向左移这种情况）</p>
-<p>按照这种思想，当左右游标相遇时，停止当前 i 轮，进入 i + 1 轮循环，即可遍历所有情况。</p>
-<p><strong>然后再考虑更细节一点儿的情况：如果相邻的是相同的数字，应该如何处理？</strong></p>
-<p>答案是：跳过，直到不相同为止。这里可能会问，会不会漏掉诸如 A, A, B这种组合呢？<strong>不会</strong>，因为别忘了，外层还有个 i 的循环，这确保了 A, A, B这种模式会被访问到。同样的，我们可以对外层循环进行类似的处理，如果当前的数字和刚刚遍历的一样，那么可以跳过。</p>
-<p>并且我们可以注意到，当 i 超过0的时候，必然不存在新的可能，因此后面的遍历也可以省去。</p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">threeSum</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        """</div><div class="line">        nums.sort()</div><div class="line">        result = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(nums) - <span class="number">2</span>):</div><div class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i<span class="number">-1</span>]:</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> nums[i] == <span class="number">0</span>:</div><div class="line">                <span class="keyword">if</span> i + <span class="number">1</span> &lt; len(nums) <span class="keyword">and</span> i + <span class="number">2</span> &lt; len(nums):</div><div class="line">                    <span class="keyword">if</span> nums[i+<span class="number">1</span>] == <span class="number">0</span> <span class="keyword">and</span> nums[i+<span class="number">2</span>] == <span class="number">0</span>:</div><div class="line">                        result.append([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>])</div><div class="line">                        <span class="keyword">break</span></div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        <span class="keyword">break</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>:</div><div class="line">                <span class="keyword">break</span></div><div class="line"></div><div class="line">            left, right = i + <span class="number">1</span>, len(nums) - <span class="number">1</span></div><div class="line">            <span class="keyword">while</span> left &lt; right:</div><div class="line">                sum = nums[i] + nums[left] + nums[right]</div><div class="line">                <span class="keyword">if</span> sum &lt; <span class="number">0</span>:</div><div class="line">                    left += <span class="number">1</span></div><div class="line">                <span class="keyword">elif</span> sum &gt; <span class="number">0</span>:</div><div class="line">                    right -= <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    result.append([nums[i], nums[left], nums[right]])</div><div class="line">                    <span class="keyword">while</span> left &lt; right <span class="keyword">and</span> nums[left] == nums[left+<span class="number">1</span>]:</div><div class="line">                        left += <span class="number">1</span></div><div class="line">                    <span class="keyword">while</span> right &gt; left <span class="keyword">and</span> nums[right] == nums[right<span class="number">-1</span>]:</div><div class="line">                        right -= <span class="number">1</span></div><div class="line">                    left += <span class="number">1</span></div><div class="line">                    right -=<span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-<h2 id="题目变形"><a href="#题目变形" class="headerlink" title="题目变形"></a>题目变形</h2><p>一个是LeetCode16题，给出一个target，求哪三个数字之和最接近target，只需在上述程序基础上稍作改动即可</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">threeSumClosest</span><span class="params">(self, nums, target)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        nums.sort()</div><div class="line">        result = <span class="number">0</span></div><div class="line">        gap = sys.maxint</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(nums) - <span class="number">2</span>):</div><div class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i<span class="number">-1</span>]:</div><div class="line">                <span class="keyword">continue</span></div><div class="line"></div><div class="line">            left, right = i + <span class="number">1</span>, len(nums) - <span class="number">1</span></div><div class="line">            <span class="keyword">while</span> left &lt; right:</div><div class="line">                sum = nums[i] + nums[left] + nums[right]</div><div class="line">                diff = sum - target</div><div class="line">                tg = abs(diff)</div><div class="line">                <span class="keyword">if</span> tg &lt; gap:</div><div class="line">                    gap = tg</div><div class="line">                    result = sum</div><div class="line">                <span class="keyword">if</span> gap == <span class="number">0</span>:</div><div class="line">                    <span class="keyword">return</span> sum</div><div class="line"></div><div class="line">                <span class="keyword">if</span> diff &lt; <span class="number">0</span>:</div><div class="line">                    left += <span class="number">1</span></div><div class="line">                <span class="keyword">elif</span> diff &gt; <span class="number">0</span>:</div><div class="line">                    right -= <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/3Sum/" data-id="cj5b4rr9y00017q1yy4acqaf2" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-利用XHR、jQuery实现文件下载并标识下载结束" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/07/19/利用XHR、jQuery实现文件下载并标识下载结束/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="利用XHR、jQuery实现文件下载并标识下载结束"><a href="#利用XHR、jQuery实现文件下载并标识下载结束" class="headerlink" title="利用XHR、jQuery实现文件下载并标识下载结束"></a>利用XHR、jQuery实现文件下载并标识下载结束</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>实现文件下载，点击下载按钮出现遮罩/提示层，等待后台文件准备完毕弹出另存为窗口，遮罩层消失。</p>
-<h2 id="问题所在"><a href="#问题所在" class="headerlink" title="问题所在"></a>问题所在</h2><p>传统的文件下载可以实现点击以后出现遮罩层，但是由于无法判断文件何时传输完毕，导致弹出另存为窗口时无法找到事件钩子或回调函数以实现遮罩层消失。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="XHR-XMLHttpRequest"><a href="#XHR-XMLHttpRequest" class="headerlink" title="XHR-XMLHttpRequest"></a>XHR-XMLHttpRequest</h3><p>XHR其实我们平时很经常的在用到，它是Ajax实现的基础，所有现代浏览器均支持XHR。它可以与服务器异步通信，所以可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
-<p>主要用到的函数与变量主要有：</p>
-<ol>
-<li>open(<em>method</em>,<em>url</em>,<em>async</em>)</li>
-</ol>
-<p>规定请求的类型、URL 以及是否异步处理请求。</p>
-<ul>
-<li><em>method</em>：请求的类型；GET 或 POST</li>
-<li><em>url</em>：文件在服务器上的位置</li>
-<li><em>async</em>：true（异步）或 false（同步）</li>
-</ul>
-<ol>
-<li>send(<em>string</em>)</li>
-</ol>
-<p>发送请求，当POST请求时，用到string参数。</p>
-<ol>
-<li>setRequestHeader(<em>header</em>,<em>value</em>)</li>
-</ol>
-<p>设置HTTP头的函数。</p>
-<ol>
-<li>responseText &amp; responseXML &amp; response</li>
-</ol>
-<p>XHR对象属性，用于获取服务器响应。</p>
-<h5 id="下面的是解决本问题所用到的额外的几个参数"><a href="#下面的是解决本问题所用到的额外的几个参数" class="headerlink" title="下面的是解决本问题所用到的额外的几个参数"></a>下面的是解决本问题所用到的额外的几个参数</h5><ol>
-<li>responseType</li>
-</ol>
-<p>XHR对象属性，设置想要获得的response类型，常用的有下面几个：</p>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>Data type of <code>response</code> property</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>&quot;&quot;</code></td>
-<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString" target="_blank" rel="external"><code>DOMString</code></a> (默认值)</td>
-</tr>
-<tr>
-<td><code>&quot;arraybuffer&quot;</code></td>
-<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer" target="_blank" rel="external"><code>ArrayBuffer</code></a></td>
-</tr>
-<tr>
-<td><code>&quot;blob&quot;</code></td>
-<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob" target="_blank" rel="external"><code>Blob</code></a> (用于文件下载等大量数据)</td>
-</tr>
-<tr>
-<td><code>&quot;document&quot;</code></td>
-<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank" rel="external"><code>Document</code></a></td>
-</tr>
-<tr>
-<td><code>&quot;json&quot;</code></td>
-<td>由服务端返回的JSON字符串所构造的JavaScript 对象</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>onload事件</li>
-</ol>
-<p>当请求成功完成时触发，此时<code>xhr.readystate=4</code>，利用onload回调，可以在此实现文件下载完毕时关闭遮罩层。</p>
-<h3 id="Blob简介"><a href="#Blob简介" class="headerlink" title="Blob简介"></a>Blob简介</h3><p>BLOB (binary large object)，二进制大对象，是一个可以存储二进制文件的容器。<br>在计算机中，BLOB常常是数据库中用来存储二进制文件的字段类型。<br>BLOB是一个大文件，典型的BLOB是一张图片或一个声音文件，由于它们的尺寸，必须使用特殊的方式来处理（例如：上传、下载或者存放到一个数据库）。</p>
-<p>利用Blob，我们的问题得以解决。说到Blob，就不得不说起利用<strong><em>window.URL</em></strong> or <strong><em>window.webkitURL</em></strong>实现下载Blob的问题啦</p>
-<p><strong><em>URL.createObjectURL()</em></strong> 方法会根据传入的参数创建一个指向该参数对象的URL。这个URL的生命仅存在于它被创建的这个文档里。 新的对象URL指向执行的File对象或者是Blob对象。</p>
-<p><strong><em>URL.revokeObjectURL()</em> </strong>方法会释放一个通过URL.createObjectURL()创建的对象URL，当你要已经用过了这个对象URL，然后要让浏览器知道这个URL已经不再需要指向对应的文件的时候，就需要调用这个方法。</p>
-<p>具体的意思就是说，一个对象URL，使用这个url是可以访问到指定的文件的，但是我可能只需要访问一次，一旦已经访问到了，这个对象URL就不再需要了，就被释放掉。被释放掉以后，这个对象URL就不再指向指定的文件了。</p>
-<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>利用XHR实现把后台传输的文件以Blob格式存储，在点击下载按钮时，发送XMLHttpRequest请求，在onload回调中创建虚拟的一个a标签并将其绑定到Blob对象，然后模拟点击URL下载的操作实现下载。弹出另存为窗口后，也即在onload事件的最后隐藏遮罩层。搞定~</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  $(<span class="string">".submit"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $(<span class="string">'.wrd-loading'</span>).show();</div><div class="line">    <span class="keyword">var</span> oReq = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">    oReq.open(<span class="string">"GET"</span>, <span class="string">"&#123;&#123; action('System\LogController@getDownloadLogFile')  &#125;&#125;"</span>, <span class="literal">true</span>);</div><div class="line">    oReq.responseType = <span class="string">"blob"</span>;</div><div class="line"></div><div class="line">    oReq.onload = <span class="function"><span class="keyword">function</span>(<span class="params">oEvent</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> blob = oReq.response;</div><div class="line">      <span class="keyword">let</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</div><div class="line">      <span class="keyword">let</span> myURL = <span class="built_in">window</span>.URL</div><div class="line">      <span class="keyword">if</span>(myURL.createObjectURL == <span class="literal">undefined</span>)</div><div class="line">        myURL = <span class="built_in">window</span>.webkitURL</div><div class="line">      <span class="keyword">let</span> url = myURL.createObjectURL(blob);</div><div class="line">      <span class="keyword">let</span> filename = <span class="string">'api_push.zip'</span>;</div><div class="line">      a.href = url;</div><div class="line">      a.download = filename;</div><div class="line">      a.click();</div><div class="line">      myURL.revokeObjectURL(url);</div><div class="line">      $(<span class="string">'.wrd-loading'</span>).hide();</div><div class="line">    &#125;;</div><div class="line">    oReq.send();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>后台只需按正常方式发送即可，如php可能就是echo file_get_contents();</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><p>[你真的会使用XMLHttpRequest吗？]: <a href="https://segmentfault.com/a/1190000004322487" target="_blank" rel="external">https://segmentfault.com/a/1190000004322487</a></p>
-</li>
-<li><p>[XMLHttpRequest.responseType]: <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType</a></p>
-</li>
-<li><p>[URL.createObjectURL和URL.revokeObjectUR]: <a href="http://www.mamicode.com/info-detail-456059.html" target="_blank" rel="external">http://www.mamicode.com/info-detail-456059.html</a></p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/利用XHR、jQuery实现文件下载并标识下载结束/" data-id="cj5b4rrag00067q1yidzp3ojb" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-OpenDayLight配置" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/07/19/OpenDayLight配置/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
+  <time datetime="2017-07-19T15:18:48.000Z" itemprop="datePublished">2017-07-19</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/19/OpenDayLight配置/">SDN基础知识学习-环境配置</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="OpenDayLight配置"><a href="#OpenDayLight配置" class="headerlink" title="OpenDayLight配置"></a>OpenDayLight配置</h1><h3 id="安装配置ODL"><a href="#安装配置ODL" class="headerlink" title="安装配置ODL"></a>安装配置ODL</h3><ol>
+        <h3 id="安装配置ODL"><a href="#安装配置ODL" class="headerlink" title="安装配置ODL"></a>安装配置ODL</h3><ol>
 <li>安装Java</li>
 <li>官网下载对应的包，并解压</li>
 <li>进入解压后的文件夹</li>
@@ -2856,9 +2461,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/" data-id="cj5b4rrah00077q1yllgex1r5" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/" data-id="cj5b5mxt70008151y8duflpzn" class="article-share-link">Delen</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li></ul>
+
     </footer>
   </div>
   
@@ -2869,7 +2476,7 @@
     <article id="post-论文阅读报告" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/07/19/论文阅读报告/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
+  <time datetime="2017-07-19T15:16:07.000Z" itemprop="datePublished">2017-07-19</time>
 </a>
     
   </div>
@@ -2894,7 +2501,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/论文阅读报告/" data-id="cj5b4rram00087q1yh2zclf0u" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/19/论文阅读报告/" data-id="cj5b5mxte000j151yof193nol" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -2904,37 +2511,535 @@
 
 
   
-    <article id="post-机器学习基础算法合集" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/19/机器学习基础算法合集/" class="article-date">
-  <time datetime="2017-07-19T14:19:06.000Z" itemprop="datePublished">2017-07-19</time>
+    <a href="/2017/07/19/hello-world/" class="article-date">
+  <time datetime="2017-07-19T15:14:46.000Z" itemprop="datePublished">2017-07-19</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/19/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="机器学习基础算法合集"><a href="#机器学习基础算法合集" class="headerlink" title="机器学习基础算法合集"></a>机器学习基础算法合集</h1><h2 id="一、朴素贝叶斯"><a href="#一、朴素贝叶斯" class="headerlink" title="一、朴素贝叶斯"></a>一、朴素贝叶斯</h2><p>朴素贝叶斯是一种分类算法，以贝叶斯定理为基础：<br>$$<br>P(B|A) = P(A|B)P(B)/P(A)<br>$$<br>这个公式在大学的概率论中被提及，在没有遇到实际问题之前，这个公式对于我来说一直就只是作为一种解题工具而存在，并没有考虑其实际用途。其实结合实际问题我们可以发现这个公式可用的广泛性：</p>
-<p>比如医生看病，就是在已知症状的前提下对所得病进行判断的过程，<em>一般来说从症状到病的推理是相对困难的，但是从病到症状的概率却容易得知</em>，再加上本身得病的概率等可以通过统计数据计算而得，所以通过贝叶斯公式，我们就可以从<strong><em>P(症状|病)</em></strong>推出<strong><em>P(病|症状)</em></strong>。又比如区分论坛的账号真实性，从几个特征点去推算一个账号是否是真实账号，这两个案例在<a href="http://www.ruanyifeng.com/blog/2013/12/naive_bayes_classifier.html" target="_blank" rel="external">朴素贝叶斯分类器的应用-阮一峰</a>一文中讲的很仔细，对理解很有帮助。</p>
-<p>朴素贝叶斯分类器可以<strong>计算多个特征的联合条件概率</strong>。</p>
-<p><strong>优点</strong>：对于在小数据集上有显著特征的相关对象，朴素贝叶斯方法可对其进行快速分类</p>
-<p><strong>场景举例</strong>：情感分析、消费者分类</p>
-<h2 id="二、支持向量机-SVM"><a href="#二、支持向量机-SVM" class="headerlink" title="二、支持向量机 SVM"></a>二、支持向量机 SVM</h2><p>又称作“支持向量网络”。在分类与回归分析中分析数据的<strong>监督式学习模型</strong>与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为<strong>非概率二元线性分类器</strong>。SVM模型是将实例表示为空间中的点，这样映射就使得<strong>单独类别的实例被尽可能宽的明显的间隔分开</strong>。然后，将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</p>
-<p>可以想象为一个p维向量的数据点，我们用p-1维超平面分割这些点，并且寻找一个“线”把这些点分成两个类，使两侧的数据都距离这条线越远越好。</p>
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Svm_separating_hyperplanes_%28SVG%29.svg/220px-Svm_separating_hyperplanes_%28SVG%29.svg.png" alt="img"></p>
-<p>有的时候不容易在原有限维空间进行线性划分，我们通常会采用一些方法将原有限维空间映射到维数高的多的空间中，以求更容易的分离，这个映射所用的函数我们称为<strong>核函数</strong>。</p>
-<p><strong>优点</strong>：支持向量机擅长在变量 X 与其它变量之间进行二元分类操作，无论其关系是否是线性的</p>
-<p><strong>场景举例</strong>：文本、超文本的分类，图像分类，手写字体识别，医学中分类蛋白质等</p>
-<h3 id="线性SVM-L-SVM"><a href="#线性SVM-L-SVM" class="headerlink" title="线性SVM (L-SVM)"></a>线性SVM (L-SVM)</h3><p>最大间隔超平面算法</p>
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/机器学习基础算法合集/" data-id="cj5b4rran00097q1y7escfu93" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/19/hello-world/" data-id="cj5b5mxt8000a151ydmk2uff7" class="article-share-link">Delen</a>
       
       
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-从生成括号到递归算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/21/从生成括号到递归算法/" class="article-date">
+  <time datetime="2017-06-21T12:27:28.000Z" itemprop="datePublished">2017-06-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/21/从生成括号到递归算法/">从生成括号到递归算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给出数字n，表示有n对格式对应的括号，求解一共有多少种情况。如，n = 3时解为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  &quot;((()))&quot;,</div><div class="line">  &quot;(()())&quot;,</div><div class="line">  &quot;(())()&quot;,</div><div class="line">  &quot;()(())&quot;,</div><div class="line">  &quot;()()()&quot;</div><div class="line">]</div></pre></td></tr></table></figure>
+<h2 id="递归与回溯"><a href="#递归与回溯" class="headerlink" title="递归与回溯"></a>递归与回溯</h2><p>我们经常会碰到这种情况：为了描述问题的某一状态，必须要用到它的上一状态，而要描述它的上一状态，又要用上上一状态。这种用自己定义自己的方法，称为<strong>递归定义</strong>。递归定义有两个要素：</p>
+<ol>
+<li>递归边界条件，也就是最小的或者最原始的时候的情况，也是递归结束的情况</li>
+</ol>
+<p>。</p>
+<ol>
+<li>递归定义：使问题向边界条件转化的规则。递归定义必须能使问题越来越简单。也就是前面说的化简到最小的情况。</li>
+</ol>
+<p>递归算法的效率往往很低，费时和费内存空间。 但是递归也有其长处,，它能使一个蕴含递归关系且结构复杂的程序简介精炼,，增加可读性。特别是在难于找到从边界到解的全过程的情况下，如果把问题推进一步没其结果仍维持原问题的关系，则采用递归算法编程比较合适。</p>
+<p>回溯是一种算法思想，可以用递归实现。通俗点讲回溯就是一种试探，类似于穷举，但回溯有“剪枝”功能，比如求和问题。给定7个数字，1 2 3 4 5 6 7求和等于7的组合，从小到大搜索，选择1+2+3+4 =10&gt;7，已经超过了7，之后的5 6 7就没必要在继续了，这就是一种搜索过程的优化。</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>显然，回溯算法的思想适用于本题，我们可以用递归来实现，通过给出一些限制条件进行剪枝，完成题目。</p>
+<p>我们需要记录当前状态已经有多少个左括号，多少个右括号，以便对结束条件进行判断。当左右括号数等于n * 2时说明已经达到最大长度，不再递归。</p>
+<p>那么什么时候需要进行深一层的递归呢？首先是在左括号的数量没有达到n时，当前括号串后面加一个 “(” 并 left+1。其次是在右括号数小于左括号数时，当前括号串后面加一个 “)” 并 right+1。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generateParenthesis</span><span class="params">(self, n)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type n: int</div><div class="line">        :rtype: List[str]</div><div class="line">        """</div><div class="line">        self.result = []</div><div class="line">        self.backtrace(<span class="string">""</span>, <span class="number">0</span>, <span class="number">0</span>, n)</div><div class="line"></div><div class="line">        <span class="keyword">return</span> self.result</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backtrace</span><span class="params">(self, str, left, right, n)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(str) == n * <span class="number">2</span>:</div><div class="line">            self.result.append(str)</div><div class="line">            <span class="keyword">return</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> left &lt; n:</div><div class="line">            self.backtrace(str + <span class="string">"("</span>, left+<span class="number">1</span>, right, n)</div><div class="line">        <span class="keyword">if</span> right &lt; left:</div><div class="line">            self.backtrace(str + <span class="string">")"</span>, left, right+<span class="number">1</span>, n)</div></pre></td></tr></table></figure>
+<h2 id="用到递归-回溯的其他题目"><a href="#用到递归-回溯的其他题目" class="headerlink" title="用到递归-回溯的其他题目"></a>用到递归-回溯的其他题目</h2><h4 id="Leetcode-24-交换一个链表的每相邻的两个数字，如：1-gt-2-gt-3-gt-4-变换为-2-gt-1-gt-4-gt-3"><a href="#Leetcode-24-交换一个链表的每相邻的两个数字，如：1-gt-2-gt-3-gt-4-变换为-2-gt-1-gt-4-gt-3" class="headerlink" title="Leetcode 24 - 交换一个链表的每相邻的两个数字，如：1-&gt;2-&gt;3-&gt;4 变换为 2-&gt;1-&gt;4-&gt;3"></a>Leetcode 24 - 交换一个链表的每相邻的两个数字，如：1-&gt;2-&gt;3-&gt;4 变换为 2-&gt;1-&gt;4-&gt;3</h4><p>​    定义交换函数swapPairs(Node)。通过分析可以看出，整个过程是不断地对接下来的两个数字进行交换，因此有递归式：<code>node.next = swapPairs(node.next.next)</code> 代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">swapPairsByRecursion</span><span class="params">(self, head)</span>:</span></div><div class="line">    <span class="keyword">if</span> head <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> head.next <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        <span class="keyword">return</span> head</div><div class="line">    node = head.next</div><div class="line">    head.next = self.swapPairs(head.next.next)</div><div class="line">    node.next = head</div><div class="line">    <span class="keyword">return</span> n</div></pre></td></tr></table></figure>
+<h4 id="LeetCode-25-上题的变形：交换链表的每k个数字"><a href="#LeetCode-25-上题的变形：交换链表的每k个数字" class="headerlink" title="LeetCode 25 - 上题的变形：交换链表的每k个数字"></a>LeetCode 25 - 上题的变形：交换链表的每k个数字</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">reverseKGroupByRecursion</span><span class="params">(self, head, k)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    :type head: ListNode</div><div class="line">    :type k: int</div><div class="line">    :rtype: ListNode</div><div class="line">    """</div><div class="line">    cur = head</div><div class="line">    count = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> cur <span class="keyword">and</span> count != k:</div><div class="line">        cur = cur.next</div><div class="line">        count += <span class="number">1</span></div><div class="line">    <span class="comment"># 如果够k个，则逆置，否则直接返回头结点</span></div><div class="line">    <span class="keyword">if</span> count == k:</div><div class="line">        cur = self.reverseKGroupByRecursion(cur, k)</div><div class="line">        <span class="comment"># 逆置子链表</span></div><div class="line">        <span class="keyword">while</span> count &gt; <span class="number">0</span>:</div><div class="line">            tmp = head.next</div><div class="line">            head.next = cur</div><div class="line">            cur = head</div><div class="line">            head = tmp</div><div class="line">            count -= <span class="number">1</span></div><div class="line">        head = cur</div><div class="line"></div><div class="line">    <span class="keyword">return</span> head</div></pre></td></tr></table></figure>
+<p>这类题目还有投机取巧的方法，消耗空间以换取解决问题的容易与易理解性。比如交换每k个数字，我们可以利用诸如Python中的字典类似的数据结构，每个维度存一个ListNode的数组，然后按序向该字典中放置链表节点，最后按序从字典中读取并重组链表。这种思路在一些走Z字型N字型之类的题目中都可以应用。</p>
+<p>不过显然，使用递归的方法代码更加简洁，也不用借助额外的数据结构（空间开销）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/06/21/从生成括号到递归算法/" data-id="cj5b5mxtb000d151y5cuiqfdr" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-15.3Sum" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/05/15.3Sum/" class="article-date">
+  <time datetime="2017-06-05T13:47:48.000Z" itemprop="datePublished">2017-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/05/15.3Sum/">求和为0的三个数字的所有集合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LeetCode-15"><a href="#LeetCode-15" class="headerlink" title="LeetCode 15"></a>LeetCode 15</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给出一个含有n个整数的数组，取其中三个元素a, b, c，使a + b + c = 0，列举出所有可能的情况</p>
+<p><em>注意：</em> [ 1, 2, 3 ] 和 [ 2, 1, 3 ]将被认为是同一组数据‘</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>暴力遍历所有情况，将是O(n^3)时间复杂度，当数据量上升到一定程度时算法会很慢。这里我们考虑有没有更快的情况。</p>
+<p>比O(n^3)低的有O(n^2)，也即只需遍历两遍，即可找到所有情况。</p>
+<p>首先想到的是进行<strong>排序</strong>，<strong>预处理后</strong>再做进一步打算，常用的排序都可以控制时间复杂度在O(n^2)以下。</p>
+<p>为了能够确保每个数字都被访问到，必然有一个外层循环 i 包括了所有下标，因为有三个数字，所以这个最外层只需要遍历到 0 ~ n-3 即可。</p>
+<p>接下来考虑<strong>如何更加有效的找另外两个数字</strong>，使题设成立：</p>
+<p>要想在O(n^2)完成任务，已经用掉了n，还剩下n。自然需要剩下的两个下标从两头向中间走。</p>
+<p>因为数据已排序，如果三者之和小于0，说明左边的下标太小，需要更大一些（对应的数字会小一些）</p>
+<p>同理，如果三者之和大于0，说明左边的下标太大，右边的太小，需要把右边的下标变小一些（它对应的数字更小一些）</p>
+<p>（因为左右边界已经定死 i + 1 ~ nums_len - 1，所以只能把小的变大，大的变小，而不能出现因为三者之和大于0就让左侧下标向左移这种情况）</p>
+<p>按照这种思想，当左右游标相遇时，停止当前 i 轮，进入 i + 1 轮循环，即可遍历所有情况。</p>
+<p><strong>然后再考虑更细节一点儿的情况：如果相邻的是相同的数字，应该如何处理？</strong></p>
+<p>答案是：跳过，直到不相同为止。这里可能会问，会不会漏掉诸如 A, A, B这种组合呢？<strong>不会</strong>，因为别忘了，外层还有个 i 的循环，这确保了 A, A, B这种模式会被访问到。同样的，我们可以对外层循环进行类似的处理，如果当前的数字和刚刚遍历的一样，那么可以跳过。</p>
+<p>并且我们可以注意到，当 i 超过0的时候，必然不存在新的可能，因此后面的遍历也可以省去。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">threeSum</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        """</div><div class="line">        nums.sort()</div><div class="line">        result = []</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(nums) - <span class="number">2</span>):</div><div class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i<span class="number">-1</span>]:</div><div class="line">                <span class="keyword">continue</span></div><div class="line">            <span class="keyword">if</span> nums[i] == <span class="number">0</span>:</div><div class="line">                <span class="keyword">if</span> i + <span class="number">1</span> &lt; len(nums) <span class="keyword">and</span> i + <span class="number">2</span> &lt; len(nums):</div><div class="line">                    <span class="keyword">if</span> nums[i+<span class="number">1</span>] == <span class="number">0</span> <span class="keyword">and</span> nums[i+<span class="number">2</span>] == <span class="number">0</span>:</div><div class="line">                        result.append([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>])</div><div class="line">                        <span class="keyword">break</span></div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        <span class="keyword">break</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    <span class="keyword">break</span></div><div class="line">            <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>:</div><div class="line">                <span class="keyword">break</span></div><div class="line"></div><div class="line">            left, right = i + <span class="number">1</span>, len(nums) - <span class="number">1</span></div><div class="line">            <span class="keyword">while</span> left &lt; right:</div><div class="line">                sum = nums[i] + nums[left] + nums[right]</div><div class="line">                <span class="keyword">if</span> sum &lt; <span class="number">0</span>:</div><div class="line">                    left += <span class="number">1</span></div><div class="line">                <span class="keyword">elif</span> sum &gt; <span class="number">0</span>:</div><div class="line">                    right -= <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    result.append([nums[i], nums[left], nums[right]])</div><div class="line">                    <span class="keyword">while</span> left &lt; right <span class="keyword">and</span> nums[left] == nums[left+<span class="number">1</span>]:</div><div class="line">                        left += <span class="number">1</span></div><div class="line">                    <span class="keyword">while</span> right &gt; left <span class="keyword">and</span> nums[right] == nums[right<span class="number">-1</span>]:</div><div class="line">                        right -= <span class="number">1</span></div><div class="line">                    left += <span class="number">1</span></div><div class="line">                    right -=<span class="number">1</span></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h2 id="题目变形"><a href="#题目变形" class="headerlink" title="题目变形"></a>题目变形</h2><p>一个是LeetCode16题，给出一个target，求哪三个数字之和最接近target，只需在上述程序基础上稍作改动即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">threeSumClosest</span><span class="params">(self, nums, target)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :type target: int</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        nums.sort()</div><div class="line">        result = <span class="number">0</span></div><div class="line">        gap = sys.maxint</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(nums) - <span class="number">2</span>):</div><div class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i<span class="number">-1</span>]:</div><div class="line">                <span class="keyword">continue</span></div><div class="line"></div><div class="line">            left, right = i + <span class="number">1</span>, len(nums) - <span class="number">1</span></div><div class="line">            <span class="keyword">while</span> left &lt; right:</div><div class="line">                sum = nums[i] + nums[left] + nums[right]</div><div class="line">                diff = sum - target</div><div class="line">                tg = abs(diff)</div><div class="line">                <span class="keyword">if</span> tg &lt; gap:</div><div class="line">                    gap = tg</div><div class="line">                    result = sum</div><div class="line">                <span class="keyword">if</span> gap == <span class="number">0</span>:</div><div class="line">                    <span class="keyword">return</span> sum</div><div class="line"></div><div class="line">                <span class="keyword">if</span> diff &lt; <span class="number">0</span>:</div><div class="line">                    left += <span class="number">1</span></div><div class="line">                <span class="keyword">elif</span> diff &gt; <span class="number">0</span>:</div><div class="line">                    right -= <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/06/05/15.3Sum/" data-id="cj5b5mxsz0003151y7sf4jhre" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-11.容器装水取最大" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/27/11.容器装水取最大/" class="article-date">
+  <time datetime="2017-05-27T07:04:48.000Z" itemprop="datePublished">2017-05-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/27/11.容器装水取最大/">容器装水取最大</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LeetCode-11"><a href="#LeetCode-11" class="headerlink" title="LeetCode 11"></a>LeetCode 11</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给出n个非负整数的数组，以下标和值分别作x, y轴，可以构成一个坐标轴中有很多竖线的图例，取其中两条线作为一个容器，求如何取线可以使容器获得最大的容量</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>一个是要注意是非负整数，这就意味着有可能值为0，此时与其他正数构成的形状是三角形，所以蓄水量为0</p>
+<p>还有一个是输入数组长度至少应该为2</p>
+<h2 id="方法一-暴力求解"><a href="#方法一-暴力求解" class="headerlink" title="方法一 - 暴力求解"></a>方法一 - 暴力求解</h2><p>首先想到的就是暴力枚举，通过遍历所有情况求得最大值，这种情况下时间复杂度为O(n^2)。进一步思考，下标ij和ji的值是相同的，不需要重复计算，也即只需计算 j &gt; i 或者 i &gt; j 的情况即可。代码简单，此处不再赘述。</p>
+<h2 id="方法二-一点小Trick与其他的思考"><a href="#方法二-一点小Trick与其他的思考" class="headerlink" title="方法二 - 一点小Trick与其他的思考"></a>方法二 - 一点小Trick与其他的思考</h2><p>最近被动态规划给整惨了，搞得我现在一看到这种有重复计算包含在其中的都想去看看能不能动态规划一下…但是想了一下，虽然看起来有很多计算，好像可以重复利用，但是仔细思考并不适合用动态规划，最优子结构是什么？</p>
+<p>类比正则匹配的题目一样以f[i][j]作为i和j之间的最大蓄水量吗…好像没有办法在接下来的计算中进行利用…</p>
+<p>类比最长回文子串的题目一样以回文串的长度作为子结构进行一步步迭代利用吗？哎？这个好像可以，但是这样的话好像把问题想复杂了，时间复杂度还是O(n^2)呀…</p>
+<p>方法一的代码提交以后显示超时，那么一般来说，这里的时间复杂度应该可以减到O(logn)或者O(n)，看到log就想二分思想，但是这里显然和二分没有什么关系。看到O(n)就想到遍历一遍，一种情况是从左往右，一种情况就是从两边到中间。第一种情况想了一下不可能，因为两个点的位置是任意出现的，并不是一个固定一个活动。所以考虑情况二。</p>
+<p>根据贪心的思想，每次都想让结果更大一些，那么两个竖线低的一边应该继续活动，寻找有没有更大的。这样做出来确实是对的，但是却让人心生疑惑，会不会有一个x轴跨度比较大，竖线长度比较短，而有一个x轴跨度比较小，但是竖线很长的，这两个哪个会更大呢，会不会错过一些可能的获得最大值的情况呢？</p>
+<p>学习了<a href="https://discuss.leetcode.com/topic/503/anyone-who-has-a-o-n-algorithm/3" target="_blank" rel="external">Discuss</a>以后，根据第一位答主的反证法证明，我们可以看出上述问题是不可能存在的：</p>
+<p>假设这样计算的结果不是最优解。那么假设最优解是a_ol和a_or。我们的算法结束的条件是左游标和右游标相遇，那么我们必然是只有一个游标曾经走过a_ol或a_or，假设一个游标到了a_ol，那么下列情况下，该游标可能从a_ol上移走：</p>
+<ol>
+<li>另一个游标也到了a_ol。这种情况下会退出循环，但是容易看出，a_or肯定被另一个游标走过了，这与我们的假设相悖，不可能成立。</li>
+<li>另一个游标到了一个比a_ol处数组更大的值的地方，假设它是a_rr。这种情况下，哎？刚才我们是不是假设a_ol和a_or能蓄水最多吗？如果又出来一个a_rr，岂不是刚才的假设失效了？显然，这种情况也是不可能发生的。</li>
+</ol>
+<p>综上所述，该算法成立。</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxArea</span><span class="params">(self, height)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type height: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        Max = <span class="number">0</span></div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = len(height) - <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i != j:</div><div class="line">            tm = (j - i) * min(height[i], height[j])</div><div class="line">            Max = tm <span class="keyword">if</span> tm &gt; Max <span class="keyword">else</span> Max</div><div class="line">            <span class="keyword">if</span> height[i] &lt; height[j]:</div><div class="line">                i += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                j -= <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> Max</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/05/27/11.容器装水取最大/" data-id="cj5b5mxsw0001151yuvvyql6u" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trick/">trick</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10.简单正则匹配" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/25/10.简单正则匹配/" class="article-date">
+  <time datetime="2017-05-25T15:30:48.000Z" itemprop="datePublished">2017-05-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/25/10.简单正则匹配/">简单正则匹配（.和*）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LeetCode-10"><a href="#LeetCode-10" class="headerlink" title="LeetCode 10"></a>LeetCode 10</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给定一个字符串s和一个正则表达式p，检查是否匹配</p>
+<h2 id="方法一-递归遍历"><a href="#方法一-递归遍历" class="headerlink" title="方法一 - 递归遍历"></a>方法一 - 递归遍历</h2><p>我们知道，‘.’ 代表任意一个字符，而 ‘<em>’ 代表前面的字符出现0或多次。题目这里考虑的正则表达式p默认是正确的，不会出现一些奇怪的错误匹配式。所以我们可以每次看p中的两个字符，如果第二个是 ’\</em>‘ 则进行相应处理，如果不是则继续向后处理。显然这里就出现了递归，遍历所有情况，即可获得答案。但是要注意如果正则表达式是空串，那么它只匹配空。</p>
+<p>让我们进一步讨论 p[1] 是否为 ’*‘ 的情况：</p>
+<ol>
+<li>是。此时一种情况是p[0]没有出现过，则继续用s原串继续向后匹配即可：<code>isMatch(s, p[2:])</code> 第二种情况是p[0]出现了一次或多次，则应保证s长度大于0即 <code>len(s) != 0</code> 且 <code>s[0] == p[0]</code> 或 <code>p[0] == &#39;.&#39;</code> 此时可以把s的下标+1继续向后匹配 <code>isMatch(s[1:], p)</code></li>
+<li>否。此时应保证s长度大于0并判断是否匹配，若匹配则s和p的下标均+1继续向后匹配即可</li>
+</ol>
+<p>综上，递归算法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(self, s, p)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :type p: str</div><div class="line">        :rtype: bool</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> len(p) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> len(s) == <span class="number">0</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> p[<span class="number">1</span>] == <span class="string">'*'</span>:</div><div class="line">            <span class="keyword">return</span> (self.isMatch(s, p[<span class="number">2</span>:]) <span class="keyword">or</span> len(s) != <span class="number">0</span> <span class="keyword">and</span> (s[<span class="number">0</span>] == p[<span class="number">0</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[<span class="number">0</span>]) <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p));</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> len(s) != <span class="number">0</span> <span class="keyword">and</span> (s[<span class="number">0</span>] == p[<span class="number">0</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[<span class="number">0</span>]) <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</div></pre></td></tr></table></figure>
+<h2 id="方法二-动态规划"><a href="#方法二-动态规划" class="headerlink" title="方法二 - 动态规划"></a>方法二 - 动态规划</h2><h5 id="方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？"><a href="#方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？" class="headerlink" title="方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？"></a>方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？</h5><p>我们知道，动态规划是用空间换时间的经典思想，通过一个数组保存之前的计算状态供进一步分析使用帮助我们避免了许多重复的计算。</p>
+<p>想要使用动态规划算法，可以使用动态规划解决的问题通常有下面的特点：最优子结构，无后效性，重叠子问题。</p>
+<p>其中最重要的一点就是<strong>无后效性</strong>，所谓无后效性，就是之前的状态和之后的状态之间没有关系，引用百度百科，“某阶段的状态一旦确定，则此后过程的演变不再受此前各种状态及决策的影响”。</p>
+<p>最优子结构的意思是，每个阶段的最优状态可以从之前某个阶段的某个或某些状态直接得到。</p>
+<p>重叠子问题就不用多说啦，空间换时间，通过记录子问题的结果用于下一步的快速计算。</p>
+<p>之前的时候我们曾经用DP解决过最长回文子串的问题，是以回文串的长度作为一个基准去不断扩张计算（长度更长的串必然包括长度短的，因此由短推长）。</p>
+<p>这里我们设置一个数组 f[i][j] 表示 s[0 ~ i-1] 和 p[0 ~ j-1] 相匹配。</p>
+<h5 id="对初始条件进行以下分析："><a href="#对初始条件进行以下分析：" class="headerlink" title="对初始条件进行以下分析："></a>对初始条件进行以下分析：</h5><ol>
+<li>空串除了和空正则表达式相匹配，其他情况下均不能匹配，故 f[0][0] = True, i &gt;0时 f[i][0] = False</li>
+<li>当正则表达式中遇到 ‘<em>‘ 时（p[j-1] = ‘\</em>‘）需要考虑前一位的情况，只有当 f[0][j-2] = True 且 j &gt; 1时为 f[0][j] True</li>
+</ol>
+<h5 id="对于-f-i-j-："><a href="#对于-f-i-j-：" class="headerlink" title="对于 f[i][j] ："></a>对于 f[i][j] ：</h5><ol>
+<li><p>如果p[j-1] != ‘*‘ 只需 f[i-1][j-1] = True(前面的都匹配) 且 (s[i] = p[j] 或 p[j-1] = ‘.’) 即为True</p>
+</li>
+<li><p>如果p[j-1] = ‘*’ 若令 f[i][j] = True 此时又有下面几种情况，其中一种成立即可为True：</p>
+<p>a. 如果s中没有出现匹配串，那么只需 f[i][j-2] = True。这个比较好理解，就是 s[0 ~ i-1] 和 p[0 ~ j-3] 匹配即可（p[j-2]和p[j-1]分别是一个任意字符和 ‘*’ 字符，没有匹配到）</p>
+<p>b. 如果出现了至少一次，那么 f[i-1][j] = True 且 (s[i-1] = p[j-2] 或 p[j-2] = ‘.’) </p>
+<p>​    因为出现了至少一次，所以是s[0 ~ i-2]和p[0 ~ j-1]匹配成功，故要有f[i-1][j] = True</p>
+<p>​    要继续匹配下去，那么要看p[j-2]的关系（p[j-1]是 ‘*’）</p>
+</li>
+</ol>
+<p>综上，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(self, s, p)</span>:</span></div><div class="line">        m = len(s)</div><div class="line">        n = len(p)</div><div class="line">        f = [[<span class="keyword">False</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> range(m + <span class="number">1</span>)]</div><div class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="keyword">True</span></div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt;= m:</div><div class="line">            f[i][<span class="number">0</span>] = <span class="keyword">False</span></div><div class="line">            i += <span class="number">1</span></div><div class="line"></div><div class="line">        j = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> j &lt;= n:</div><div class="line">            f[<span class="number">0</span>][j] = j &gt; <span class="number">1</span> <span class="keyword">and</span> <span class="string">'*'</span> == p[j<span class="number">-1</span>] <span class="keyword">and</span> f[<span class="number">0</span>][j<span class="number">-2</span>]</div><div class="line">            j += <span class="number">1</span></div><div class="line"></div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt;= m:</div><div class="line">            j = <span class="number">1</span></div><div class="line">            <span class="keyword">while</span> j &lt;= n:</div><div class="line">                <span class="keyword">if</span> p[j<span class="number">-1</span>] != <span class="string">'*'</span>:</div><div class="line">                    f[i][j] = f[i<span class="number">-1</span>][j<span class="number">-1</span>] <span class="keyword">and</span> (s[i<span class="number">-1</span>] == p[j<span class="number">-1</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[j<span class="number">-1</span>])</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    f[i][j] = f[i][j<span class="number">-2</span>] <span class="keyword">or</span> ((s[i<span class="number">-1</span>] == p[j<span class="number">-2</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[j<span class="number">-2</span>]) <span class="keyword">and</span> f[i<span class="number">-1</span>][j])</div><div class="line">                j += <span class="number">1</span></div><div class="line">            i += <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> f[m][n]</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/05/25/10.简单正则匹配/" data-id="cj5b5mxsr0000151yco0xac0g" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-5.最长回文子串" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/13/5.最长回文子串/" class="article-date">
+  <time datetime="2017-05-13T12:15:48.000Z" itemprop="datePublished">2017-05-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/13/5.最长回文子串/">最长回文子串</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LeetCode-5"><a href="#LeetCode-5" class="headerlink" title="LeetCode 5"></a>LeetCode 5</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给定一个字符串，求其最长回文子串。</p>
+<p>如：abacd的最长回文子串为aba，abcdedcba的最长回文子串为abcdedcba，abcded的最长回文子串为a…</p>
+<h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>最基本的方法，就是遍历所有的情况，选出最长的那个串。这种方法最大的问题是效率低下，时间复杂度较高（n^3）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">longestPalindrome_normal</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :rtype: str</div><div class="line">        """</div><div class="line">        max = <span class="number">0</span></div><div class="line">        max_str = <span class="string">""</span></div><div class="line">        search_str = <span class="string">""</span></div><div class="line">        <span class="comment"># 遍历所有字符</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> s:</div><div class="line">            <span class="comment"># 如果该字符还出现过，找到所有可能的位置，检查是否回文，是否是最大值</span></div><div class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> search_str:</div><div class="line">                indices = findIndex(search_str, i)</div><div class="line">                <span class="comment"># check palindrome</span></div><div class="line">                <span class="keyword">for</span> index <span class="keyword">in</span> indices:</div><div class="line">                    <span class="keyword">if</span> len(search_str) == index + <span class="number">1</span>:</div><div class="line">                        <span class="keyword">if</span> max &lt; <span class="number">2</span>:</div><div class="line">                            max = <span class="number">2</span></div><div class="line">                            max_str = search_str[index:] + i</div><div class="line">                        <span class="keyword">continue</span></div><div class="line">                    wait_checked = search_str[index:] + i</div><div class="line">                    rtn = checkPalindrome(wait_checked)</div><div class="line">                    <span class="keyword">if</span> rtn <span class="keyword">is</span> <span class="keyword">False</span>:</div><div class="line">                        <span class="keyword">continue</span></div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        <span class="keyword">if</span> rtn &gt; max:</div><div class="line">                            max = rtn</div><div class="line">                            max_str = search_str[index:] + i</div><div class="line"></div><div class="line">            search_str += i</div><div class="line"></div><div class="line">        <span class="keyword">if</span> max == <span class="number">0</span>:</div><div class="line">            max_str = s[<span class="number">0</span>]</div><div class="line">        <span class="keyword">return</span> max_str</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">findIndex</span><span class="params">(str, needle)</span>:</span></div><div class="line">    <span class="keyword">return</span> [i <span class="keyword">for</span> i, letter <span class="keyword">in</span> enumerate(str) <span class="keyword">if</span> letter == needle]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkPalindrome</span><span class="params">(str)</span>:</span></div><div class="line">    check_len = len(str)</div><div class="line">    <span class="keyword">if</span> check_len == <span class="number">1</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    half_len = check_len / <span class="number">2</span></div><div class="line">    <span class="keyword">for</span> index, val <span class="keyword">in</span> enumerate(str):</div><div class="line">        <span class="keyword">if</span> index == half_len:</div><div class="line">            <span class="keyword">break</span></div><div class="line">        count_part = <span class="number">0</span> - index - <span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span> val != str[count_part]:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> check_len</div></pre></td></tr></table></figure>
+<h2 id="方法二-Manacher-算法"><a href="#方法二-Manacher-算法" class="headerlink" title="方法二 - Manacher 算法"></a>方法二 - Manacher 算法</h2><h4 id="方法一中我们考虑问题太过于粗暴，有两点没有考虑到："><a href="#方法一中我们考虑问题太过于粗暴，有两点没有考虑到：" class="headerlink" title="方法一中我们考虑问题太过于粗暴，有两点没有考虑到："></a>方法一中我们考虑问题太过于粗暴，有两点没有考虑到：</h4><p>一个是回文串的定义，不难得出，回文串就像之前的中位数一样，有一个“中间点”，回文串以该中间点对称。</p>
+<p>第二个是在计算新的回文串之前，可能里面包含了我们曾经算过的回文串，这样的话我们就算多了，做了重复劳动。</p>
+<h4 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h4><h5 id="根据第一点，转变做题思路"><a href="#根据第一点，转变做题思路" class="headerlink" title="根据第一点，转变做题思路"></a>根据第一点，转变做题思路</h5><p>不再是把当前在算的这个位置作为回文串的左侧从左往右一个个找，而是把这个位置当做一个回文串的中间点，以此点向左、向右扩展，得到回文串。</p>
+<p>这样一来，我们可以通过声明一个RL数组来标志以每个字符作为中间点的回文串的长度。</p>
+<p>还有一个问题是如果是长度为偶数的串，并没有这个中间点，因此我们需要创造这个中间点，方法是向字符串的头、尾还有两两之间添加一个不会出现的特殊字符，如“#”。这样的话字符串恒为奇数长度，且既不会影响回文性，也不会影响计算，只是要记得最后得把“#”占位的地方去掉就可以了。</p>
+<h5 id="解决了这些问题，根据第二点，我们做如下分析"><a href="#解决了这些问题，根据第二点，我们做如下分析" class="headerlink" title="解决了这些问题，根据第二点，我们做如下分析"></a>解决了这些问题，根据第二点，我们做如下分析</h5><p>设i为当前走到的位置</p>
+<p>maxRight为当前回文串能走到的最右侧</p>
+<p>pos为当前最长回文串的中间点</p>
+<p>j为i与pos对称的位置（此时，j的RL值已经算出），不难得出i与j的关系为：j = pos - ( i - pos ) = 2 * pos - i</p>
+<p><em>注意到：i的位置必然在pos的右边，因为假设i在pos左边，那么maxRight的位置必须也往左边跑，那么pos也往左跑，不应该是当前位置（考虑最长回文串的半径长度很容易看出）</em></p>
+<p>在这些条件下，有两种情况：</p>
+<ol>
+<li><p>i &gt;= maxRight 这种情况下，按照最普通的方式，以i为中心向左向右扩展寻找回文串，更新pos、maxRight的位置</p>
+</li>
+<li><p>i &lt; maxRight 这种情况下又分为两种子情况：</p>
+<p>a. 如果RL[j] &lt;= maxRight - i 也即j处的回文串长度较小，其对应的i处长度还没有超出maxRight，那么根据对称性可以知道，i处的长度至少为RL[j]，求i处回文串只需从RL[j]半径处继续向外扩展即可</p>
+<p>b. 如果RL[j] &gt; maxRight - i 也即j处的回文串长度较长，那么i处的回文串只能保证到maxRight的位置，因为对称性利用的是maxRight所在的最长回文串的对称性，超出maxRight无法保证回文性成立</p>
+</li>
+</ol>
+<h4 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestPalindrome</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :rtype: str</div><div class="line">        """</div><div class="line">        s = <span class="string">"#"</span> + <span class="string">"#"</span>.join(s) + <span class="string">"#"</span></div><div class="line">        RL = &#123;&#125;</div><div class="line">        maxRight = <span class="number">0</span></div><div class="line">        pos = <span class="number">0</span></div><div class="line">        length = len(s)</div><div class="line">        <span class="keyword">for</span> (i, c) <span class="keyword">in</span> enumerate(s):</div><div class="line">            <span class="keyword">if</span> i &gt;= maxRight:</div><div class="line">                k = <span class="number">1</span></div><div class="line">                <span class="keyword">while</span> i - k &gt;= <span class="number">0</span> <span class="keyword">and</span> i + k &lt; length:</div><div class="line">                    <span class="keyword">if</span> s[i-k] != s[i+k]:</div><div class="line">                        <span class="keyword">break</span></div><div class="line">                    k += <span class="number">1</span></div><div class="line">                RL[i] = k - <span class="number">1</span></div><div class="line">                maxRight = i + k - <span class="number">1</span></div><div class="line">                pos = i</div><div class="line"></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                j = pos * <span class="number">2</span> - i</div><div class="line">                <span class="keyword">if</span> RL[j] &lt;= (maxRight - i):</div><div class="line">                    k = RL[j] + <span class="number">1</span></div><div class="line">                    <span class="keyword">while</span> i - k &gt;= <span class="number">0</span> <span class="keyword">and</span> i + k &lt; length:</div><div class="line">                        <span class="keyword">if</span> s[i-k] != s[i+k]:</div><div class="line">                            <span class="keyword">break</span></div><div class="line">                        k += <span class="number">1</span></div><div class="line">                    RL[i] = k - <span class="number">1</span></div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    k = maxRight - i</div><div class="line">                    <span class="keyword">while</span> i - k &gt;= <span class="number">0</span> <span class="keyword">and</span> i + k &lt; length:</div><div class="line">                        <span class="keyword">if</span> s[i-k] != s[i+k]:</div><div class="line">                            <span class="keyword">break</span></div><div class="line">                        k += <span class="number">1</span></div><div class="line">                    RL[i] = k - <span class="number">1</span></div><div class="line"></div><div class="line">        maxPos = <span class="number">0</span></div><div class="line">        maxLen = <span class="number">0</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> RL:</div><div class="line">            <span class="keyword">if</span> maxLen &lt; RL[i]:</div><div class="line">                maxLen = RL[i]</div><div class="line">                maxPos = i</div><div class="line"></div><div class="line">        <span class="keyword">return</span> s[maxPos - RL[maxPos]:maxPos + RL[maxPos]].replace(<span class="string">"#"</span>, <span class="string">""</span>)</div></pre></td></tr></table></figure>
+<p>写题过程中的一些小经验就是如果涉及到算下标算位置的时候（比如循环退出条件），可以先考虑一下能不能通过边界判断让代码自己去做，不然的话我们自己手算的可能不对还可能要浪费好多时间，<code>while i - k &gt;= 0 and i + k &lt; length:</code>就是一个鲜明的例子。</p>
+<h2 id="方法三-动态规划"><a href="#方法三-动态规划" class="headerlink" title="方法三 - 动态规划"></a>方法三 - 动态规划</h2><p>其实这个题目一看到我就想到了动态规划，奈何功力太浅找不到具体的思路0.0~估计对于有经验的来说先想到的会是动态规划吧，时间复杂度O(n^2)</p>
+<p>去搜了一下果然是可以用，总结如下：</p>
+<p>动态规划的思路主要就是利用之前计算的结果在下一步计算时继续用，它有几个特点，即：最优子结构性质、无后效性、子问题的重叠性。</p>
+<p>对于解决一个实际问题，我觉得最难的就是要找什么内容是可以下一步继续复用的…在网上看到了一些杂七杂八的答案，有的明明是错的，还在Baidu排在前几页（吐槽渣Baidu）去Google了一下总算是找到了一个比较正确的做法~</p>
+<p>定义数组<code>f[i][j] (i &lt; length, j &lt; length)</code>表示i到j之间是回文串，以回文串的长度作为重叠性的体现，不难看出，长度更长的回文串肯定包含长度短的回文串，即长回文串可以由短的回文串继续推广而得。</p>
+<p>当<code>s[i] == s[i+k-1]</code>并且比其小1的串也是回文串(<code>f[i+1][i+k-2] == 1</code>)说明<code>s[i][i+k-1]</code>是一个更长的回文串。</p>
+<p>然后我们探讨初始条件，一个字符本身构成的回文长度是1，相邻的回文长度也应该是1（或者更大，姑且置为最小值1，可以通过迭代继续增长），而<code>f[i][j]</code>和<code>f[j][i]</code>本质上是一样的，把f看成一个矩阵，容易看出我们只需要讨论一半即可。这里我们选择矩阵的左下部分（即 i &lt; j 的部分）讨论，故置<code>f[i][i]</code>和<code>f[i][i-1]</code>为初始值1</p>
+<h4 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestPalindrome</span><span class="params">(self, s)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :rtype: str</div><div class="line">        """</div><div class="line">        length = len(s)</div><div class="line">        <span class="keyword">if</span> length == <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> s</div><div class="line">        f = [[<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(length)] <span class="keyword">for</span> i <span class="keyword">in</span> range(length)]</div><div class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span></div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt; length:</div><div class="line">            f[i][i] = <span class="number">1</span></div><div class="line">            f[i][i - <span class="number">1</span>] = <span class="number">1</span></div><div class="line">            i += <span class="number">1</span></div><div class="line"></div><div class="line">        maxLeft = maxRight = <span class="number">0</span></div><div class="line">        k = <span class="number">2</span></div><div class="line">        <span class="keyword">while</span> k &lt;= length:</div><div class="line">            i = <span class="number">0</span></div><div class="line">            <span class="keyword">while</span> i &lt;= length - k:</div><div class="line">                <span class="keyword">if</span> s[i] == s[i+k<span class="number">-1</span>] <span class="keyword">and</span> f[i+<span class="number">1</span>][i+k<span class="number">-2</span>] == <span class="number">1</span>:</div><div class="line">                    f[i][i+k<span class="number">-1</span>] = <span class="number">1</span></div><div class="line">                    <span class="keyword">if</span> maxRight - maxLeft + <span class="number">1</span> &lt; k:</div><div class="line">                        maxLeft = i</div><div class="line">                        maxRight = i + k - <span class="number">1</span></div><div class="line">                i += <span class="number">1</span></div><div class="line">            k += <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> s[maxLeft:maxRight+<span class="number">1</span>]</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/05/13/5.最长回文子串/" data-id="cj5b5mxt20005151yt5qd2nka" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-利用XHR、jQuery实现文件下载并标识下载结束" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/" class="article-date">
+  <time datetime="2017-05-09T11:40:48.000Z" itemprop="datePublished">2017-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/">利用XHR、jQuery实现文件下载并标识下载结束</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>实现文件下载，点击下载按钮出现遮罩/提示层，等待后台文件准备完毕弹出另存为窗口，遮罩层消失。</p>
+<h2 id="问题所在"><a href="#问题所在" class="headerlink" title="问题所在"></a>问题所在</h2><p>传统的文件下载可以实现点击以后出现遮罩层，但是由于无法判断文件何时传输完毕，导致弹出另存为窗口时无法找到事件钩子或回调函数以实现遮罩层消失。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="XHR-XMLHttpRequest"><a href="#XHR-XMLHttpRequest" class="headerlink" title="XHR-XMLHttpRequest"></a>XHR-XMLHttpRequest</h3><p>XHR其实我们平时很经常的在用到，它是Ajax实现的基础，所有现代浏览器均支持XHR。它可以与服务器异步通信，所以可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<p>主要用到的函数与变量主要有：</p>
+<ol>
+<li>open(<em>method</em>,<em>url</em>,<em>async</em>)</li>
+</ol>
+<p>规定请求的类型、URL 以及是否异步处理请求。</p>
+<ul>
+<li><em>method</em>：请求的类型；GET 或 POST</li>
+<li><em>url</em>：文件在服务器上的位置</li>
+<li><em>async</em>：true（异步）或 false（同步）</li>
+</ul>
+<ol>
+<li>send(<em>string</em>)</li>
+</ol>
+<p>发送请求，当POST请求时，用到string参数。</p>
+<ol>
+<li>setRequestHeader(<em>header</em>,<em>value</em>)</li>
+</ol>
+<p>设置HTTP头的函数。</p>
+<ol>
+<li>responseText &amp; responseXML &amp; response</li>
+</ol>
+<p>XHR对象属性，用于获取服务器响应。</p>
+<h5 id="下面的是解决本问题所用到的额外的几个参数"><a href="#下面的是解决本问题所用到的额外的几个参数" class="headerlink" title="下面的是解决本问题所用到的额外的几个参数"></a>下面的是解决本问题所用到的额外的几个参数</h5><ol>
+<li>responseType</li>
+</ol>
+<p>XHR对象属性，设置想要获得的response类型，常用的有下面几个：</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Data type of <code>response</code> property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&quot;&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMString" target="_blank" rel="external"><code>DOMString</code></a> (默认值)</td>
+</tr>
+<tr>
+<td><code>&quot;arraybuffer&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBuffer" target="_blank" rel="external"><code>ArrayBuffer</code></a></td>
+</tr>
+<tr>
+<td><code>&quot;blob&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob" target="_blank" rel="external"><code>Blob</code></a> (用于文件下载等大量数据)</td>
+</tr>
+<tr>
+<td><code>&quot;document&quot;</code></td>
+<td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank" rel="external"><code>Document</code></a></td>
+</tr>
+<tr>
+<td><code>&quot;json&quot;</code></td>
+<td>由服务端返回的JSON字符串所构造的JavaScript 对象</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>onload事件</li>
+</ol>
+<p>当请求成功完成时触发，此时<code>xhr.readystate=4</code>，利用onload回调，可以在此实现文件下载完毕时关闭遮罩层。</p>
+<h3 id="Blob简介"><a href="#Blob简介" class="headerlink" title="Blob简介"></a>Blob简介</h3><p>BLOB (binary large object)，二进制大对象，是一个可以存储二进制文件的容器。<br>在计算机中，BLOB常常是数据库中用来存储二进制文件的字段类型。<br>BLOB是一个大文件，典型的BLOB是一张图片或一个声音文件，由于它们的尺寸，必须使用特殊的方式来处理（例如：上传、下载或者存放到一个数据库）。</p>
+<p>利用Blob，我们的问题得以解决。说到Blob，就不得不说起利用<strong><em>window.URL</em></strong> or <strong><em>window.webkitURL</em></strong>实现下载Blob的问题啦</p>
+<p><strong><em>URL.createObjectURL()</em></strong> 方法会根据传入的参数创建一个指向该参数对象的URL。这个URL的生命仅存在于它被创建的这个文档里。 新的对象URL指向执行的File对象或者是Blob对象。</p>
+<p><strong><em>URL.revokeObjectURL()</em> </strong>方法会释放一个通过URL.createObjectURL()创建的对象URL，当你要已经用过了这个对象URL，然后要让浏览器知道这个URL已经不再需要指向对应的文件的时候，就需要调用这个方法。</p>
+<p>具体的意思就是说，一个对象URL，使用这个url是可以访问到指定的文件的，但是我可能只需要访问一次，一旦已经访问到了，这个对象URL就不再需要了，就被释放掉。被释放掉以后，这个对象URL就不再指向指定的文件了。</p>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><p>利用XHR实现把后台传输的文件以Blob格式存储，在点击下载按钮时，发送XMLHttpRequest请求，在onload回调中创建虚拟的一个a标签并将其绑定到Blob对象，然后模拟点击URL下载的操作实现下载。弹出另存为窗口后，也即在onload事件的最后隐藏遮罩层。搞定~</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  $(<span class="string">".submit"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    $(<span class="string">'.wrd-loading'</span>).show();</div><div class="line">    <span class="keyword">var</span> oReq = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">    oReq.open(<span class="string">"GET"</span>, <span class="string">"&#123;&#123; action('System\LogController@getDownloadLogFile')  &#125;&#125;"</span>, <span class="literal">true</span>);</div><div class="line">    oReq.responseType = <span class="string">"blob"</span>;</div><div class="line"></div><div class="line">    oReq.onload = <span class="function"><span class="keyword">function</span>(<span class="params">oEvent</span>) </span>&#123;</div><div class="line">      <span class="keyword">var</span> blob = oReq.response;</div><div class="line">      <span class="keyword">let</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</div><div class="line">      <span class="keyword">let</span> myURL = <span class="built_in">window</span>.URL</div><div class="line">      <span class="keyword">if</span>(myURL.createObjectURL == <span class="literal">undefined</span>)</div><div class="line">        myURL = <span class="built_in">window</span>.webkitURL</div><div class="line">      <span class="keyword">let</span> url = myURL.createObjectURL(blob);</div><div class="line">      <span class="keyword">let</span> filename = <span class="string">'api_push.zip'</span>;</div><div class="line">      a.href = url;</div><div class="line">      a.download = filename;</div><div class="line">      a.click();</div><div class="line">      myURL.revokeObjectURL(url);</div><div class="line">      $(<span class="string">'.wrd-loading'</span>).hide();</div><div class="line">    &#125;;</div><div class="line">    oReq.send();</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>后台只需按正常方式发送即可，如php可能就是echo file_get_contents();</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><p>[你真的会使用XMLHttpRequest吗？]: <a href="https://segmentfault.com/a/1190000004322487" target="_blank" rel="external">https://segmentfault.com/a/1190000004322487</a></p>
+</li>
+<li><p>[XMLHttpRequest.responseType]: <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType" target="_blank" rel="external">https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType</a></p>
+</li>
+<li><p>[URL.createObjectURL和URL.revokeObjectUR]: <a href="http://www.mamicode.com/info-detail-456059.html" target="_blank" rel="external">http://www.mamicode.com/info-detail-456059.html</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/" data-id="cj5b5mxtb000e151y6oc6aq4g" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-4.求有序数组的中位数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/04/4.求有序数组的中位数/" class="article-date">
+  <time datetime="2017-05-04T07:01:48.000Z" itemprop="datePublished">2017-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/04/4.求有序数组的中位数/">求有序数组的中位数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LeetCode-4"><a href="#LeetCode-4" class="headerlink" title="LeetCode 4"></a>LeetCode 4</h1><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>遍历，分别从两个数组头最小的开始向后走，走到中间为止。这种方法最简单，但是时间复杂度为O(m+n)，那么有没有更快的方法呢？</p>
+<p>由题目要求我们的算法时间复杂度为O(log (m+n))可以看出显然是有的，看到log就让人想起二分，没错，这种更快的方法正是利用了二分的原理。</p>
+<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>根据中位数的定义可以知道，中位数是一组数据中位于中间位置的数字，这也就意味着，假设有两个有序数组A和B：</p>
+<p>把A分成两部分，分别为0 ~ i-1, i ~ m-1</p>
+<p>把B分成两部分，分别为0 ~ j-1, j ~ n-1</p>
+<p>可以知道</p>
+<p>i-1-0+1 + j-1-0+1 = m-1-i+1 + n-1-j+1</p>
+<p>也就是 i + j = (m + n) / 2</p>
+<p>这里要注意的是，该式是m+n为偶数时成立的情况，当m+n为奇数时，i+j = (m+n+1) / 2，原因如下：</p>
+<h3 id="首先我们要搞清楚，按这种分法，中位数在哪里产生："><a href="#首先我们要搞清楚，按这种分法，中位数在哪里产生：" class="headerlink" title="首先我们要搞清楚，按这种分法，中位数在哪里产生："></a>首先我们要搞清楚，按这种分法，中位数在哪里产生：</h3><ol>
+<li>如果是偶数的话，显然应该是i-1和j-1的较大者与i和j的较小者的均值</li>
+<li>如果是奇数的话，则我们认定为i-1和j-1的较大者</li>
+</ol>
+<h3 id="在这种情况下，我们进行假设："><a href="#在这种情况下，我们进行假设：" class="headerlink" title="在这种情况下，我们进行假设："></a>在这种情况下，我们进行假设：</h3><p>假设A = [1,2], B = [3,4]，以第一轮为例，i = 2 / 2 = 1, j = 4 / 2 - 1 = 1，注意i和j是数组下标，也就是说，左侧分别有一个下标为0的数，正好是中位数。假设我们+1，i + j = 5 / 2 = 2 正确</p>
+<p>假设A = [1, 2], B= [3, 4, 5]，以第一轮为例，如果不+1，i = 2 / 2 = 1, j = 5 / 2 - 1 = 1，由于i和j是数组下标，那么左侧共有两个数，而根据之前的定义左侧应该有3个数，所以只有+1以后才能满足左侧有3个数（此时j = 2）</p>
+<p>为什么必须是3个数呢？这要从开始的解题思路说起，因为我们假设分成的两部分是以 i, j 为分割的，那么左侧加起来应该为总长度的一半，此时中位数为左侧最大与右侧最小的均值。如果无法整除，取左侧最大。所以左侧长度要么为一半，要么为一半 +1，故i + j = (m + n + 1) / 2</p>
+<p>为什么要保证m &lt; n呢？因为如果m &gt; n，i比较大，有可能会出现j为负数的情况。</p>
+<h3 id="那么搜索的时候有哪些情况呢？"><a href="#那么搜索的时候有哪些情况呢？" class="headerlink" title="那么搜索的时候有哪些情况呢？"></a>那么搜索的时候有哪些情况呢？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;a&gt; (j == 0 or i == m or B[j-1] &lt;= A[i]) and</div><div class="line">    (i == 0 or j = n or A[i-1] &lt;= B[j])</div><div class="line">    i即为所求.</div><div class="line"></div><div class="line">&lt;b&gt; j &gt; 0 and i &lt; m and B[j - 1] &gt; A[i]</div><div class="line">    i太小，应该增加（j会相应减小）.</div><div class="line"></div><div class="line">&lt;c&gt; i &gt; 0 and j &lt; n and A[i - 1] &gt; B[j]</div><div class="line">    i太大，应该减小（j会相应增加）.</div></pre></td></tr></table></figure>
+<h3 id="综上，代码如下："><a href="#综上，代码如下：" class="headerlink" title="综上，代码如下："></a>综上，代码如下：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">median</span><span class="params">(A, B)</span>:</span></div><div class="line">   m, n = len(A), len(B)</div><div class="line">   <span class="keyword">if</span> m &gt; n:</div><div class="line">       A, B, m, n = B, A, n, m</div><div class="line">   <span class="keyword">if</span> n == <span class="number">0</span>:</div><div class="line">       <span class="keyword">raise</span> ValueError</div><div class="line"></div><div class="line">   imin, imax, half_len = <span class="number">0</span>, m, (m + n + <span class="number">1</span>) / <span class="number">2</span></div><div class="line">   <span class="keyword">while</span> imin &lt;= imax:</div><div class="line">       i = (imin + imax) / <span class="number">2</span></div><div class="line">       j = half_len - i</div><div class="line">       <span class="keyword">if</span> i &lt; m <span class="keyword">and</span> B[j<span class="number">-1</span>] &gt; A[i]:</div><div class="line">           <span class="comment"># i is too small, must increase it</span></div><div class="line">           imin = i + <span class="number">1</span></div><div class="line">       <span class="keyword">elif</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> A[i<span class="number">-1</span>] &gt; B[j]:</div><div class="line">           <span class="comment"># i is too big, must decrease it</span></div><div class="line">           imax = i - <span class="number">1</span></div><div class="line">       <span class="keyword">else</span>:</div><div class="line">           <span class="comment"># i is perfect</span></div><div class="line"></div><div class="line">		<span class="comment"># i = 0意味着数组A太大了，走到左侧的头了，左侧只有B了，所以左侧的最大值应该为B[j-1]</span></div><div class="line">           <span class="keyword">if</span> i == <span class="number">0</span>: max_of_left = B[j<span class="number">-1</span>]</div><div class="line">           <span class="comment"># j = 0意味着B太大了，指针走到左侧的头了，左侧只有A了，所以左侧最大值应该为A[i-1]</span></div><div class="line">           <span class="keyword">elif</span> j == <span class="number">0</span>: max_of_left = A[i<span class="number">-1</span>]</div><div class="line">           <span class="comment"># 否则说明中位数的第一个数字（左侧较大的）在两组数据的中间位置</span></div><div class="line">           <span class="keyword">else</span>: max_of_left = max(A[i<span class="number">-1</span>], B[j<span class="number">-1</span>])</div><div class="line"></div><div class="line">		<span class="comment"># 根据上面的分析知道如果是奇数，该数就是中位数</span></div><div class="line">           <span class="keyword">if</span> (m + n) % <span class="number">2</span> == <span class="number">1</span>:</div><div class="line">               <span class="keyword">return</span> max_of_left</div><div class="line"></div><div class="line">		<span class="comment"># 如果i走到最右边，说明A太小了，右侧只有B，所以右侧最小值是B[j]</span></div><div class="line">           <span class="keyword">if</span> i == m: min_of_right = B[j]</div><div class="line">           <span class="comment"># 如果j走到最右边，说明B太小了，右侧只有A，所以右侧最小值是A[i]</span></div><div class="line">           <span class="keyword">elif</span> j == n: min_of_right = A[i]</div><div class="line">           <span class="comment"># 否则说明中位数的第二个数字(右侧较小的)在两组数据的中间位置</span></div><div class="line">           <span class="keyword">else</span>: min_of_right = min(A[i], B[j])</div><div class="line"></div><div class="line">		<span class="comment"># 如果是偶数，应该为左侧最大与右侧最小值的均值</span></div><div class="line">           <span class="keyword">return</span> (max_of_left + min_of_right) / <span class="number">2.0</span></div></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>解题过程中遇到的问题与解决思路主要有两个：</p>
+<ol>
+<li>第一次尝试解题，没能把中位数的概念运用好，i和j之间的关系没有用起来，导致i与j各自独立，计算的时候混乱。</li>
+<li>第二次尝试解题，注意了i与j之间的关系，但是对于 m + n + 1 中为什么+1没搞清楚，至于为什么+1，在上面已经讲清楚了。</li>
+<li>如果说还有小的点，那就是对imin和imax的设置了，一定要注意是 i + 1或者 i - 1 ，不是设置成1…这算是二分的基本点了。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/05/04/4.求有序数组的中位数/" data-id="cj5b5mxt00004151y363bgury" class="article-share-link">Delen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
+
     </footer>
   </div>
   
@@ -2955,15 +3060,10 @@
 
   
     
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Labels</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li></ul>
     </div>
   </div>
 
@@ -2971,28 +3071,47 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/SDN/" style="font-size: 10px;">SDN</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/trick/" style="font-size: 10px;">trick</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/07/19/Rules of Machine Learning: Best Practices for ML Engineering — Martin Zinkevich/">(no title)</a>
+            <a href="/2017/07/19/OpenDayLight配置/">SDN基础知识学习-环境配置</a>
           </li>
         
           <li>
-            <a href="/2017/07/19/11.容器装水取最大/">(no title)</a>
+            <a href="/2017/07/19/论文阅读报告/">(no title)</a>
           </li>
         
           <li>
-            <a href="/2017/07/19/4.求有序数组的中位数/">(no title)</a>
+            <a href="/2017/07/19/hello-world/">Hello World</a>
           </li>
         
           <li>
-            <a href="/2017/07/19/5.最长回文子串/">(no title)</a>
+            <a href="/2017/06/21/从生成括号到递归算法/">从生成括号到递归算法</a>
           </li>
         
           <li>
-            <a href="/2017/07/19/从生成括号到递归算法/">(no title)</a>
+            <a href="/2017/06/05/15.3Sum/">求和为0的三个数字的所有集合</a>
           </li>
         
       </ul>
