@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imqishi.cn"></form>
@@ -60,6 +60,69 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-设备识别论文阅读" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/09/设备识别论文阅读/" class="article-date">
+  <time datetime="2017-08-09T13:53:00.000Z" itemprop="datePublished">2017-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/09/设备识别论文阅读/">设备识别论文阅读</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在wdjwxh学长的建议下，结合当前项目所做，将设备识别纳入论文考虑范围，并寻找了几篇文章进行阅读。</p>
+<p>我们知道，传统的设备识别方法是通过各种“指纹”特征进行特征匹配进行识别。该方法的准确度主要取决于指纹类型的数量、指纹库的丰富程度。想要进行准确的设备识别所需要的指纹库可能会很大，导致加载指纹库需要较长的时间，当指纹类型繁多时比对过程需要较长的时间，并且一旦指纹库中不存在的新设备到来时无法进行识别，并且指纹库的信息通常需要额外的代码（如js）在设备运行以手机信息。</p>
+<p>如果把传统的指纹特征提取，并且使用机器学习的方法训练一个识别模型，然后使用模型进行设备识别，可能前期会需要较多工作，但是训练完成后不需要如此庞大的指纹库，并且速度可以获得保证，对于新加入的设备会得到一个最接近的设备类型而不是“Unknown”。该方式只需要一些常见的信息（如dhcp和dns报文以及少许http报文，这些在连网过程中都很容易得到）就可以得到准确度相当甚至更好的结果。相比之下使用该方式更好。</p>
+<h2 id="Start"><a href="#Start" class="headerlink" title="Start"></a>Start</h2><p>在IEEE Xplore对device identify identification classify fingerprint等关键字进行搜索，没有找到相关论文文献，不知道是搜索方法不对还是关键词不对还是没人写这方面的东西。</p>
+<p>在万方、维普平台查了半天，只找到了两篇相关论文，一篇是《基于统计数据与贝叶斯方法的设备识别模型设计》，一篇是《Android设备指纹识别技术的研究与实现》。在Baidu搜索相关关键词获取到H3C的设备识别白皮书一份以及已经形成专利的《一种网关设备自动识别接入设备类型及优化服务的方法》。</p>
+<h2 id="Android设备指纹识别技术的研究与实现"><a href="#Android设备指纹识别技术的研究与实现" class="headerlink" title="Android设备指纹识别技术的研究与实现"></a>Android设备指纹识别技术的研究与实现</h2><p>这篇论文是一篇完整的大论文，是2015年东南大学研究生毕业论文，原文作者研究的目的是为了应用在计算机安全领域（我简直是哔了狗了，本科论文想写的那个当时搜的也是东南大学的一个人写过一个几乎一模一样的）。文章很长，总结一下主要分为<strong>四个部分</strong>：<strong>背景</strong>、<strong>传统方法（指纹的获取、分析与应用）</strong>、<strong>机器学习方法（朴素贝叶斯分类器）</strong>以及<strong>两种方法的对比测试</strong>。整体写的比较全面，和我们之前设想的写法几乎完全一致，只是作者仅仅分析了Android设备类型，我们想要做的是对所有设备（PC、Pad、Phone）的识别，但是了解过设备识别方面的基本都知道主要的难点在于Android设备，因为厂商杂乱，没有统一的标准，经常会被一些第三方软件伪装等。看了这篇文章我感到很绝望，如果真要做这方面的话顶多就是改改他的论文了，换一种方法选取指纹，然后换一种机器学习模型进行学习，然后进行识别比对，再找创新点的话就是我们可能并不需要像他一样需要向Android设备植入一小段程序用于收集设备信息，我们只需要利用常用的信息（但是这种情况下还没有考察准确率能否和他的相当）最致命的是按照该论文所说识别准确率已经能够达到90%以上，那不管再怎么做提高的准确率恐怕也不足以到创新的标准…</p>
+<h2 id="基于统计数据与贝叶斯方法的设备识别模型设计"><a href="#基于统计数据与贝叶斯方法的设备识别模型设计" class="headerlink" title="基于统计数据与贝叶斯方法的设备识别模型设计"></a>基于统计数据与贝叶斯方法的设备识别模型设计</h2><p>2002年的一篇老文了。本文主要讲了一种设备识别模型，通过三类认证方法所能提供的指纹为特征构建一个动态学习的贝叶斯方法构造的模型。文章指出了传统的静态匹配方式（如基于指纹元素匹配个数的计算方式和完形模式匹配）不具备适应性和动态学习的功能。文章利用贝叶斯的方法在动态识别模式中采用分层算法计算指纹可信度并进行测试。测试结果准确率也很高….</p>
+<h2 id="一种网关设备自动识别接入设备类型及优化服务的方法"><a href="#一种网关设备自动识别接入设备类型及优化服务的方法" class="headerlink" title="一种网关设备自动识别接入设备类型及优化服务的方法"></a>一种网关设备自动识别接入设备类型及优化服务的方法</h2><p>利用了DHCP过程，使用OPTION60报文（Vendor Class Identifier）决定是否提供DHCP透传功能，网关设备根据OPTION60信息自动进行设备类型分类，网关设备根据分类结果进行服务优先级设置。</p>
+<p>看了半天发现是软文，用vci识别大类这也能申请专利？！…</p>
+<h2 id="H3C设备识别白皮书"><a href="#H3C设备识别白皮书" class="headerlink" title="H3C设备识别白皮书"></a>H3C设备识别白皮书</h2><p>主要讲到了以下概念：</p>
+<ol>
+<li>主动式设备指纹识别：需要主动向被鉴定的设备发送一定数量的特别组合的数据包， 根据对方的反应来确定对方的设备型号、操作系统类型甚至版本号。这一技术 常常被应用到网络安全领域，当黑客或安全专家需要对远程系统进行渗透时， 常常以设备指纹识别的动作作为开场白。</li>
+<li>被动式设备指纹识别：被动式的技术体系坚持在不发送任何数据的情况下就达到识别设备指纹的 目的。这样的实现机制可以在对网络不产生任何影响的情况下，收集更加详尽 的信息，以便 供给网络管理与安全管理之用。被动式指纹鉴别技术由于不发 送任何探测尝试，因此必须通过数据包捕获的方式实现。</li>
+</ol>
+<p>被动式设备指纹识别常用的方向：</p>
+<ol>
+<li>TTL</li>
+<li>TCP指纹分析</li>
+<li>SMB指纹分析</li>
+<li>DHCP指纹分析</li>
+<li>HTTP指纹分析</li>
+<li>MAC OUI分析</li>
+</ol>
+<p>白皮书提出了UAM系统终端识别方案，综合运用MAC OUI、DHCP、HTTP User-Agent三种方法进行识别。H3C设备中集成了DHCP插件和DNS插件帮助识别。</p>
+<p>DHCP 访问fingerbank获取OPTION 55 fgr信息</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/08/09/设备识别论文阅读/" data-id="cj652vbo0000i4a1yg3olz0b1" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper/">paper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-论文阅读报告" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -101,10 +164,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/26/论文阅读报告/" data-id="cj5ks7w20000d8j1yq9zofedi" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/26/论文阅读报告/" data-id="cj652vbnx000d4a1y6vaamwiq" class="article-share-link">Partager</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper/">paper</a></li></ul>
 
     </footer>
   </div>
@@ -170,10 +233,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/25/今日论文-20170725/" data-id="cj5ks7w22000i8j1ynod1be6o" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/25/今日论文-20170725/" data-id="cj652vbnl00034a1yvx20ptjg" class="article-share-link">Partager</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper/">paper</a></li></ul>
 
     </footer>
   </div>
@@ -2582,7 +2645,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/" data-id="cj5ks7w1y000a8j1yibdbkb4u" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/" data-id="cj652vbo2000m4a1ypbq9wovw" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li></ul>
@@ -2641,7 +2704,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/06/21/从生成括号到递归算法/" data-id="cj5ks7w1x00088j1yts0g6o76" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/06/21/从生成括号到递归算法/" data-id="cj652vbnp00084a1yl2vmhzi8" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -2697,7 +2760,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/06/05/15.3Sum/" data-id="cj5ks7w1m00018j1ycizomvvt" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/06/05/15.3Sum/" data-id="cj652vbng00014a1y9ux06ltc" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -2752,7 +2815,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/27/11.容器装水取最大/" data-id="cj5ks7w1i00008j1yjub6znez" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/27/11.容器装水取最大/" data-id="cj652vbnc00004a1y94i8in50" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trick/">trick</a></li></ul>
@@ -2822,7 +2885,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/25/10.简单正则匹配/" data-id="cj5ks7w1q00038j1ymvztax8k" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/25/10.简单正则匹配/" data-id="cj652vbo3000n4a1ycni3ie7a" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -2893,7 +2956,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/13/5.最长回文子串/" data-id="cj5ks7w1r00048j1ytf376ajx" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/13/5.最长回文子串/" data-id="cj652vbnm00044a1ywngbf7ff" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -3010,73 +3073,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/" data-id="cj5ks7w21000f8j1yb8ir8rsa" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/" data-id="cj652vbns000a4a1y3r131pzf" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-4.求有序数组的中位数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/04/4.求有序数组的中位数/" class="article-date">
-  <time datetime="2017-05-04T07:01:48.000Z" itemprop="datePublished">2017-05-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/04/4.求有序数组的中位数/">求有序数组的中位数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="LeetCode-4"><a href="#LeetCode-4" class="headerlink" title="LeetCode 4"></a>LeetCode 4</h1><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>遍历，分别从两个数组头最小的开始向后走，走到中间为止。这种方法最简单，但是时间复杂度为O(m+n)，那么有没有更快的方法呢？</p>
-<p>由题目要求我们的算法时间复杂度为O(log (m+n))可以看出显然是有的，看到log就让人想起二分，没错，这种更快的方法正是利用了二分的原理。</p>
-<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>根据中位数的定义可以知道，中位数是一组数据中位于中间位置的数字，这也就意味着，假设有两个有序数组A和B：</p>
-<p>把A分成两部分，分别为0 ~ i-1, i ~ m-1</p>
-<p>把B分成两部分，分别为0 ~ j-1, j ~ n-1</p>
-<p>可以知道</p>
-<p>i-1-0+1 + j-1-0+1 = m-1-i+1 + n-1-j+1</p>
-<p>也就是 i + j = (m + n) / 2</p>
-<p>这里要注意的是，该式是m+n为偶数时成立的情况，当m+n为奇数时，i+j = (m+n+1) / 2，原因如下：</p>
-<h3 id="首先我们要搞清楚，按这种分法，中位数在哪里产生："><a href="#首先我们要搞清楚，按这种分法，中位数在哪里产生：" class="headerlink" title="首先我们要搞清楚，按这种分法，中位数在哪里产生："></a>首先我们要搞清楚，按这种分法，中位数在哪里产生：</h3><ol>
-<li>如果是偶数的话，显然应该是i-1和j-1的较大者与i和j的较小者的均值</li>
-<li>如果是奇数的话，则我们认定为i-1和j-1的较大者</li>
-</ol>
-<h3 id="在这种情况下，我们进行假设："><a href="#在这种情况下，我们进行假设：" class="headerlink" title="在这种情况下，我们进行假设："></a>在这种情况下，我们进行假设：</h3><p>假设A = [1,2], B = [3,4]，以第一轮为例，i = 2 / 2 = 1, j = 4 / 2 - 1 = 1，注意i和j是数组下标，也就是说，左侧分别有一个下标为0的数，正好是中位数。假设我们+1，i + j = 5 / 2 = 2 正确</p>
-<p>假设A = [1, 2], B= [3, 4, 5]，以第一轮为例，如果不+1，i = 2 / 2 = 1, j = 5 / 2 - 1 = 1，由于i和j是数组下标，那么左侧共有两个数，而根据之前的定义左侧应该有3个数，所以只有+1以后才能满足左侧有3个数（此时j = 2）</p>
-<p>为什么必须是3个数呢？这要从开始的解题思路说起，因为我们假设分成的两部分是以 i, j 为分割的，那么左侧加起来应该为总长度的一半，此时中位数为左侧最大与右侧最小的均值。如果无法整除，取左侧最大。所以左侧长度要么为一半，要么为一半 +1，故i + j = (m + n + 1) / 2</p>
-<p>为什么要保证m &lt; n呢？因为如果m &gt; n，i比较大，有可能会出现j为负数的情况。</p>
-<h3 id="那么搜索的时候有哪些情况呢？"><a href="#那么搜索的时候有哪些情况呢？" class="headerlink" title="那么搜索的时候有哪些情况呢？"></a>那么搜索的时候有哪些情况呢？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;a&gt; (j == 0 or i == m or B[j-1] &lt;= A[i]) and</div><div class="line">    (i == 0 or j = n or A[i-1] &lt;= B[j])</div><div class="line">    i即为所求.</div><div class="line"></div><div class="line">&lt;b&gt; j &gt; 0 and i &lt; m and B[j - 1] &gt; A[i]</div><div class="line">    i太小，应该增加（j会相应减小）.</div><div class="line"></div><div class="line">&lt;c&gt; i &gt; 0 and j &lt; n and A[i - 1] &gt; B[j]</div><div class="line">    i太大，应该减小（j会相应增加）.</div></pre></td></tr></table></figure>
-<h3 id="综上，代码如下："><a href="#综上，代码如下：" class="headerlink" title="综上，代码如下："></a>综上，代码如下：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">median</span><span class="params">(A, B)</span>:</span></div><div class="line">   m, n = len(A), len(B)</div><div class="line">   <span class="keyword">if</span> m &gt; n:</div><div class="line">       A, B, m, n = B, A, n, m</div><div class="line">   <span class="keyword">if</span> n == <span class="number">0</span>:</div><div class="line">       <span class="keyword">raise</span> ValueError</div><div class="line"></div><div class="line">   imin, imax, half_len = <span class="number">0</span>, m, (m + n + <span class="number">1</span>) / <span class="number">2</span></div><div class="line">   <span class="keyword">while</span> imin &lt;= imax:</div><div class="line">       i = (imin + imax) / <span class="number">2</span></div><div class="line">       j = half_len - i</div><div class="line">       <span class="keyword">if</span> i &lt; m <span class="keyword">and</span> B[j<span class="number">-1</span>] &gt; A[i]:</div><div class="line">           <span class="comment"># i is too small, must increase it</span></div><div class="line">           imin = i + <span class="number">1</span></div><div class="line">       <span class="keyword">elif</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> A[i<span class="number">-1</span>] &gt; B[j]:</div><div class="line">           <span class="comment"># i is too big, must decrease it</span></div><div class="line">           imax = i - <span class="number">1</span></div><div class="line">       <span class="keyword">else</span>:</div><div class="line">           <span class="comment"># i is perfect</span></div><div class="line"></div><div class="line">		<span class="comment"># i = 0意味着数组A太大了，走到左侧的头了，左侧只有B了，所以左侧的最大值应该为B[j-1]</span></div><div class="line">           <span class="keyword">if</span> i == <span class="number">0</span>: max_of_left = B[j<span class="number">-1</span>]</div><div class="line">           <span class="comment"># j = 0意味着B太大了，指针走到左侧的头了，左侧只有A了，所以左侧最大值应该为A[i-1]</span></div><div class="line">           <span class="keyword">elif</span> j == <span class="number">0</span>: max_of_left = A[i<span class="number">-1</span>]</div><div class="line">           <span class="comment"># 否则说明中位数的第一个数字（左侧较大的）在两组数据的中间位置</span></div><div class="line">           <span class="keyword">else</span>: max_of_left = max(A[i<span class="number">-1</span>], B[j<span class="number">-1</span>])</div><div class="line"></div><div class="line">		<span class="comment"># 根据上面的分析知道如果是奇数，该数就是中位数</span></div><div class="line">           <span class="keyword">if</span> (m + n) % <span class="number">2</span> == <span class="number">1</span>:</div><div class="line">               <span class="keyword">return</span> max_of_left</div><div class="line"></div><div class="line">		<span class="comment"># 如果i走到最右边，说明A太小了，右侧只有B，所以右侧最小值是B[j]</span></div><div class="line">           <span class="keyword">if</span> i == m: min_of_right = B[j]</div><div class="line">           <span class="comment"># 如果j走到最右边，说明B太小了，右侧只有A，所以右侧最小值是A[i]</span></div><div class="line">           <span class="keyword">elif</span> j == n: min_of_right = A[i]</div><div class="line">           <span class="comment"># 否则说明中位数的第二个数字(右侧较小的)在两组数据的中间位置</span></div><div class="line">           <span class="keyword">else</span>: min_of_right = min(A[i], B[j])</div><div class="line"></div><div class="line">		<span class="comment"># 如果是偶数，应该为左侧最大与右侧最小值的均值</span></div><div class="line">           <span class="keyword">return</span> (max_of_left + min_of_right) / <span class="number">2.0</span></div></pre></td></tr></table></figure>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>解题过程中遇到的问题与解决思路主要有两个：</p>
-<ol>
-<li>第一次尝试解题，没能把中位数的概念运用好，i和j之间的关系没有用起来，导致i与j各自独立，计算的时候混乱。</li>
-<li>第二次尝试解题，注意了i与j之间的关系，但是对于 m + n + 1 中为什么+1没搞清楚，至于为什么+1，在上面已经讲清楚了。</li>
-<li>如果说还有小的点，那就是对imin和imax的设置了，一定要注意是 i + 1或者 i - 1 ，不是设置成1…这算是二分的基本点了。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/04/4.求有序数组的中位数/" data-id="cj5ks7w1t00058j1yjj9vhynf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
 
     </footer>
   </div>
@@ -3099,9 +3099,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
     </div>
   </div>
 
@@ -3109,18 +3109,18 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/SDN/" style="font-size: 15px;">SDN</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/trick/" style="font-size: 10px;">trick</a>
+      <a href="/tags/SDN/" style="font-size: 15px;">SDN</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 15px;">paper</a> <a href="/tags/trick/" style="font-size: 10px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
     </div>
   </div>
 
@@ -3128,9 +3128,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/08/09/设备识别论文阅读/">设备识别论文阅读</a>
+          </li>
         
           <li>
             <a href="/2017/07/26/论文阅读报告/">论文阅读报告</a>
@@ -3148,10 +3152,6 @@
             <a href="/2017/06/21/从生成括号到递归算法/">从生成括号到递归算法</a>
           </li>
         
-          <li>
-            <a href="/2017/06/05/15.3Sum/">求和为0的三个数字的所有集合</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -3165,7 +3165,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Nick<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
