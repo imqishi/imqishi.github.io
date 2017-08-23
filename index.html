@@ -54,7 +54,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imqishi.cn"></form>
@@ -64,6 +64,68 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-VuejQueryTry" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/23/VuejQueryTry/" class="article-date">
+  <time datetime="2017-08-23T13:57:48.000Z" itemprop="datePublished">2017-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/23/VuejQueryTry/">即时生成Vue组件并挂载（改造已有组件）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>开发主要使用的前端框架为Element UI，现在有一个新的需求，就是希望能够点击表格中的一个分组项，该行出现一个下拉表格列表，以更加详细的显示分组内的更详细信息。如果只是一个普通的下拉其实也很好实现，只要使用jQuery在对应的点击事件中加一个DOM操作就可以了。但是更让人烦躁的是，所要添加的内容又需要用到Element UI的组件。显然直接写到<code>$(&quot;tr&quot;).after()</code>中是无效的，因为Element UI的组件需要经过babel转码、编译等一系列操作之后才被渲染在页面上。那么怎么办呢？</p>
+<p>如果可以先经过Vue渲染，再加到DOM里面就好了！</p>
+<h2 id="Let’s-try-try-try…"><a href="#Let’s-try-try-try…" class="headerlink" title="Let’s try try try…"></a>Let’s try try try…</h2><p>首先，在填表格的时候搞一点小小的事情：在<code>&lt;el-column&gt;</code>中需要下拉的行的某一列下渲染一个<code>display: none</code>的表格，然后在点击的时候利用<code>jQuery.clone(true, true)</code>方法将元素和事件克隆一份并追加到相应的<code>&lt;tr&gt;</code>下。这样的话下拉的内容也是由Vue渲染好的，组件神马的就都可以用啦~</p>
+<p>然而…</p>
+<p>当点击按钮时，的确获得了经Vue渲染的表格，但是里面的内容却是…暂无数据…</p>
+<p>会不会是移动的时候数据没有加载上？尝试了$nextTick方法以及定时以后没有效果。再审查一下元素发现，原始的表格是有数据的，但是clone()获得的却没有。</p>
+<h2 id="Vue-extend大法"><a href="#Vue-extend大法" class="headerlink" title="Vue.extend大法"></a>Vue.extend大法</h2><h4 id="Vue-extend-options"><a href="#Vue-extend-options" class="headerlink" title="Vue.extend(options)"></a>Vue.extend(options)</h4><ul>
+<li><p><strong>Arguments:</strong></p>
+<ul>
+<li><code>{Object} options</code></li>
+</ul>
+</li>
+<li><p><strong>Usage:</strong></p>
+<p>Create a “subclass” of the base Vue constructor. The argument should be an object containing component options.</p>
+<p>The special case to note here is the <code>data</code> option - it must be a function when used with <code>Vue.extend()</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div id=&quot;mount-point&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// create constructor</div><div class="line">var Profile = Vue.extend(&#123;</div><div class="line">  template: &apos;&lt;p&gt;&#123;&#123;firstName&#125;&#125; &#123;&#123;lastName&#125;&#125; aka &#123;&#123;alias&#125;&#125;&lt;/p&gt;&apos;,</div><div class="line">  data: function () &#123;</div><div class="line">    return &#123;</div><div class="line">      firstName: &apos;Walter&apos;,</div><div class="line">      lastName: &apos;White&apos;,</div><div class="line">      alias: &apos;Heisenberg&apos;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">// create an instance of Profile and mount it on an element</div><div class="line">new Profile().$mount(&apos;#mount-point&apos;)</div></pre></td></tr></table></figure>
+<p>Will result in:</p>
+<p><code>&lt;p&gt;Walter White aka Heisenberg&lt;/p&gt;</code></p>
+</li>
+</ul>
+<p>显然，这就像开了挂！…0.0（啥开了挂，不就是又套了个现定义的component嘛…完全可以把参数和必要的函数都传进去构造一个component）但是呢要记得不要把 this 搞乱了…建议在extend前将父组件的 this 使用<code>let _this = this;</code>备份，在extend的组件里就可以使用 _this 访问父 this 啦~~</p>
+<p>因此我们可以先定位到需要添加的<code>&lt;tr&gt;</code>上，在其后用jQuery生成一个新的<code>&lt;tr&gt;</code>用于挂载临时组件，然后把这个鬼东西使用<code>.$mount()</code>方法挂载上去。</p>
+<p>这种方式的话需要注意的是在页面切换走的时候要记得把jQuery创建的对象在beforeDestroy()钩子以及其他必要的函数处即时清除，因为由jQuery创建的对象不会被Vue接管管理，需要自己手动管理。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/08/23/VuejQueryTry/" data-id="cj6p360wl0008ru1y8qzma9vs" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vue/">Vue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-最长有效括号长度求解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -121,7 +183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/08/15/最长有效括号长度求解/" data-id="cj6dr1n8f000itr1ypdtcyjbu" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/08/15/最长有效括号长度求解/" data-id="cj6p360y8000yru1yrh4p5fd7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -186,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/08/13/全排列问题 Permutation/" data-id="cj6dr1n8e000gtr1yvp3rme6w" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/08/13/全排列问题 Permutation/" data-id="cj6p360ya0010ru1ypuk8c8eu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -249,7 +311,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/08/09/设备识别论文阅读/" data-id="cj6dr1n8l000qtr1ys8wuonlp" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/08/09/设备识别论文阅读/" data-id="cj6p360yi0018ru1ya7slt7ax" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper/">paper</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
@@ -301,7 +363,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/26/论文阅读报告/" data-id="cj6dr1n8j000ntr1y3txlmupc" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/26/论文阅读报告/" data-id="cj6p360yf0016ru1yubhht6a2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper/">paper</a></li></ul>
@@ -370,7 +432,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/25/今日论文-20170725/" data-id="cj6dr1n860008tr1yzqp878b3" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/25/今日论文-20170725/" data-id="cj6p360wn0009ru1y2njins42" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/paper/">paper</a></li></ul>
@@ -2782,7 +2844,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/" data-id="cj6dr1n8d000dtr1y8kti83e1" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/" data-id="cj6p360x8000vru1ywx5nhkai" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li></ul>
@@ -2841,7 +2903,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/06/21/从生成括号到递归算法/" data-id="cj6dr1n870009tr1ylarf7gua" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/06/21/从生成括号到递归算法/" data-id="cj6p360y7000xru1y8dzbn3yz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -2897,7 +2959,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/06/05/15.3Sum/" data-id="cj6dr1n7y0003tr1y9cwxz9uv" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/06/05/15.3Sum/" data-id="cj6p360we0003ru1ymjxq537l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -2952,80 +3014,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/27/11.容器装水取最大/" data-id="cj6dr1n7q0001tr1y9k6ceq5k" class="article-share-link">Delen</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/27/11.容器装水取最大/" data-id="cj6p360w70001ru1yitkc32nn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trick/">trick</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-10.简单正则匹配" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/25/10.简单正则匹配/" class="article-date">
-  <time datetime="2017-05-25T15:30:48.000Z" itemprop="datePublished">2017-05-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/05/25/10.简单正则匹配/">简单正则匹配（.和*）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="LeetCode-10"><a href="#LeetCode-10" class="headerlink" title="LeetCode 10"></a>LeetCode 10</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给定一个字符串s和一个正则表达式p，检查是否匹配</p>
-<h2 id="方法一-递归遍历"><a href="#方法一-递归遍历" class="headerlink" title="方法一 - 递归遍历"></a>方法一 - 递归遍历</h2><p>我们知道，‘.’ 代表任意一个字符，而 ‘<em>’ 代表前面的字符出现0或多次。题目这里考虑的正则表达式p默认是正确的，不会出现一些奇怪的错误匹配式。所以我们可以每次看p中的两个字符，如果第二个是 ’\</em>‘ 则进行相应处理，如果不是则继续向后处理。显然这里就出现了递归，遍历所有情况，即可获得答案。但是要注意如果正则表达式是空串，那么它只匹配空。</p>
-<p>让我们进一步讨论 p[1] 是否为 ’*‘ 的情况：</p>
-<ol>
-<li>是。此时一种情况是p[0]没有出现过，则继续用s原串继续向后匹配即可：<code>isMatch(s, p[2:])</code> 第二种情况是p[0]出现了一次或多次，则应保证s长度大于0即 <code>len(s) != 0</code> 且 <code>s[0] == p[0]</code> 或 <code>p[0] == &#39;.&#39;</code> 此时可以把s的下标+1继续向后匹配 <code>isMatch(s[1:], p)</code></li>
-<li>否。此时应保证s长度大于0并判断是否匹配，若匹配则s和p的下标均+1继续向后匹配即可</li>
-</ol>
-<p>综上，递归算法如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(self, s, p)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type s: str</div><div class="line">        :type p: str</div><div class="line">        :rtype: bool</div><div class="line">        """</div><div class="line">        <span class="keyword">if</span> len(p) == <span class="number">0</span>:</div><div class="line">            <span class="keyword">return</span> len(s) == <span class="number">0</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> p[<span class="number">1</span>] == <span class="string">'*'</span>:</div><div class="line">            <span class="keyword">return</span> (self.isMatch(s, p[<span class="number">2</span>:]) <span class="keyword">or</span> len(s) != <span class="number">0</span> <span class="keyword">and</span> (s[<span class="number">0</span>] == p[<span class="number">0</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[<span class="number">0</span>]) <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p));</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">return</span> len(s) != <span class="number">0</span> <span class="keyword">and</span> (s[<span class="number">0</span>] == p[<span class="number">0</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[<span class="number">0</span>]) <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</div></pre></td></tr></table></figure>
-<h2 id="方法二-动态规划"><a href="#方法二-动态规划" class="headerlink" title="方法二 - 动态规划"></a>方法二 - 动态规划</h2><h5 id="方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？"><a href="#方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？" class="headerlink" title="方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？"></a>方法一遍历了所有的情况，显然效率比较低下，而通过简单的分析我们可以看出，该匹配前半部分进行的测试总结可以作为后半部分测试的前提继续用，所以考虑，是不是可以用动态规划来做呢？</h5><p>我们知道，动态规划是用空间换时间的经典思想，通过一个数组保存之前的计算状态供进一步分析使用帮助我们避免了许多重复的计算。</p>
-<p>想要使用动态规划算法，可以使用动态规划解决的问题通常有下面的特点：最优子结构，无后效性，重叠子问题。</p>
-<p>其中最重要的一点就是<strong>无后效性</strong>，所谓无后效性，就是之前的状态和之后的状态之间没有关系，引用百度百科，“某阶段的状态一旦确定，则此后过程的演变不再受此前各种状态及决策的影响”。</p>
-<p>最优子结构的意思是，每个阶段的最优状态可以从之前某个阶段的某个或某些状态直接得到。</p>
-<p>重叠子问题就不用多说啦，空间换时间，通过记录子问题的结果用于下一步的快速计算。</p>
-<p>之前的时候我们曾经用DP解决过最长回文子串的问题，是以回文串的长度作为一个基准去不断扩张计算（长度更长的串必然包括长度短的，因此由短推长）。</p>
-<p>这里我们设置一个数组 f[i][j] 表示 s[0 ~ i-1] 和 p[0 ~ j-1] 相匹配。</p>
-<h5 id="对初始条件进行以下分析："><a href="#对初始条件进行以下分析：" class="headerlink" title="对初始条件进行以下分析："></a>对初始条件进行以下分析：</h5><ol>
-<li>空串除了和空正则表达式相匹配，其他情况下均不能匹配，故 f[0][0] = True, i &gt;0时 f[i][0] = False</li>
-<li>当正则表达式中遇到 ‘<em>‘ 时（p[j-1] = ‘\</em>‘）需要考虑前一位的情况，只有当 f[0][j-2] = True 且 j &gt; 1时为 f[0][j] True</li>
-</ol>
-<h5 id="对于-f-i-j-："><a href="#对于-f-i-j-：" class="headerlink" title="对于 f[i][j] ："></a>对于 f[i][j] ：</h5><ol>
-<li><p>如果p[j-1] != ‘*‘ 只需 f[i-1][j-1] = True(前面的都匹配) 且 (s[i] = p[j] 或 p[j-1] = ‘.’) 即为True</p>
-</li>
-<li><p>如果p[j-1] = ‘*’ 若令 f[i][j] = True 此时又有下面几种情况，其中一种成立即可为True：</p>
-<p>a. 如果s中没有出现匹配串，那么只需 f[i][j-2] = True。这个比较好理解，就是 s[0 ~ i-1] 和 p[0 ~ j-3] 匹配即可（p[j-2]和p[j-1]分别是一个任意字符和 ‘*’ 字符，没有匹配到）</p>
-<p>b. 如果出现了至少一次，那么 f[i-1][j] = True 且 (s[i-1] = p[j-2] 或 p[j-2] = ‘.’) </p>
-<p>​    因为出现了至少一次，所以是s[0 ~ i-2]和p[0 ~ j-1]匹配成功，故要有f[i-1][j] = True</p>
-<p>​    要继续匹配下去，那么要看p[j-2]的关系（p[j-1]是 ‘*’）</p>
-</li>
-</ol>
-<p>综上，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(self, s, p)</span>:</span></div><div class="line">        m = len(s)</div><div class="line">        n = len(p)</div><div class="line">        f = [[<span class="keyword">False</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(n + <span class="number">1</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> range(m + <span class="number">1</span>)]</div><div class="line">        f[<span class="number">0</span>][<span class="number">0</span>] = <span class="keyword">True</span></div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt;= m:</div><div class="line">            f[i][<span class="number">0</span>] = <span class="keyword">False</span></div><div class="line">            i += <span class="number">1</span></div><div class="line"></div><div class="line">        j = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> j &lt;= n:</div><div class="line">            f[<span class="number">0</span>][j] = j &gt; <span class="number">1</span> <span class="keyword">and</span> <span class="string">'*'</span> == p[j<span class="number">-1</span>] <span class="keyword">and</span> f[<span class="number">0</span>][j<span class="number">-2</span>]</div><div class="line">            j += <span class="number">1</span></div><div class="line"></div><div class="line">        i = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i &lt;= m:</div><div class="line">            j = <span class="number">1</span></div><div class="line">            <span class="keyword">while</span> j &lt;= n:</div><div class="line">                <span class="keyword">if</span> p[j<span class="number">-1</span>] != <span class="string">'*'</span>:</div><div class="line">                    f[i][j] = f[i<span class="number">-1</span>][j<span class="number">-1</span>] <span class="keyword">and</span> (s[i<span class="number">-1</span>] == p[j<span class="number">-1</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[j<span class="number">-1</span>])</div><div class="line">                <span class="keyword">else</span>:</div><div class="line">                    f[i][j] = f[i][j<span class="number">-2</span>] <span class="keyword">or</span> ((s[i<span class="number">-1</span>] == p[j<span class="number">-2</span>] <span class="keyword">or</span> <span class="string">'.'</span> == p[j<span class="number">-2</span>]) <span class="keyword">and</span> f[i<span class="number">-1</span>][j])</div><div class="line">                j += <span class="number">1</span></div><div class="line">            i += <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> f[m][n]</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/25/10.简单正则匹配/" data-id="cj6dr1n7k0000tr1yoiet1mpt" class="article-share-link">Delen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
 
     </footer>
   </div>
@@ -3048,9 +3040,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Labels</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
     </div>
   </div>
 
@@ -3060,14 +3052,14 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/SDN/" style="font-size: 16.67px;">SDN</a> <a href="/tags/dp/" style="font-size: 16.67px;">dp</a> <a href="/tags/javascript/" style="font-size: 10px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 16.67px;">paper</a> <a href="/tags/trick/" style="font-size: 13.33px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
+      <a href="/tags/SDN/" style="font-size: 16.67px;">SDN</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/dp/" style="font-size: 16.67px;">dp</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 16.67px;">paper</a> <a href="/tags/trick/" style="font-size: 13.33px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
     </div>
@@ -3077,9 +3069,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/08/23/VuejQueryTry/">即时生成Vue组件并挂载（改造已有组件）</a>
+          </li>
         
           <li>
             <a href="/2017/08/15/最长有效括号长度求解/">最长有效括号长度求解</a>
@@ -3095,10 +3091,6 @@
         
           <li>
             <a href="/2017/07/26/论文阅读报告/">论文阅读报告</a>
-          </li>
-        
-          <li>
-            <a href="/2017/07/25/今日论文-20170725/">今日论文</a>
           </li>
         
       </ul>
