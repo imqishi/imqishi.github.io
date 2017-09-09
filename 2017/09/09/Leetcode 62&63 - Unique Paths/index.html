@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>最长有效括号长度求解 | Nick&#39;s Recycle bin</title>
+  <title>Leetcode 62&amp;63 - Unique Paths | Nick&#39;s Recycle bin</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Leetcode 62&amp;amp;63 - Unique Paths这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。 前两天做了好几个求所有具体情况的问题写了好几个DFS，今天也没仔细看题直接DFS跑起来了…结果上来就超时了…然后画了几个图感觉是个数学题，总感觉有规律，然而找不到…瞄了眼答案的确是数学题，不过">
+  <meta name="description" content="这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。 前两天做了好几个求所有具体情况的问题写了好几个DFS，今天也没仔细看题直接DFS跑起来了…结果上来就超时了…然后画了几个图感觉是个数学题，总感觉有规律，然而找不到…瞄了眼答案的确是数学题，不过也可以用DP来做…我感觉我脑回路可能真和一般人不一样，这题A率接近">
 <meta name="keywords" content="leetcode,dp">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最长有效括号长度求解">
+<meta property="og:title" content="Leetcode 62&amp;63 - Unique Paths">
 <meta property="og:url" content="http://blog.imqishi.cn/2017/09/09/Leetcode 62&63 - Unique Paths/index.html">
 <meta property="og:site_name" content="Nick&#39;s Recycle bin">
-<meta property="og:description" content="Leetcode 62&amp;amp;63 - Unique Paths这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。 前两天做了好几个求所有具体情况的问题写了好几个DFS，今天也没仔细看题直接DFS跑起来了…结果上来就超时了…然后画了几个图感觉是个数学题，总感觉有规律，然而找不到…瞄了眼答案的确是数学题，不过">
+<meta property="og:description" content="这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。 前两天做了好几个求所有具体情况的问题写了好几个DFS，今天也没仔细看题直接DFS跑起来了…结果上来就超时了…然后画了几个图感觉是个数学题，总感觉有规律，然而找不到…瞄了眼答案的确是数学题，不过也可以用DP来做…我感觉我脑回路可能真和一般人不一样，这题A率接近">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-09T10:50:45.000Z">
+<meta property="og:updated_time" content="2017-09-09T10:52:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="最长有效括号长度求解">
-<meta name="twitter:description" content="Leetcode 62&amp;amp;63 - Unique Paths这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。 前两天做了好几个求所有具体情况的问题写了好几个DFS，今天也没仔细看题直接DFS跑起来了…结果上来就超时了…然后画了几个图感觉是个数学题，总感觉有规律，然而找不到…瞄了眼答案的确是数学题，不过">
+<meta name="twitter:title" content="Leetcode 62&amp;63 - Unique Paths">
+<meta name="twitter:description" content="这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。 前两天做了好几个求所有具体情况的问题写了好几个DFS，今天也没仔细看题直接DFS跑起来了…结果上来就超时了…然后画了几个图感觉是个数学题，总感觉有规律，然而找不到…瞄了眼答案的确是数学题，不过也可以用DP来做…我感觉我脑回路可能真和一般人不一样，这题A率接近">
   
     <link rel="alternate" href="/atom.xml" title="Nick&#39;s Recycle bin" type="application/atom+xml">
   
@@ -79,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      最长有效括号长度求解
+      Leetcode 62&amp;63 - Unique Paths
     </h1>
   
 
@@ -87,7 +87,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Leetcode-62-amp-63-Unique-Paths"><a href="#Leetcode-62-amp-63-Unique-Paths" class="headerlink" title="Leetcode 62&amp;63 - Unique Paths"></a>Leetcode 62&amp;63 - Unique Paths</h1><p>这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。</p>
+        <p>这两道题目是类似的，大意是给你一个m x n的棋盘，问从左上角到右下角共有多少种走法。只不过第二个题目引入了墙的概念，也即有墙的地方不能走。</p>
 <p>前两天做了好几个<strong>求所有具体情况</strong>的问题写了好几个DFS，今天也没仔细看题直接DFS跑起来了…结果上来就超时了…然后画了几个图感觉是个数学题，总感觉有规律，然而找不到…瞄了眼答案的确是数学题，不过也可以用DP来做…我感觉我脑回路可能真和一般人不一样，这题A率接近50%我特喵的就是没想起来怎么DP…看答案的DP式那么简单我还懵了几秒钟…简直哔了狗…</p>
 <p>Ps：求数量一般都是有更容易的方法，比如数学题，比如DP。而求具体的所有情况一般才是遍历、DFS等。</p>
 <p>以下先以第一道题为例进行分析：</p>
@@ -112,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/09/09/Leetcode 62&63 - Unique Paths/" data-id="cj7d6wnsw000g7h1ygdmmjhxp" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/09/09/Leetcode 62&63 - Unique Paths/" data-id="cj7d6yfvt00048v1ylck2r7qw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -177,7 +177,7 @@
       <ul>
         
           <li>
-            <a href="/2017/09/09/Leetcode 62&63 - Unique Paths/">最长有效括号长度求解</a>
+            <a href="/2017/09/09/Leetcode 62&63 - Unique Paths/">Leetcode 62&amp;63 - Unique Paths</a>
           </li>
         
           <li>
