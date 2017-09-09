@@ -65,6 +65,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-11.容器装水取最大" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/27/11.容器装水取最大/" class="article-date">
+  <time datetime="2017-05-27T07:04:48.000Z" itemprop="datePublished">2017-05-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/27/11.容器装水取最大/">容器装水取最大</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="LeetCode-11"><a href="#LeetCode-11" class="headerlink" title="LeetCode 11"></a>LeetCode 11</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>给出n个非负整数的数组，以下标和值分别作x, y轴，可以构成一个坐标轴中有很多竖线的图例，取其中两条线作为一个容器，求如何取线可以使容器获得最大的容量</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>一个是要注意是非负整数，这就意味着有可能值为0，此时与其他正数构成的形状是三角形，所以蓄水量为0</p>
+<p>还有一个是输入数组长度至少应该为2</p>
+<h2 id="方法一-暴力求解"><a href="#方法一-暴力求解" class="headerlink" title="方法一 - 暴力求解"></a>方法一 - 暴力求解</h2><p>首先想到的就是暴力枚举，通过遍历所有情况求得最大值，这种情况下时间复杂度为O(n^2)。进一步思考，下标ij和ji的值是相同的，不需要重复计算，也即只需计算 j &gt; i 或者 i &gt; j 的情况即可。代码简单，此处不再赘述。</p>
+<h2 id="方法二-一点小Trick与其他的思考"><a href="#方法二-一点小Trick与其他的思考" class="headerlink" title="方法二 - 一点小Trick与其他的思考"></a>方法二 - 一点小Trick与其他的思考</h2><p>最近被动态规划给整惨了，搞得我现在一看到这种有重复计算包含在其中的都想去看看能不能动态规划一下…但是想了一下，虽然看起来有很多计算，好像可以重复利用，但是仔细思考并不适合用动态规划，最优子结构是什么？</p>
+<p>类比正则匹配的题目一样以f[i][j]作为i和j之间的最大蓄水量吗…好像没有办法在接下来的计算中进行利用…</p>
+<p>类比最长回文子串的题目一样以回文串的长度作为子结构进行一步步迭代利用吗？哎？这个好像可以，但是这样的话好像把问题想复杂了，时间复杂度还是O(n^2)呀…</p>
+<p>方法一的代码提交以后显示超时，那么一般来说，这里的时间复杂度应该可以减到O(logn)或者O(n)，看到log就想二分思想，但是这里显然和二分没有什么关系。看到O(n)就想到遍历一遍，一种情况是从左往右，一种情况就是从两边到中间。第一种情况想了一下不可能，因为两个点的位置是任意出现的，并不是一个固定一个活动。所以考虑情况二。</p>
+<p>根据贪心的思想，每次都想让结果更大一些，那么两个竖线低的一边应该继续活动，寻找有没有更大的。这样做出来确实是对的，但是却让人心生疑惑，会不会有一个x轴跨度比较大，竖线长度比较短，而有一个x轴跨度比较小，但是竖线很长的，这两个哪个会更大呢，会不会错过一些可能的获得最大值的情况呢？</p>
+<p>学习了<a href="https://discuss.leetcode.com/topic/503/anyone-who-has-a-o-n-algorithm/3" target="_blank" rel="external">Discuss</a>以后，根据第一位答主的反证法证明，我们可以看出上述问题是不可能存在的：</p>
+<p>假设这样计算的结果不是最优解。那么假设最优解是a_ol和a_or。我们的算法结束的条件是左游标和右游标相遇，那么我们必然是只有一个游标曾经走过a_ol或a_or，假设一个游标到了a_ol，那么下列情况下，该游标可能从a_ol上移走：</p>
+<ol>
+<li>另一个游标也到了a_ol。这种情况下会退出循环，但是容易看出，a_or肯定被另一个游标走过了，这与我们的假设相悖，不可能成立。</li>
+<li>另一个游标到了一个比a_ol处数组更大的值的地方，假设它是a_rr。这种情况下，哎？刚才我们是不是假设a_ol和a_or能蓄水最多吗？如果又出来一个a_rr，岂不是刚才的假设失效了？显然，这种情况也是不可能发生的。</li>
+</ol>
+<p>综上所述，该算法成立。</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxArea</span><span class="params">(self, height)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type height: List[int]</div><div class="line">        :rtype: int</div><div class="line">        """</div><div class="line">        Max = <span class="number">0</span></div><div class="line">        i = <span class="number">0</span></div><div class="line">        j = len(height) - <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i != j:</div><div class="line">            tm = (j - i) * min(height[i], height[j])</div><div class="line">            Max = tm <span class="keyword">if</span> tm &gt; Max <span class="keyword">else</span> Max</div><div class="line">            <span class="keyword">if</span> height[i] &lt; height[j]:</div><div class="line">                i += <span class="number">1</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                j -= <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> Max</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/05/27/11.容器装水取最大/" data-id="cj7d6wnrw00017h1y7refj8me" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trick/">trick</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-10.简单正则匹配" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/05/25/10.简单正则匹配/" class="article-date">
@@ -123,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/25/10.简单正则匹配/" data-id="cj721kdzh00008l1yjturfgck" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/25/10.简单正则匹配/" data-id="cj7d6wnrr00007h1yipx70xtn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -194,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/13/5.最长回文子串/" data-id="cj721kdzt00058l1yo5qnin42" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/13/5.最长回文子串/" data-id="cj7d6wnsp000d7h1y9y4fa3ra" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dp/">dp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/trick/">trick</a></li></ul>
@@ -311,7 +366,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/" data-id="cj721ke08000i8l1ywffic50a" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/" data-id="cj7d6wntb000u7h1yb3zw3sy8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
@@ -374,7 +429,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/04/4.求有序数组的中位数/" data-id="cj721kdzr00048l1y4iysg337" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/05/04/4.求有序数组的中位数/" data-id="cj7d6wnss000e7h1yxs08nhsn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
@@ -433,7 +488,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/04/17/近期总结与下一步计划/" data-id="cj721ke0d000q8l1yloo47rsc" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/04/17/近期总结与下一步计划/" data-id="cj7d6wntj00147h1y2uurnypc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -503,7 +558,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/01/16/第一篇博客/" data-id="cj721ke0b000n8l1yh6cnbexa" class="article-share-link">Share</a>
+      <a data-url="http://blog.imqishi.cn/2017/01/16/第一篇博客/" data-id="cj7d6wntd000z7h1yjxkvg4nq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -539,7 +594,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/SDN/" style="font-size: 16.67px;">SDN</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/dp/" style="font-size: 16.67px;">dp</a> <a href="/tags/javascript/" style="font-size: 13.33px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 16.67px;">paper</a> <a href="/tags/trick/" style="font-size: 13.33px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
+      <a href="/tags/SDN/" style="font-size: 15px;">SDN</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/dp/" style="font-size: 17.5px;">dp</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 15px;">paper</a> <a href="/tags/trick/" style="font-size: 12.5px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
     </div>
   </div>
 
@@ -561,6 +616,10 @@
       <ul>
         
           <li>
+            <a href="/2017/09/09/Leetcode 62&63 - Unique Paths/">最长有效括号长度求解</a>
+          </li>
+        
+          <li>
             <a href="/2017/09/01/全排列问题 Permutation/">全排列问题 -- Permutation</a>
           </li>
         
@@ -574,10 +633,6 @@
         
           <li>
             <a href="/2017/08/09/设备识别论文阅读/">设备识别论文阅读</a>
-          </li>
-        
-          <li>
-            <a href="/2017/07/26/论文阅读报告/">论文阅读报告</a>
           </li>
         
       </ul>
