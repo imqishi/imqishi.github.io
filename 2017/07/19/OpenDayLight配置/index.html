@@ -1,182 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="If you don’t like how the table is set, turn over the table.">
-    <meta name="keyword" content="null">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="Nick&#39;s Blog" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        SDN基础知识学习-环境配置｜Nick&#39;s Blog
-        
-    </title>
+  <meta charset="utf-8">
+  
+  <title>SDN基础知识学习-环境配置 | Nick&#39;s Recycle bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="安装配置ODL 安装Java 官网下载对应的包，并解压 进入解压后的文件夹 ./bin/karaf 安装必要的feature：feature:install odl-l2switch-switch odl-restconf odl-mdsal-all odl-openflowplugin-all odl-dlux-all odl-adsal-northbound 新版本里有可能没有odl-adsa">
+<meta name="keywords" content="SDN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDN基础知识学习-环境配置">
+<meta property="og:url" content="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/index.html">
+<meta property="og:site_name" content="Nick&#39;s Recycle bin">
+<meta property="og:description" content="安装配置ODL 安装Java 官网下载对应的包，并解压 进入解压后的文件夹 ./bin/karaf 安装必要的feature：feature:install odl-l2switch-switch odl-restconf odl-mdsal-all odl-openflowplugin-all odl-dlux-all odl-adsal-northbound 新版本里有可能没有odl-adsa">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-07-19T15:19:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDN基础知识学习-环境配置">
+<meta name="twitter:description" content="安装配置ODL 安装Java 官网下载对应的包，并解压 进入解压后的文件夹 ./bin/karaf 安装必要的feature：feature:install odl-l2switch-switch odl-restconf odl-mdsal-all odl-openflowplugin-all odl-dlux-all odl-adsal-northbound 新版本里有可能没有odl-adsa">
+  
+    <link rel="alternate" href="/atom.xml" title="Nick&#39;s Recycle bin" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
 
-    <link rel="canonical" href="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
 </head>
 
-<style>
-
-    header.intro-header {
-        background-image: url('img/background.jpg')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
-" data-ishome = "false" >
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    Nick&#39;s Blog
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-							
-                        <li>
-                            <a href="/Tags/">Tags</a>
-                        </li>
-							
-						
-                    
-					
-					
-                </ul>
-            </div>
-        </div>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Nick&#39;s Recycle bin</a>
+      </h1>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-<!--only post-->
-
-
-<img class="wechat-title-img"
-     src="">
-
-
-<style>
-    
-    header.intro-header {
-        background-image: url('')
-    }
-
-    
-</style>
-
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>SDN基础知识学习-环境配置</h1>
-                    
-                    <span class="meta">
-                         作者 Nick
-                        <span>
-                          日期 2017-07-19
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#SDN"
-                           title="SDN">SDN</a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imqishi.cn"></form>
+      </div>
     </div>
-    <div class="post-title-haojen">
-        <span>
-            SDN基础知识学习-环境配置
-        </span>
-    </div>
+  </div>
 </header>
+      <div class="outer">
+        <section id="main"><article id="post-OpenDayLight配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/19/OpenDayLight配置/" class="article-date">
+  <time datetime="2017-07-19T15:18:48.000Z" itemprop="datePublished">2017-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SDN基础知识学习-环境配置
+    </h1>
+  
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3 id="安装配置ODL"><a href="#安装配置ODL" class="headerlink" title="安装配置ODL"></a>安装配置ODL</h3><ol>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="安装配置ODL"><a href="#安装配置ODL" class="headerlink" title="安装配置ODL"></a>安装配置ODL</h3><ol>
 <li>安装Java</li>
 <li>官网下载对应的包，并解压</li>
 <li>进入解压后的文件夹</li>
@@ -201,11 +112,11 @@
 </ol>
 <p>利用Postman、<em>PUT方式</em>、<em>Authorization使用Basic，用户密码均为admin</em>。</p>
 <p>Headers设置如下：</p>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">Accept:application/xml</div><div class="line">Content-Type:applcation/xml</div><div class="line">Postman还会自动生成一个Authorization的域，我们可以不用管它</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Accept:application/xml</div><div class="line">Content-Type:applcation/xml</div><div class="line">Postman还会自动生成一个Authorization的域，我们可以不用管它</div></pre></td></tr></table></figure>
 <p>Body设置类型为<em>raw</em> 类型 <em>XML(application/xml)</em>，下述为<strong>阻断 </strong> <em>源和目的均为10.0.0.0/24(ipv4-source, ipv4-destination)</em> <em>IPv4(ethernet-type)</em> <em>TCP(ip-protocol)</em> <em>13911目的端口(tcp-destination-port)</em>的流</p>
 <p>url为：<a href="http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table/0/flow/1" target="_blank" rel="external">http://localhost:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:1/table/0/flow/1</a></p>
 <p>注意openflow:后面跟的数字应该是在Web拓扑中看到的openflow:后的数字，初步配置table就是0对应xml文件中的<strong>table_id</strong>，flow后的1对应xml文件中的<strong>id</strong>，xml文件中<strong>flow-name</strong>随便起。像<strong>strict</strong>，<strong>cookie-mask</strong>，<strong>installHw</strong>，<strong>barrier</strong>没有特殊要求都可以先不配。还需要注意的一点是，<strong>priority数值越大优先级越大</strong>。其实匹配规则就是按照ovs-ofctl dump-flows s1从上往下的顺序匹配的。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">flow</span> <span class="attr">xmlns</span>=<span class="string">"urn:opendaylight:flow:inventory"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">strict</span>&gt;</span>false<span class="tag">&lt;/<span class="name">strict</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">match</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ethernet-match</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">ethernet-type</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">type</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">type</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">ethernet-type</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ethernet-match</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ipv4-source</span>&gt;</span>10.0.0.1/24<span class="tag">&lt;/<span class="name">ipv4-source</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ipv4-destination</span>&gt;</span>10.0.0.3/24<span class="tag">&lt;/<span class="name">ipv4-destination</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">ip-match</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">ip-protocol</span>&gt;</span>6<span class="tag">&lt;/<span class="name">ip-protocol</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ip-match</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tcp-destination-port</span>&gt;</span>13911<span class="tag">&lt;/<span class="name">tcp-destination-port</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">match</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table_id</span>&gt;</span>0<span class="tag">&lt;/<span class="name">table_id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">flow-name</span>&gt;</span>flow1<span class="tag">&lt;/<span class="name">flow-name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">priority</span>&gt;</span>1<span class="tag">&lt;/<span class="name">priority</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">instructions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">instruction</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">order</span>&gt;</span>0<span class="tag">&lt;/<span class="name">order</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">apply-actions</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">action</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">order</span>&gt;</span>0<span class="tag">&lt;/<span class="name">order</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">drop-action</span>/&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">apply-actions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">instruction</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">instructions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">cookie</span>&gt;</span>3<span class="tag">&lt;/<span class="name">cookie</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">cookie_mask</span>&gt;</span>255<span class="tag">&lt;/<span class="name">cookie_mask</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">installHw</span>&gt;</span>false<span class="tag">&lt;/<span class="name">installHw</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">hard-timeout</span>&gt;</span>1200<span class="tag">&lt;/<span class="name">hard-timeout</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">barrier</span>&gt;</span>false<span class="tag">&lt;/<span class="name">barrier</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">flow</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">flow</span> <span class="attr">xmlns</span>=<span class="string">"urn:opendaylight:flow:inventory"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">strict</span>&gt;</span>false<span class="tag">&lt;/<span class="name">strict</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">match</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ethernet-match</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">ethernet-type</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">type</span>&gt;</span>2048<span class="tag">&lt;/<span class="name">type</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">ethernet-type</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ethernet-match</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ipv4-source</span>&gt;</span>10.0.0.1/24<span class="tag">&lt;/<span class="name">ipv4-source</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">ipv4-destination</span>&gt;</span>10.0.0.3/24<span class="tag">&lt;/<span class="name">ipv4-destination</span>&gt;</span></div><div class="line">         <span class="tag">&lt;<span class="name">ip-match</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">ip-protocol</span>&gt;</span>6<span class="tag">&lt;/<span class="name">ip-protocol</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">ip-match</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">tcp-destination-port</span>&gt;</span>13911<span class="tag">&lt;/<span class="name">tcp-destination-port</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">match</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">table_id</span>&gt;</span>0<span class="tag">&lt;/<span class="name">table_id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>1<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">flow-name</span>&gt;</span>flow1<span class="tag">&lt;/<span class="name">flow-name</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">priority</span>&gt;</span>1<span class="tag">&lt;/<span class="name">priority</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">instructions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">instruction</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">order</span>&gt;</span>0<span class="tag">&lt;/<span class="name">order</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">apply-actions</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="name">action</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">order</span>&gt;</span>0<span class="tag">&lt;/<span class="name">order</span>&gt;</span></div><div class="line">                    <span class="tag">&lt;<span class="name">drop-action</span>/&gt;</span></div><div class="line">                <span class="tag">&lt;/<span class="name">action</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="name">apply-actions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">instruction</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">instructions</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">cookie</span>&gt;</span>3<span class="tag">&lt;/<span class="name">cookie</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">cookie_mask</span>&gt;</span>255<span class="tag">&lt;/<span class="name">cookie_mask</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">installHw</span>&gt;</span>false<span class="tag">&lt;/<span class="name">installHw</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">hard-timeout</span>&gt;</span>1200<span class="tag">&lt;/<span class="name">hard-timeout</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">barrier</span>&gt;</span>false<span class="tag">&lt;/<span class="name">barrier</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">flow</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>同理，我们可以将<strong>ip-protoco</strong>l置为<strong>17</strong>，<strong>tcp-destination-port</strong>改为<strong>udp-destination-port</strong>去阻断udp端口</p>
 <h3 id="测试工具-iperf简介"><a href="#测试工具-iperf简介" class="headerlink" title="测试工具 iperf简介"></a>测试工具 iperf简介</h3><p>Iperf 是一个网络性能测试工具。Iperf可以测试最大TCP和UDP带宽性能。Iperf具有多种参数和UDP特性，可以根据需要调整。Iperf可以报告带宽，延迟抖动和数据包丢失。</p>
 <p>一般测试两台设备之间的连通性。在一台设备上使用<em>server模式</em>，另一台使用<em>client模式</em>。</p>
@@ -2551,185 +2462,138 @@
 </table>
 <p><a href="http://blog.sina.com.cn/s/blog_701557360101n6ye.html" target="_blank" rel="external">ovs-基本操作</a></p>
 
-                <hr>
-                
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2017/07/25/今日论文-20170725/" data-toggle="tooltip" data-placement="top"
-                           title="今日论文">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2017/06/21/从生成括号到递归算法/" data-toggle="tooltip" data-placement="top"
-                           title="从生成括号到递归算法">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-
-                
-
-
-                <!--加入新的评论系统-->
-                
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置ODL"><span class="toc-text">安装配置ODL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装配置MN"><span class="toc-text">安装配置MN</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#如果miniedit成功Run但是不出来mininet-gt-命令提示符，可以先将拓扑导出为python文件：File–-gt-Export-Level2-Script，然后手动执行python-test-py-进入mininet-gt-界面，使用xterm-h1打开相应设备的Terminal"><span class="toc-text">如果miniedit成功Run但是不出来mininet>命令提示符，可以先将拓扑导出为python文件：File–>Export Level2 Script，然后手动执行python test.py 进入mininet>界面，使用xterm h1打开相应设备的Terminal</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#如果mininet总是报奇怪的错误，可以尝试在Terminal中使用mn-c清空原有配置，再次运行。"><span class="toc-text">如果mininet总是报奇怪的错误，可以尝试在Terminal中使用mn -c清空原有配置，再次运行。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看配置、下流表"><span class="toc-text">查看配置、下流表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试工具-iperf简介"><span class="toc-text">测试工具 iperf简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#附录"><span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#以太网类型码"><span class="toc-text">以太网类型码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IP-Protocol-number与各协议对应表"><span class="toc-text">IP Protocol number与各协议对应表</span></a></li></ol></li></ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5 class="text-center">
-                        <a href="/tags/">FEATURED TAGS</a>
-                    </h5>
-                    <div class="tags">
-                        
-                        <a class="tag" href="/tags/#SDN"
-                           title="SDN">SDN</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://blog.imqishi.cn/2017/07/19/OpenDayLight配置/" data-id="cj7d8d7m6000mp31yds6wrsl5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDN/">SDN</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/25/今日论文-20170725/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          今日论文
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/21/从生成括号到递归算法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">从生成括号到递归算法</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
+</section>
+        
+          <aside id="sidebar">
+  
+    
 
-
-
-
-
-
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/imqishi">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; Nick&#39;s Blog 2017
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
     </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/SDN/" style="font-size: 15px;">SDN</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/dp/" style="font-size: 17.5px;">dp</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 15px;">paper</a> <a href="/tags/trick/" style="font-size: 12.5px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/09/Leetcode 62&63 - Unique Paths/">Leetcode 62&amp;63 - Unique Paths</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/01/全排列问题 Permutation/">全排列问题 -- Permutation</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/23/VuejQueryTry/">即时生成Vue组件并挂载（改造已有组件）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/15/最长有效括号长度求解/">最长有效括号长度求解</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/09/设备识别论文阅读/">设备识别论文阅读</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Nick<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://blog.imqishi.cn/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-<!-- Google Analytics -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- Baidu Tongji -->
 
+<script src="/js/script.js"></script>
 
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','null','2.0.0');
-</script>
-
-<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="img/avatar.jpg">
+  </div>
 </body>
-
 </html>
