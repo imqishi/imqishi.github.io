@@ -1,270 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>全排列问题 -- Permutation | Nick&#39;s Recycle bin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2017-08-13 18:54:28 第一版 好久不写Leetcode了，果然手生的很，思路也僵化了，本科的时候都会写的全排列竟然折腾了一天才想明白怎么回事。还是要多加练习。 问题分析实现一个不会有重复字符的串的全排列（这里以仅以实现数字为例） 所谓全排列呢，就是问你n个数字从左往右排不重样有多少种摆法，高中的时候基本大家都算过有多少种情况(n!种情况)还经常和组合（Cmn种情况，在有重复的元素">
-<meta name="keywords" content="leetcode">
-<meta property="og:type" content="article">
-<meta property="og:title" content="全排列问题 -- Permutation">
-<meta property="og:url" content="http://blog.imqishi.cn/2017/09/01/全排列问题 Permutation/index.html">
-<meta property="og:site_name" content="Nick&#39;s Recycle bin">
-<meta property="og:description" content="2017-08-13 18:54:28 第一版 好久不写Leetcode了，果然手生的很，思路也僵化了，本科的时候都会写的全排列竟然折腾了一天才想明白怎么回事。还是要多加练习。 问题分析实现一个不会有重复字符的串的全排列（这里以仅以实现数字为例） 所谓全排列呢，就是问你n个数字从左往右排不重样有多少种摆法，高中的时候基本大家都算过有多少种情况(n!种情况)还经常和组合（Cmn种情况，在有重复的元素">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-01T15:35:21.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="全排列问题 -- Permutation">
-<meta name="twitter:description" content="2017-08-13 18:54:28 第一版 好久不写Leetcode了，果然手生的很，思路也僵化了，本科的时候都会写的全排列竟然折腾了一天才想明白怎么回事。还是要多加练习。 问题分析实现一个不会有重复字符的串的全排列（这里以仅以实现数字为例） 所谓全排列呢，就是问你n个数字从左往右排不重样有多少种摆法，高中的时候基本大家都算过有多少种情况(n!种情况)还经常和组合（Cmn种情况，在有重复的元素">
-  
-    <link rel="alternate" href="/atom.xml" title="Nick&#39;s Recycle bin" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
+extends includes/layout.pug
 
-</head>
+block top_img
+  - var top_img = page.top_img || theme.top_img || config.top_img
+  if (top_img)
+    - var flag = top_img === true ? 'no-bg' : undefined
+    div#top-container(style=`background-image: url(${top_img})` class=flag)
+      include ./includes/header.pug
+      #post-info
+        #post-title= page.title || _p('no_title') 
+        #post-meta
+          if (theme.post_meta.date_type)
+            - var date_type = theme.post_meta.date_type == 'updated' ? 'updated' : 'date' 
+            time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)] 
+          if (theme.post_meta.categories && page.categories.data.length > 0)
+            if (theme.post_meta.date_type)
+              span.post-meta__separator  | 
+            each item, index in page.categories.data
+              i.fa.fa-inbox(aria-hidden="true")  
+              a(href=url_for(item.path)).post-meta__categories  #[=item.name]  
+              if (index < page.categories.data.length - 1)
+                 i.fa.fa-angle-right(aria-hidden="true")  
+          if (theme.disqus.enable && theme.disqus.count)
+            if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
+              span.post-meta__separator  | 
+            i.fa.fa-comment-o(aria-hidden="true")  
+            a(href=url_for(page.path) + '#disqus_thread')
+              span.disqus-comment-count(data-disqus-identifier=page.path)
+  else
+    div#top-container.plain
+      include ./includes/header.pug
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Nick&#39;s Recycle bin</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imqishi.cn"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-全排列问题 Permutation" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/09/01/全排列问题 Permutation/" class="article-date">
-  <time datetime="2017-09-01T15:25:18.000Z" itemprop="datePublished">2017-09-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      全排列问题 -- Permutation
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>2017-08-13 18:54:28 第一版</p>
-<p>好久不写Leetcode了，果然手生的很，思路也僵化了，本科的时候都会写的全排列竟然折腾了一天才想明白怎么回事。还是要多加练习。</p>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>实现一个不会有重复字符的串的全排列（这里以仅以实现数字为例）</p>
-<p>所谓<strong>全排列</strong>呢，就是问你n个数字从左往右排不重样有多少种摆法，高中的时候基本大家都算过有多少种情况(<strong>n!</strong>种情况)还经常和<strong>组合</strong>（Cmn种情况，在有重复的元素的时候不考虑同样元素的先后顺序进行排列，e而全排列则会考虑先后顺序）放到一块考，到现在排列组合对我都是梦魇般的存在，高考的时候上天眷顾走了狗屎运这类问题都蒙对了因而超常发挥了一把，想不到读了大学、研究生还是得用，想想就都是泪，不提了…言归正传…</p>
-<p>以[1, 2, 3]为例，我们按照<em>字典序</em>对其全排列结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1, 2, 3</div><div class="line">1, 3, 2</div><div class="line">2, 1, 3</div><div class="line">2, 3, 1</div><div class="line">3, 1, 2</div><div class="line">3, 2, 1</div></pre></td></tr></table></figure>
-<p>不难看出其规律，就是：</p>
-<p><strong>把这串数字从左往右分别固定住每个数字，然后对右方的数字进行交换。</strong></p>
-<p>n个数字的问题不断细化，会发现每个子问题都是这种解决方法。显然的，我们可以使用递归的方式进行算法实现。</p>
-<h2 id="递归实现"><a href="#递归实现" class="headerlink" title="递归实现"></a>递归实现</h2><p>递归递归，书上说是“最符合正常人脑回路的想法”，但是据我了解很多人都感觉递归比普通迭代理解起来难…我们很容易自己把自己绕到子问题的具体实现里面，对于这种时候，比较好的做法是：<strong>把要实现的递归函数看做一个黑盒系统，只知道输入与输出，不要想内部的具体逻辑。</strong></p>
-<p>假设我们定义函数为<code>perm()</code>，首先让我们想一下这个函数可能需要哪些参数：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">nums - array 输入的原始数组，必然要有</div><div class="line">start - int 当前函数运行到的数组位置，必然要有</div><div class="line"># end - int 数组的结束位置，这个可忽略，因为end的位置始终是固定的，就是输入数组的长度</div><div class="line"># 现在，我们得到函数原型：</div><div class="line">perm(nums, start = 0)</div></pre></td></tr></table></figure>
-<p>根据上述分析，每个元素都要与后面的元素进行交换，我们是从左往右一个一个进行元素的“确定”工作的，因此递归式可以确定为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">perm(nums, start + 1)</div></pre></td></tr></table></figure>
-<p>递归条件又如何呢？应该是从<code>start</code>位置起，一直到数组末尾的所有都需要进行交换，我们以一个新的变量<code>i</code>作为这个循环的游标：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">i = start</div><div class="line"><span class="keyword">while</span> i &lt; len(nums):</div><div class="line">    nums[i], nums[start] = nums[start], nums[i] <span class="comment"># swap value</span></div><div class="line">    perm(nums, start + <span class="number">1</span>) <span class="comment"># recursion</span></div><div class="line">    <span class="comment"># something may be lost here...</span></div><div class="line">    </div><div class="line">    i += <span class="number">1</span></div></pre></td></tr></table></figure>
-<p>为什么 i = start 而不是 start + 1 呢？<strong>因为start + 1时会丢失当前轮的组合</strong><br><strong>这样的话得到的结果里会有部分缺失，并且有部分重复。原因是：上述操作把i位置和start位置元素互换并进行进一步递归，当下级递归结束返回的时候再进行i+1与start位置元素互换，这个时候的nums不是初始状态的nums了！（黑人问号）</strong></p>
-<p><strong>所以，正确的方法应该是：</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">i = start</div><div class="line"><span class="keyword">while</span> i &lt; len(nums):</div><div class="line">    nums[i], nums[start] = nums[start], nums[i] <span class="comment"># swap value</span></div><div class="line">    perm(nums, start + <span class="number">1</span>) <span class="comment"># recursion</span></div><div class="line">    nums[i], nums[start] = nums[start], nums[i] <span class="comment"># reset nums to origin state</span></div><div class="line">    </div><div class="line">    i += <span class="number">1</span></div></pre></td></tr></table></figure>
-<p>对于结束条件，显然是当<code>start</code>超出<code>nums</code>的范围时，此时意味着一个全排列已经生成，可以打印or保存到返回列表中去。</p>
-<p>总结一下，最终代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">perm</span><span class="params">(nums, start = <span class="number">0</span>)</span>:</span></div><div class="line">    <span class="keyword">if</span> start &gt;= len(nums) - <span class="number">1</span>:</div><div class="line">        <span class="keyword">print</span> nums</div><div class="line">        <span class="keyword">return</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        i = start</div><div class="line">        <span class="keyword">while</span> i &lt; len(nums):</div><div class="line">            nums[i], nums[start] = nums[start], nums[i]</div><div class="line">            self.perm(nums, start+<span class="number">1</span>)</div><div class="line">            nums[i], nums[start] = nums[start], nums[i]</div><div class="line">            </div><div class="line">            i += <span class="number">1</span></div></pre></td></tr></table></figure>
-<h2 id="非递归实现"><a href="#非递归实现" class="headerlink" title="非递归实现"></a>非递归实现</h2><p>非递归实现，顾名思义，就是一段代码直接一个接一个的得到，而不是一个函数套一个函数让人整不明白O.O~看到这个问题让我想起了上学期的时候殷王回来曾经问我们一个滴滴面试的问题，给你几个数和它们的一组排列所形成的数字，求比这个数大的数里最接近这个数的数。现在想想其实就是Leetcode 31题，求下一个全排列…当时宿舍三四个人找了半天规律T.T~言归正传，来看看怎么非递归找全排列~</p>
-<p>以<code>3 1 4 5 2</code>为例，它的下一个应该是<code>3 1 5 2 4</code>，获得得算法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. 从后向前找第一双相邻的递增数字，称前一个数字为替换数，替换数的下标称为替换点(4)</div><div class="line">2. 再从后面找一个比替换数大的最小数（这个数必然存在），将该数字和替换数交换(3 1 5 4 2)</div><div class="line">3. 将替换点后的字符串颠倒即得到(3 1 5 2 4)</div></pre></td></tr></table></figure>
-<p>由此可以由一个序列推得下一个序列，当推回到最初的序列时，说明所有的全排列均已找到。</p>
-<p>根据一个排列寻找下一排列的代码如下，求所有的排列将下属代码逐次使用上次结果进行调用即可：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">def permPart(nums)</div><div class="line">    end = len(nums) - 1</div><div class="line">    reverse = True</div><div class="line">    swap_pos = False</div><div class="line">    while end &gt; 0:</div><div class="line">        if nums[end-1] &lt; nums[end]:</div><div class="line">            reverse = False</div><div class="line">            swap_pos = end - 1</div><div class="line">            break</div><div class="line">        else:</div><div class="line">            end -= 1</div><div class="line">            continue</div><div class="line"></div><div class="line">    if reverse is True:</div><div class="line">        nums.sort()</div><div class="line">    else:</div><div class="line">        i = swap_pos + 1</div><div class="line">        bak_pos = False</div><div class="line">        while i &lt; len(nums):</div><div class="line">            if nums[i] &gt; nums[swap_pos]:</div><div class="line">                if bak_pos is False:</div><div class="line">                    bak_pos = i</div><div class="line">                else:</div><div class="line">                    bak_pos = i if nums[i] &lt;= nums[bak_pos] else bak_pos #从右往左找第一个数，因此要加等号的判断条件</div><div class="line">            i += 1</div><div class="line"></div><div class="line">        nums[swap_pos], nums[bak_pos] = nums[bak_pos], nums[swap_pos]</div><div class="line">        bak = nums[swap_pos+1:]</div><div class="line">        bak.reverse()</div><div class="line">        nums[swap_pos+1:] = bak</div><div class="line">    print nums</div></pre></td></tr></table></figure>
-<h2 id="New！2017-09-01-Leetcode-47"><a href="#New！2017-09-01-Leetcode-47" class="headerlink" title="New！2017-09-01 Leetcode 47"></a>New！2017-09-01 Leetcode 47</h2><p>47题和上面这道求所有的全排列的题目很像。但是不同之处就在于上面题目说明了给出的数字不会重复，<strong>但是47题会给出重复的数字，需要去重</strong></p>
-<p>其实我个人的想法是如果能用数据结构来简化的问题尽量避免去搞事情，一来代码更容易理解，别人接手容易，并且重要的是自己写起来也容易呀！再者说了…现在内存不是很不值钱吗…可以允许的范围内就尽量简化代码啦…（说起来还是自己算法渣，懒！）</p>
-<p>果断改了改上面的代码，把插入的动作改成插入<code>tuple</code>，然后最后利用Python的set进行去重： <code>self.result = list(set(self.result))</code> 最后 <code>self.result = [ list(item) for item in self.result]</code> 强制类型转换一下返回结果完事儿。</p>
-<p>提交以后超时了！wtf…怎么玩呢…</p>
-<p>于是又把 <code>result</code> 改成了 dict，在插入的时候以 <code>&#39;-&#39;.join(str(e) for e in nums)</code> 作为键，记得哈希的搜索应该挺快的吧，插入前用 <code>key in self.result</code> 判断一下总行了吧…</p>
-<p>结果坑爹的dict并不奏效，依然超时…然而我在网上看别人Java写的用HashMap就可以通过啊 =。= 真是醉，看来不能走捷径只能好好学算法了 T  T</p>
-<h4 id="New-DFS"><a href="#New-DFS" class="headerlink" title="New DFS"></a><strong>New DFS</strong></h4><p>新的想法与上面的有所差异，其实对于DFS算法来说，这个写法应该更具有普适应性，更容易理解。前面的算法我们还是有“交换”的思想在里面，而我所认为的更普适应性的算法应该是更具备“常理性”，也即不应该变换原来的数据，而是在原来数据上不断地去往下搜。</p>
-<p>根据对上面递归算法的理解，我们知道原来的函数具备的 <strong>start</strong> 变量用于交换时下标的记录。这里既然我们要更“普适应”，应该是每次进入递归函数都跑一遍所有的数据。我们需要增加一个参数 <strong>sub_result</strong> 用于记录当前轮所构成的部分排列，一个参数 <strong>used</strong> 记录 nums 中每个位置数字被使用过没有。<strong>个人感觉两算法差别关键在此，之前我们是不断交换、记录，并没有单独以变量记录下来，这导致了在判断重复的时候就难以判断。</strong></p>
-<p>接下来就是<strong>决定什么时候可以跳过该轮的组合生成</strong>，看了几个解释，感觉都不太好，并且基本都是抄的差不多的。最后在 <a href="https://www.tianmaying.com/tutorial/LC47" target="_blank" rel="external">这里</a> 看到了一个更容易理解 <strong>used</strong> 变量条件控制的解释。大体意思简洁版如下：</p>
-<p>重复是如何产生的呢？结合 nums 的下标变化，不难发现，<strong>在我们枚举的过程中是以下标为基准进行枚举，而下标的不同组合所构成的实际组合答案却是一样的</strong>。</p>
-<p>不难想到，这样产生的重复解决方法是，对于一个位置的同一个取值，只枚举一次，重复时跳过不进行枚举。因此，我们可以预处理一下 nums 将其先<strong>排序</strong>。</p>
-<p>used 数组先预置为 False，当一个位置被走过，那么置为 True，每当退出 sub_permute，当前位置 used 重置为 False。很显然的一点是如果 used 当前位置已经置为 True 此轮循环可以直接跳过。</p>
-<p>那么当挨着的数据相同时如何判断是否需要交换呢？这时候就要用到 used[i - 1] 咯。按照 <a href="https://www.tianmaying.com/tutorial/LC47" target="_blank" rel="external">这里</a> 的理解由于每次使用的一定是所有相同数字中最右侧的一个，所以对于一个取值，如果它右侧的数字是已经被使用过了的，就同样说明这个数是当前所有相同数字中最右侧的可用的了。可以反推得知，如果一个数左侧的数字没被使用过，说明这个数字不可用。</p>
-<p>换种思路理解，随着DFS的进行，大pos位的数字会被不断换到左侧，同样的l两个数字在构成新串的时候就会出现 used 数组右边的先于左边的被访问，这个时候就会出现重复（比如仅考虑1 2 2，第一轮得到下标为0，1，2的一个组合，第二轮会得到0，2，1的组合，这两个组合的结果其实是一样的，在第二轮的时候2位置先被访问，此时他左侧的位置是1，used[1]为False，说明已经有一个同样的组合了，因而可以跳过。由此可推多个数字重复的时候左侧相同的将会不断被跳过，直到出现不同的数字为止）</p>
-<p>至于有没有更好的理解方法…也希望大神们邮件我0.0~~感谢！</p>
-<p>代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> copy</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></div><div class="line">    result = []</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">permuteUnique</span><span class="params">(self, nums)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        :type nums: List[int]</div><div class="line">        :rtype: List[List[int]]</div><div class="line">        """</div><div class="line">        self.result = []</div><div class="line">        nums.sort()</div><div class="line">        used = [ <span class="keyword">False</span> ] * len(nums)</div><div class="line">        self.sub_permute(nums, used, [])</div><div class="line">        <span class="keyword">return</span> self.result</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sub_permute</span><span class="params">(self, nums, used, sub_result)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(sub_result) == len(nums):</div><div class="line">            self.result.append(copy.copy(sub_result))</div><div class="line">            <span class="keyword">return</span></div><div class="line"></div><div class="line">        i = <span class="number">0</span></div><div class="line">        <span class="keyword">while</span> i &lt; len(nums):</div><div class="line">            <span class="keyword">if</span> used[i] <span class="keyword">is</span> <span class="keyword">False</span>:</div><div class="line">                <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i<span class="number">-1</span>] <span class="keyword">and</span> used[i<span class="number">-1</span>] <span class="keyword">is</span> <span class="keyword">False</span>:</div><div class="line">                    i += <span class="number">1</span></div><div class="line">                    <span class="keyword">continue</span></div><div class="line">                sub_result.append(nums[i])</div><div class="line">                used[i] =  <span class="keyword">True</span></div><div class="line">                self.sub_permute(nums, used, sub_result)</div><div class="line">                used[i] = <span class="keyword">False</span></div><div class="line">                sub_result.pop()</div><div class="line"></div><div class="line">            i += <span class="number">1</span></div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/09/01/全排列问题 Permutation/" data-id="cj7d8ecx2000hrz1y4wn2lwog" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/09/09/Leetcode 62&63 - Unique Paths/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Leetcode 62&amp;63 - Unique Paths
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/08/23/VuejQueryTry/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">即时生成Vue组件并挂载（改造已有组件）</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/SDN/" style="font-size: 15px;">SDN</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/dp/" style="font-size: 17.5px;">dp</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 15px;">paper</a> <a href="/tags/trick/" style="font-size: 12.5px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/09/09/Leetcode 62&63 - Unique Paths/">Leetcode 62&amp;63 - Unique Paths</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/01/全排列问题 Permutation/">全排列问题 -- Permutation</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/23/VuejQueryTry/">即时生成Vue组件并挂载（改造已有组件）</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/15/最长有效括号长度求解/">最长有效括号长度求解</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/09/设备识别论文阅读/">设备识别论文阅读</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 Nick<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-  </div>
-</body>
-</html>
+block content
+  article#post(class="")
+    if (!top_img)
+      #post-title.plain= page.title || _p('no_title') 
+      #post-meta
+        if (theme.post_meta.date_type)
+          - var date_type = theme.post_meta.date_type == 'updated' ? '' : 'date' 
+          time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)] 
+        if (theme.post_meta.categories && page.categories.data.length > 0)
+          if (theme.post_meta.date_type)
+            span.post-meta__separator  | 
+          each item, index in page.categories.data
+            i.fa.fa-inbox(aria-hidden="true")  
+            a(href=url_for(item.path)).post-meta__categories  #[=item.name]
+            if (index < page.categories.data.length - 1)
+                i.fa.fa-angle-right.post-meta__separator(aria-hidden="true")  
+        if (theme.disqus.enable && theme.disqus.count)
+          if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
+            span.post-meta__separator  | 
+          i.fa.fa-comment-o(aria-hidden="true")  
+          a(href=url_for(page.path) + '#disqus_thread')
+            span.disqus-comment-count(data-disqus-identifier=page.path)
+    #post-content!= page.content
+    if (theme.post_meta.tags)
+      .post-meta__tag-list
+        each item, index in page.tags.data
+          a(href=url_for(item.path)).post-meta__tags #[=item.name]
+    if (theme.addThis.enable)
+      .addthis_inline_share_toolbox.pull-right
+      script(src=`//s7.addthis.com/js/300/addthis_widget.js#pubid=${theme.addThis.pubid}` async)
+  include includes/pagination.pug
+  if page.comments !== false
+    include includes/comments/index.pug

@@ -1,250 +1,65 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>求有序数组的中位数 | Nick&#39;s Recycle bin</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="LeetCode 4方法一遍历，分别从两个数组头最小的开始向后走，走到中间为止。这种方法最简单，但是时间复杂度为O(m+n)，那么有没有更快的方法呢？ 由题目要求我们的算法时间复杂度为O(log (m+n))可以看出显然是有的，看到log就让人想起二分，没错，这种更快的方法正是利用了二分的原理。 方法二根据中位数的定义可以知道，中位数是一组数据中位于中间位置的数字，这也就意味着，假设有两个有序数组">
-<meta name="keywords" content="leetcode">
-<meta property="og:type" content="article">
-<meta property="og:title" content="求有序数组的中位数">
-<meta property="og:url" content="http://blog.imqishi.cn/2017/05/04/4.求有序数组的中位数/index.html">
-<meta property="og:site_name" content="Nick&#39;s Recycle bin">
-<meta property="og:description" content="LeetCode 4方法一遍历，分别从两个数组头最小的开始向后走，走到中间为止。这种方法最简单，但是时间复杂度为O(m+n)，那么有没有更快的方法呢？ 由题目要求我们的算法时间复杂度为O(log (m+n))可以看出显然是有的，看到log就让人想起二分，没错，这种更快的方法正是利用了二分的原理。 方法二根据中位数的定义可以知道，中位数是一组数据中位于中间位置的数字，这也就意味着，假设有两个有序数组">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-07-19T15:14:46.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="求有序数组的中位数">
-<meta name="twitter:description" content="LeetCode 4方法一遍历，分别从两个数组头最小的开始向后走，走到中间为止。这种方法最简单，但是时间复杂度为O(m+n)，那么有没有更快的方法呢？ 由题目要求我们的算法时间复杂度为O(log (m+n))可以看出显然是有的，看到log就让人想起二分，没错，这种更快的方法正是利用了二分的原理。 方法二根据中位数的定义可以知道，中位数是一组数据中位于中间位置的数字，这也就意味着，假设有两个有序数组">
-  
-    <link rel="alternate" href="/atom.xml" title="Nick&#39;s Recycle bin" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
+extends includes/layout.pug
 
-</head>
+block top_img
+  - var top_img = page.top_img || theme.top_img || config.top_img
+  if (top_img)
+    - var flag = top_img === true ? 'no-bg' : undefined
+    div#top-container(style=`background-image: url(${top_img})` class=flag)
+      include ./includes/header.pug
+      #post-info
+        #post-title= page.title || _p('no_title') 
+        #post-meta
+          if (theme.post_meta.date_type)
+            - var date_type = theme.post_meta.date_type == 'updated' ? 'updated' : 'date' 
+            time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)] 
+          if (theme.post_meta.categories && page.categories.data.length > 0)
+            if (theme.post_meta.date_type)
+              span.post-meta__separator  | 
+            each item, index in page.categories.data
+              i.fa.fa-inbox(aria-hidden="true")  
+              a(href=url_for(item.path)).post-meta__categories  #[=item.name]  
+              if (index < page.categories.data.length - 1)
+                 i.fa.fa-angle-right(aria-hidden="true")  
+          if (theme.disqus.enable && theme.disqus.count)
+            if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
+              span.post-meta__separator  | 
+            i.fa.fa-comment-o(aria-hidden="true")  
+            a(href=url_for(page.path) + '#disqus_thread')
+              span.disqus-comment-count(data-disqus-identifier=page.path)
+  else
+    div#top-container.plain
+      include ./includes/header.pug
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Nick&#39;s Recycle bin</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://blog.imqishi.cn"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-4.求有序数组的中位数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/05/04/4.求有序数组的中位数/" class="article-date">
-  <time datetime="2017-05-04T07:01:48.000Z" itemprop="datePublished">2017-05-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      求有序数组的中位数
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="LeetCode-4"><a href="#LeetCode-4" class="headerlink" title="LeetCode 4"></a>LeetCode 4</h1><h2 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h2><p>遍历，分别从两个数组头最小的开始向后走，走到中间为止。这种方法最简单，但是时间复杂度为O(m+n)，那么有没有更快的方法呢？</p>
-<p>由题目要求我们的算法时间复杂度为O(log (m+n))可以看出显然是有的，看到log就让人想起二分，没错，这种更快的方法正是利用了二分的原理。</p>
-<h2 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h2><p>根据中位数的定义可以知道，中位数是一组数据中位于中间位置的数字，这也就意味着，假设有两个有序数组A和B：</p>
-<p>把A分成两部分，分别为0 ~ i-1, i ~ m-1</p>
-<p>把B分成两部分，分别为0 ~ j-1, j ~ n-1</p>
-<p>可以知道</p>
-<p>i-1-0+1 + j-1-0+1 = m-1-i+1 + n-1-j+1</p>
-<p>也就是 i + j = (m + n) / 2</p>
-<p>这里要注意的是，该式是m+n为偶数时成立的情况，当m+n为奇数时，i+j = (m+n+1) / 2，原因如下：</p>
-<h3 id="首先我们要搞清楚，按这种分法，中位数在哪里产生："><a href="#首先我们要搞清楚，按这种分法，中位数在哪里产生：" class="headerlink" title="首先我们要搞清楚，按这种分法，中位数在哪里产生："></a>首先我们要搞清楚，按这种分法，中位数在哪里产生：</h3><ol>
-<li>如果是偶数的话，显然应该是i-1和j-1的较大者与i和j的较小者的均值</li>
-<li>如果是奇数的话，则我们认定为i-1和j-1的较大者</li>
-</ol>
-<h3 id="在这种情况下，我们进行假设："><a href="#在这种情况下，我们进行假设：" class="headerlink" title="在这种情况下，我们进行假设："></a>在这种情况下，我们进行假设：</h3><p>假设A = [1,2], B = [3,4]，以第一轮为例，i = 2 / 2 = 1, j = 4 / 2 - 1 = 1，注意i和j是数组下标，也就是说，左侧分别有一个下标为0的数，正好是中位数。假设我们+1，i + j = 5 / 2 = 2 正确</p>
-<p>假设A = [1, 2], B= [3, 4, 5]，以第一轮为例，如果不+1，i = 2 / 2 = 1, j = 5 / 2 - 1 = 1，由于i和j是数组下标，那么左侧共有两个数，而根据之前的定义左侧应该有3个数，所以只有+1以后才能满足左侧有3个数（此时j = 2）</p>
-<p>为什么必须是3个数呢？这要从开始的解题思路说起，因为我们假设分成的两部分是以 i, j 为分割的，那么左侧加起来应该为总长度的一半，此时中位数为左侧最大与右侧最小的均值。如果无法整除，取左侧最大。所以左侧长度要么为一半，要么为一半 +1，故i + j = (m + n + 1) / 2</p>
-<p>为什么要保证m &lt; n呢？因为如果m &gt; n，i比较大，有可能会出现j为负数的情况。</p>
-<h3 id="那么搜索的时候有哪些情况呢？"><a href="#那么搜索的时候有哪些情况呢？" class="headerlink" title="那么搜索的时候有哪些情况呢？"></a>那么搜索的时候有哪些情况呢？</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;a&gt; (j == 0 or i == m or B[j-1] &lt;= A[i]) and</div><div class="line">    (i == 0 or j = n or A[i-1] &lt;= B[j])</div><div class="line">    i即为所求.</div><div class="line"></div><div class="line">&lt;b&gt; j &gt; 0 and i &lt; m and B[j - 1] &gt; A[i]</div><div class="line">    i太小，应该增加（j会相应减小）.</div><div class="line"></div><div class="line">&lt;c&gt; i &gt; 0 and j &lt; n and A[i - 1] &gt; B[j]</div><div class="line">    i太大，应该减小（j会相应增加）.</div></pre></td></tr></table></figure>
-<h3 id="综上，代码如下："><a href="#综上，代码如下：" class="headerlink" title="综上，代码如下："></a>综上，代码如下：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">median</span><span class="params">(A, B)</span>:</span></div><div class="line">   m, n = len(A), len(B)</div><div class="line">   <span class="keyword">if</span> m &gt; n:</div><div class="line">       A, B, m, n = B, A, n, m</div><div class="line">   <span class="keyword">if</span> n == <span class="number">0</span>:</div><div class="line">       <span class="keyword">raise</span> ValueError</div><div class="line"></div><div class="line">   imin, imax, half_len = <span class="number">0</span>, m, (m + n + <span class="number">1</span>) / <span class="number">2</span></div><div class="line">   <span class="keyword">while</span> imin &lt;= imax:</div><div class="line">       i = (imin + imax) / <span class="number">2</span></div><div class="line">       j = half_len - i</div><div class="line">       <span class="keyword">if</span> i &lt; m <span class="keyword">and</span> B[j<span class="number">-1</span>] &gt; A[i]:</div><div class="line">           <span class="comment"># i is too small, must increase it</span></div><div class="line">           imin = i + <span class="number">1</span></div><div class="line">       <span class="keyword">elif</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> A[i<span class="number">-1</span>] &gt; B[j]:</div><div class="line">           <span class="comment"># i is too big, must decrease it</span></div><div class="line">           imax = i - <span class="number">1</span></div><div class="line">       <span class="keyword">else</span>:</div><div class="line">           <span class="comment"># i is perfect</span></div><div class="line"></div><div class="line">		<span class="comment"># i = 0意味着数组A太大了，走到左侧的头了，左侧只有B了，所以左侧的最大值应该为B[j-1]</span></div><div class="line">           <span class="keyword">if</span> i == <span class="number">0</span>: max_of_left = B[j<span class="number">-1</span>]</div><div class="line">           <span class="comment"># j = 0意味着B太大了，指针走到左侧的头了，左侧只有A了，所以左侧最大值应该为A[i-1]</span></div><div class="line">           <span class="keyword">elif</span> j == <span class="number">0</span>: max_of_left = A[i<span class="number">-1</span>]</div><div class="line">           <span class="comment"># 否则说明中位数的第一个数字（左侧较大的）在两组数据的中间位置</span></div><div class="line">           <span class="keyword">else</span>: max_of_left = max(A[i<span class="number">-1</span>], B[j<span class="number">-1</span>])</div><div class="line"></div><div class="line">		<span class="comment"># 根据上面的分析知道如果是奇数，该数就是中位数</span></div><div class="line">           <span class="keyword">if</span> (m + n) % <span class="number">2</span> == <span class="number">1</span>:</div><div class="line">               <span class="keyword">return</span> max_of_left</div><div class="line"></div><div class="line">		<span class="comment"># 如果i走到最右边，说明A太小了，右侧只有B，所以右侧最小值是B[j]</span></div><div class="line">           <span class="keyword">if</span> i == m: min_of_right = B[j]</div><div class="line">           <span class="comment"># 如果j走到最右边，说明B太小了，右侧只有A，所以右侧最小值是A[i]</span></div><div class="line">           <span class="keyword">elif</span> j == n: min_of_right = A[i]</div><div class="line">           <span class="comment"># 否则说明中位数的第二个数字(右侧较小的)在两组数据的中间位置</span></div><div class="line">           <span class="keyword">else</span>: min_of_right = min(A[i], B[j])</div><div class="line"></div><div class="line">		<span class="comment"># 如果是偶数，应该为左侧最大与右侧最小值的均值</span></div><div class="line">           <span class="keyword">return</span> (max_of_left + min_of_right) / <span class="number">2.0</span></div></pre></td></tr></table></figure>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>解题过程中遇到的问题与解决思路主要有两个：</p>
-<ol>
-<li>第一次尝试解题，没能把中位数的概念运用好，i和j之间的关系没有用起来，导致i与j各自独立，计算的时候混乱。</li>
-<li>第二次尝试解题，注意了i与j之间的关系，但是对于 m + n + 1 中为什么+1没搞清楚，至于为什么+1，在上面已经讲清楚了。</li>
-<li>如果说还有小的点，那就是对imin和imax的设置了，一定要注意是 i + 1或者 i - 1 ，不是设置成1…这算是二分的基本点了。</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://blog.imqishi.cn/2017/05/04/4.求有序数组的中位数/" data-id="cj7d8ecwo0003rz1ywqgh3sce" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/">leetcode</a></li></ul>
-
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/05/09/利用XHR、jQuery实现文件下载并标识下载结束/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          利用XHR、jQuery实现文件下载并标识下载结束
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/04/17/近期总结与下一步计划/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">近期总结与下一步计划</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SDN/">SDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dp/">dp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript/">javascript</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/paper/">paper</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/trick/">trick</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设备识别/">设备识别</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/SDN/" style="font-size: 15px;">SDN</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/dp/" style="font-size: 17.5px;">dp</a> <a href="/tags/javascript/" style="font-size: 12.5px;">javascript</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/paper/" style="font-size: 15px;">paper</a> <a href="/tags/trick/" style="font-size: 12.5px;">trick</a> <a href="/tags/设备识别/" style="font-size: 10px;">设备识别</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/09/09/Leetcode 62&63 - Unique Paths/">Leetcode 62&amp;63 - Unique Paths</a>
-          </li>
-        
-          <li>
-            <a href="/2017/09/01/全排列问题 Permutation/">全排列问题 -- Permutation</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/23/VuejQueryTry/">即时生成Vue组件并挂载（改造已有组件）</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/15/最长有效括号长度求解/">最长有效括号长度求解</a>
-          </li>
-        
-          <li>
-            <a href="/2017/08/09/设备识别论文阅读/">设备识别论文阅读</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 Nick<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-  </div>
-</body>
-</html>
+block content
+  article#post(class="")
+    if (!top_img)
+      #post-title.plain= page.title || _p('no_title') 
+      #post-meta
+        if (theme.post_meta.date_type)
+          - var date_type = theme.post_meta.date_type == 'updated' ? '' : 'date' 
+          time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)] 
+        if (theme.post_meta.categories && page.categories.data.length > 0)
+          if (theme.post_meta.date_type)
+            span.post-meta__separator  | 
+          each item, index in page.categories.data
+            i.fa.fa-inbox(aria-hidden="true")  
+            a(href=url_for(item.path)).post-meta__categories  #[=item.name]
+            if (index < page.categories.data.length - 1)
+                i.fa.fa-angle-right.post-meta__separator(aria-hidden="true")  
+        if (theme.disqus.enable && theme.disqus.count)
+          if (theme.post_meta.date_type || theme.post_meta.categories && page.categories.data.length > 0)
+            span.post-meta__separator  | 
+          i.fa.fa-comment-o(aria-hidden="true")  
+          a(href=url_for(page.path) + '#disqus_thread')
+            span.disqus-comment-count(data-disqus-identifier=page.path)
+    #post-content!= page.content
+    if (theme.post_meta.tags)
+      .post-meta__tag-list
+        each item, index in page.tags.data
+          a(href=url_for(item.path)).post-meta__tags #[=item.name]
+    if (theme.addThis.enable)
+      .addthis_inline_share_toolbox.pull-right
+      script(src=`//s7.addthis.com/js/300/addthis_widget.js#pubid=${theme.addThis.pubid}` async)
+  include includes/pagination.pug
+  if page.comments !== false
+    include includes/comments/index.pug
